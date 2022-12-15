@@ -9,7 +9,7 @@ public class GameOptionsStorer : MonoBehaviour
 {
     //game options
     public static bool doFlashes;
-    public static int pointsToWin;
+    public static int pointsToWin = 100;
    
     [SerializeField] string sceneToLoad; // this might be a game option in the future, perhaphs a different game mode could be selected
 
