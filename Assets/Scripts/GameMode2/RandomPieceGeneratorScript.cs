@@ -36,6 +36,9 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //temp, delete this after testing
+        Debug.Log(int.Parse("r2".Replace("r", "")));
+
         GeneratePiece();
         string testStr = "";
         foreach( string str in generatedPiece)
@@ -44,6 +47,8 @@ public class RandomPieceGeneratorScript : MonoBehaviour
         }
 
         Debug.Log(testStr);
+
+        StartCoroutine(tempAutomaticProceedCarousel());
     }
 
     // Update is called once per frame
@@ -51,7 +56,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && (noteAmount-1 > currentNoteIndex))
         {
-            tempProceedeCarousel();
+            
         }
 
         
@@ -110,13 +115,65 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     IEnumerator tempAutomaticProceedCarousel()
     {
         for(; ; )
-        {
+        { 
+            tempDisplayNote();
             int symbolLength = getNoteOrRestLength(generatedPiece[currentNoteIndex]);
-            float secondsToWait = (bpm / 60) / (symbolLength / 4);
+            Debug.Log("symbol length: " + symbolLength);
+            
+            
+            //epic gamer formula
+            float beatspersecond = 0f;
+            float temp = 0f;
+            float secondsToWait = (bpm / 60f) / (symbolLength / 4f);
+
+            Debug.Log(secondsToWait);
+
             yield return new WaitForSeconds(secondsToWait);
-            currentNoteIndex++;
+
+            if (noteAmount - 1 > currentNoteIndex) currentNoteIndex++;
+            else break;
         }
 
+    }
+
+    public void tempDisplayNote()
+    {
+        string strCurrentNote = generatedPiece[currentNoteIndex];
+        Sprite sprite;
+
+        //Set sprite var to right image, according to the current note (strCurrentNote)
+        switch (strCurrentNote)
+        {
+            case "2":
+                sprite = note2;
+                break;
+            case "4":
+                sprite = note4;
+                break;
+            case "8":
+                sprite = note8;
+                break;
+            case "16":
+                sprite = note16;
+                break;
+            case "r2":
+                sprite = rest2;
+                break;
+            case "r4":
+                sprite = rest4;
+                break;
+            case "r8":
+                sprite = rest8;
+                break;
+            case "r16":
+                sprite = rest16;
+                break;
+            default:
+                sprite = note2;
+                break;
+        }
+
+        srTest.sprite = sprite;
     }
 
     public int getNoteOrRestLength(string strNote)
@@ -129,8 +186,5 @@ public class RandomPieceGeneratorScript : MonoBehaviour
         {
             return int.Parse(strNote);
         }
-
-        //default value in case something goes wrong :p
-        return 4;
     }
 }
