@@ -45,14 +45,14 @@ public class NoteCarouselScript : MonoBehaviour
 
     //FIXEDUPDATE VARS
     const float tempSpeed = 0.0001f;
-    const int cps = 50//fixedUpdate has 50 calls per second (50cps)
+    const int cps = 50;//fixedUpdate has 50 calls per second (50cps)
     void FixedUpdate()
     {
         
         for (int i = 0; i < cps * 30; i++){
             const float nbDistance = 1.1f;
             // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
-            float unitsToMove = nbDistance / cps;
+            float unitsToMove = nbDistance * tempSpeed / cps;
 
             Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
             
