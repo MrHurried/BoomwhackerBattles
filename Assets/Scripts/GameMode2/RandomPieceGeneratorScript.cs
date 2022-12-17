@@ -9,7 +9,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
 
     string[] availableNotes = { "2", "4", "8", "16", "r2", "r4", "r8", "r16" };
 
-    public string[] generatedPiece = new string[noteAmount];
+    public static string[] generatedPiece = new string[noteAmount];
 
     //MISC
 

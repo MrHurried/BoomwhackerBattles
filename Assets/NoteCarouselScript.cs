@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
 {
-    private RandomPieceGeneratorScript randPieceScript;
+    //private RandomPieceGeneratorScript randPieceScript;
 
-    private string[] generatedPiece;
+    string[] generatedPiece;
 
     public int bpm = 60;
     public int currentNoteIndex = 0;
 
     [SerializeField] Transform nbHolder;
-    Transform nb0,nb1, nb2, nb3, nb4;
+    Transform nb0, nb1, nb2, nb3, nb4, nb5;
 
     //NOTE SPRITES
     [SerializeField] Sprite note2;
@@ -27,6 +27,9 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Sprite rest16;
 
     Transform[] noteblocks;
+
+    [SerializeField] Transform leftMaskTransform;
+    [SerializeField] Transform rightMaskTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,32 +38,30 @@ public class NoteCarouselScript : MonoBehaviour
         nb2 = nbHolder.GetChild(2);
         nb3 = nbHolder.GetChild(3);
         nb4 = nbHolder.GetChild(4);
-        generatedPiece = randPieceScript.generatedPiece;
+        nb5 = nbHolder.GetChild(5);
 
-        noteblocks = new Transform[5] { nb0, nb1, nb2, nb3, nb4 };
+        generatedPiece = RandomPieceGeneratorScript.generatedPiece;
+
+        noteblocks = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
 
         //StartCoroutine(tempAutomaticProceedCarousel());
     }
 
     //FIXEDUPDATE VARS
-    const float tempSpeed = 0.0001f;
-    const int cps = 50;//fixedUpdate has 50 calls per second (50cps)
-    void FixedUpdate()
+    const float tempSpeed = 0.001f;
+    void Update()
     {
-        
-        for (int i = 0; i < cps * 30; i++){
-            const float nbDistance = 1.1f;
-            // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
-            float unitsToMove = nbDistance * tempSpeed / cps;
+        const float nbDistance = 1.1f;
+        // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
+        float unitsToMove = nbDistance * Time.deltaTime;
 
-            Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
-            
-            foreach(Transform t in noteblocks)
-            {
-                t.Translate(moveVector);
-                //if(t.)
-            }
+        Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
+
+        foreach (Transform t in noteblocks)
+        {
+            if (t.position.x <= leftMaskTransform.position.x) t.position = rightMaskTransform.position;
+            t.Translate(moveVector);
         }
     }
 
