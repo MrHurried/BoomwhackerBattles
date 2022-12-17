@@ -30,6 +30,7 @@ public class NoteCarouselScript : MonoBehaviour
 
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,11 +51,14 @@ public class NoteCarouselScript : MonoBehaviour
 
     //FIXEDUPDATE VARS
     const float tempSpeed = 0.001f;
+    float frame = 0f;
     void Update()
     {
+        frame += 1f * Time.deltaTime;
+        if (frame < 3) return;
         const float nbDistance = 1.1f;
         // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
-        float unitsToMove = nbDistance * Time.deltaTime;
+        float unitsToMove = nbDistance * Time.deltaTime / (60f/bpm);
 
         Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
 
@@ -64,6 +68,8 @@ public class NoteCarouselScript : MonoBehaviour
             t.Translate(moveVector);
         }
     }
+
+    
 
     IEnumerator tempAutomaticProceedCarousel()
     {

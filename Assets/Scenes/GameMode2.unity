@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56060719c071bb44689b46a3e252c4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 60
+  bpm: 340
   currentNoteIndex: 0
   nbHolder: {fileID: 930924564}
   note2: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
