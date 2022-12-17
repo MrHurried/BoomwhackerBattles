@@ -26,7 +26,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Sprite rest8;
     [SerializeField] Sprite rest16;
 
-
+    Transform[] noteblocks;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,20 +37,30 @@ public class NoteCarouselScript : MonoBehaviour
         nb4 = nbHolder.GetChild(4);
         generatedPiece = randPieceScript.generatedPiece;
 
+        noteblocks = new Transform[5] { nb0, nb1, nb2, nb3, nb4 };
+
+
         //StartCoroutine(tempAutomaticProceedCarousel());
     }
 
-    //50 calls per second
-   void FixedUpdate()
+    //FIXEDUPDATE VARS
+    const float tempSpeed = 0.0001f;
+    const int cps = 50//fixedUpdate has 50 calls per second (50cps)
+    void FixedUpdate()
     {
-        int cps = 50;// calls per second
+        
         for (int i = 0; i < cps * 30; i++){
             const float nbDistance = 1.1f;
             // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
             float unitsToMove = nbDistance / cps;
 
             Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
-            nbHolder.Translate(moveVector);
+            
+            foreach(Transform t in noteblocks)
+            {
+                t.Translate(moveVector);
+                //if(t.)
+            }
         }
     }
 
