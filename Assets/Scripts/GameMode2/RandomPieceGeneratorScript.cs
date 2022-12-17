@@ -11,7 +11,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
 
     string[] availableNotes = { "2", "4", "8", "16", "r2", "r4", "r8", "r16" };
 
-    string[] generatedPiece = new string[noteAmount];
+    public string[] generatedPiece = new string[noteAmount];
 
     //MISC
     public int bpm = 60;
