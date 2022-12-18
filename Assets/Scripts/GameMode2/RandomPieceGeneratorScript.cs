@@ -53,31 +53,24 @@ public class RandomPieceGeneratorScript : MonoBehaviour
         for (int i = 0; i < noteAmount; i++)
         {
             int rnd = Random.Range(0, availableNotes.Length - 1);
-            generatedPiece.Insert( i, availableNotes[rnd]);
+            generatedPiece.Add(availableNotes[rnd]);
 
-            int noteLength = getNoteOrRestLength(generatedPiece[i]);
-
-            int shortestNoteLength = 16;
-            int amountOfZeros = shortestNoteLength / noteLength - 1;
-            for (int i2 = 1; i < amountOfZeros + 1; i++)
-            {
-                generatedPiece.Insert(i + i2, "0");
-            }
-
-            //AddZeroNotes(getNoteOrRestLength(generatedPiece[i]), i);
+            AddZeroNotes(getNoteOrRestLength(generatedPiece[i]));
         }
 
     }
 
 
     //int iPiece represents the current index of the generatedPiece list initialization process
-    private void AddZeroNotes(int noteLength, int iPiece)
+    private void AddZeroNotes(int noteLength)
     {
         int shortestNoteLength = 16;
-        int amountOfZeros =  shortestNoteLength/noteLength -1;
+        int amountOfZeros;
+        if ((noteLength - 1) != 0) amountOfZeros = shortestNoteLength/(noteLength -1);
+        else amountOfZeros = 0;
         for(int i = 1; i < amountOfZeros+1; i++)
         {
-            generatedPiece.Insert(iPiece + i, "0");
+            generatedPiece.Add("0"); ;
         }
     }
 
