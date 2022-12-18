@@ -17,6 +17,7 @@ public class NoteCarouselScript : MonoBehaviour
     Transform nb0, nb1, nb2, nb3, nb4, nb5;
 
     //NOTE SPRITES
+    [SerializeField] Sprite note0;
     [SerializeField] Sprite note2;
     [SerializeField] Sprite note4;
     [SerializeField] Sprite note8;
@@ -80,8 +81,9 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (t.position.x <= leftMaskTransform.position.x) 
             {
-                
+                //zet de nb aan de andere kant van de carousel
                 t.position = rightMaskTransform.position;
+                //
                 if (currentNoteIndex + 5 >= 0) 
                 {
                     t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length-1);
@@ -108,12 +110,19 @@ public class NoteCarouselScript : MonoBehaviour
 
     public Sprite getNoteSprite(int noteIndex)
     {
-        string strCurrentNote = generatedPiece[noteIndex];
+        string strCurrentNote= "0";
+        if (noteIndex <= RandomPieceGeneratorScript.noteAmount-1)
+        {
+            strCurrentNote = generatedPiece[noteIndex];
+        }
         Sprite sprite;
 
         //Set sprite var to right image, according to the current note (strCurrentNote)
         switch (strCurrentNote)
         {
+            case "0":
+                sprite = note0;
+                break;
             case "2":
                 sprite = note2;
                 break;
