@@ -11,7 +11,7 @@ public class NoteCarouselScript : MonoBehaviour
     string[] generatedPiece;
 
     public int bpm = 60;
-    public int currentNoteIndex = 0;
+    public int currentNoteIndex;
 
     [SerializeField] Transform nbHolder;
     Transform nb0, nb1, nb2, nb3, nb4, nb5;
@@ -45,54 +45,45 @@ public class NoteCarouselScript : MonoBehaviour
 
         noteblocks = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
+        //THIS DOES NOT APPLY ANYMORE: minus one cus there is one nb to the left of the arrow
+        currentNoteIndex = -noteblocks.Length ;
 
         //StartCoroutine(tempAutomaticProceedCarousel());
     }
 
     //FIXEDUPDATE VARS
     const float tempSpeed = 0.001f;
-    float frame = 0f;
+    float secondsSinceLaunch = 0f;
+    float secondsSinceCarouselStart = 0f;
+    bool lastChangedNoteHasSpawned = false;
     void Update()
     {
-        frame += 1f * Time.deltaTime;
-        if (frame < 3) return;
+        //used for waiting 3 secs, eliminates bugs
+        secondsSinceLaunch += 1f * Time.deltaTime;
+        if (secondsSinceLaunch < 3) return;
+        //update the seconds since carousel start
+        secondsSinceCarouselStart += 1f * Time.deltaTime;
+
+        //distance to move each nb :p
         const float nbDistance = 1.1f;
         // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
         float unitsToMove = nbDistance * Time.deltaTime / (60f/bpm);
 
+        //make a vector3 for t.Translating purposes
         Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
 
         foreach (Transform t in noteblocks)
         {
-            if (t.position.x <= leftMaskTransform.position.x) t.position = rightMaskTransform.position;
+            if (t.position.x <= leftMaskTransform.position.x) 
+            {
+                
+                t.position = rightMaskTransform.position;
+                if(currentNoteIndex >= 0) t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getCurrentNoteSprite();
+                if(currentNoteIndex < RandomPieceGeneratorScript.noteAmount) currentNoteIndex++;
+            }
+            if (lastChangedNoteHasSpawned) return;
             t.Translate(moveVector);
         }
-    }
-
-    
-
-    IEnumerator tempAutomaticProceedCarousel()
-    {
-
-        for (; ; )
-        {
-            int symbolLength = getNoteOrRestLength(generatedPiece[currentNoteIndex]);
-            Debug.Log("symbol length: " + symbolLength);
-
-
-            //epic gamer formula
-            float beatspersecond = 0f;
-            float temp = 0f;
-            float secondsToWait = (bpm / 60f) / (symbolLength / 4f);
-
-            Debug.Log(secondsToWait);
-
-            yield return new WaitForSeconds(secondsToWait);
-
-            if (RandomPieceGeneratorScript.noteAmount - 1 > currentNoteIndex) currentNoteIndex++;
-            else break;
-        }
-
     }
 
     public Sprite getCurrentNoteSprite()
@@ -135,8 +126,6 @@ public class NoteCarouselScript : MonoBehaviour
         return sprite;
     }
 
-
-    // Update is called once per frame
     public int getNoteOrRestLength(string strNote)
     {
         if (strNote[0] == 'r')
@@ -148,4 +137,30 @@ public class NoteCarouselScript : MonoBehaviour
             return int.Parse(strNote);
         }
     }
+
+
+
+    /* IEnumerator tempAutomaticProceedCarousel()
+     {
+
+         for (; ; )
+         {
+             int symbolLength = getNoteOrRestLength(generatedPiece[currentNoteIndex]);
+             Debug.Log("symbol length: " + symbolLength);
+
+
+             //epic gamer formula
+             float beatspersecond = 0f;
+             float temp = 0f;
+             float secondsToWait = (bpm / 60f) / (symbolLength / 4f);
+
+             Debug.Log(secondsToWait);
+
+             yield return new WaitForSeconds(secondsToWait);
+
+             if (RandomPieceGeneratorScript.noteAmount - 1 > currentNoteIndex) currentNoteIndex++;
+             else break;
+         }
+
+     } */
 }
