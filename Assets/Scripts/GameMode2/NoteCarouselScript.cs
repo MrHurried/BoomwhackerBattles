@@ -8,8 +8,6 @@ public class NoteCarouselScript : MonoBehaviour
 {
     //private RandomPieceGeneratorScript randPieceScript;
 
-    string[] generatedPiece;
-
     public int bpm = 60;
     public int currentNoteIndex;
 
@@ -41,8 +39,6 @@ public class NoteCarouselScript : MonoBehaviour
         nb3 = nbHolder.GetChild(3);
         nb4 = nbHolder.GetChild(4);
         nb5 = nbHolder.GetChild(5);
-
-        generatedPiece = RandomPieceGeneratorScript.generatedPiece;
 
         noteblocks = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
@@ -88,7 +84,7 @@ public class NoteCarouselScript : MonoBehaviour
                 {
                     t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length-1);
                 }
-                if(currentNoteIndex < RandomPieceGeneratorScript.noteAmount) currentNoteIndex++;
+                if(currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
             t.Translate(moveVector);
         }
@@ -111,9 +107,9 @@ public class NoteCarouselScript : MonoBehaviour
     public Sprite getNoteSprite(int noteIndex)
     {
         string strCurrentNote= "0";
-        if (noteIndex <= RandomPieceGeneratorScript.noteAmount-1)
+        if (noteIndex <= RandomPieceGeneratorScript.generatedPiece.Count-1)
         {
-            strCurrentNote = generatedPiece[noteIndex];
+            strCurrentNote = RandomPieceGeneratorScript.generatedPiece[noteIndex];
         }
         Sprite sprite;
 

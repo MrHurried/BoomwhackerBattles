@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RandomPieceGeneratorScript : MonoBehaviour
@@ -9,7 +12,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
 
     string[] availableNotes = { "2", "4", "8", "16", "r2", "r4", "r8", "r16" };
 
-    public static string[] generatedPiece = new string[noteAmount];
+    public static List<string> generatedPiece = new List<string>();
 
     //MISC
 
@@ -46,11 +49,48 @@ public class RandomPieceGeneratorScript : MonoBehaviour
 
     void GeneratePiece()
     {
+        //get all the notes in
         for (int i = 0; i < noteAmount; i++)
         {
             int rnd = Random.Range(0, availableNotes.Length - 1);
-            generatedPiece[i] = availableNotes[rnd];
+            generatedPiece.Insert( i, availableNotes[rnd]);
+
+            int noteLength = getNoteOrRestLength(generatedPiece[i]);
+
+            int shortestNoteLength = 16;
+            int amountOfZeros = shortestNoteLength / noteLength - 1;
+            for (int i2 = 1; i < amountOfZeros + 1; i++)
+            {
+                generatedPiece.Insert(i + i2, "0");
+            }
+
+            //AddZeroNotes(getNoteOrRestLength(generatedPiece[i]), i);
+        }
+
+    }
+
+
+    //int iPiece represents the current index of the generatedPiece list initialization process
+    private void AddZeroNotes(int noteLength, int iPiece)
+    {
+        int shortestNoteLength = 16;
+        int amountOfZeros =  shortestNoteLength/noteLength -1;
+        for(int i = 1; i < amountOfZeros+1; i++)
+        {
+            generatedPiece.Insert(iPiece + i, "0");
         }
     }
-    
+
+    public int getNoteOrRestLength(string strNote)
+    {
+        if (strNote[0] == 'r')
+        {
+            return int.Parse(strNote.Replace("r", ""));
+        }
+        else
+        {
+            return int.Parse(strNote);
+        }
+    }
+
 }

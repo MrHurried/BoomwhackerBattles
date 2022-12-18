@@ -871,7 +871,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732542724}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.7, y: 2.2, z: -7.857215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -895,9 +895,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56060719c071bb44689b46a3e252c4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 20
+  bpm: 320
   currentNoteIndex: 0
   nbHolder: {fileID: 930924564}
+  note0: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
   note2: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
   note4: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
   note8: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
