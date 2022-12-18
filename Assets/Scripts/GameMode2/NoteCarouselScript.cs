@@ -46,7 +46,11 @@ public class NoteCarouselScript : MonoBehaviour
         noteblocks = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
         //THIS DOES NOT APPLY ANYMORE: minus one cus there is one nb to the left of the arrow
-        currentNoteIndex = -noteblocks.Length ;
+        currentNoteIndex = -(noteblocks.Length-1) ;
+
+        //temporary test
+        //currentNoteIndex = 0;
+
 
         //StartCoroutine(tempAutomaticProceedCarousel());
     }
@@ -78,17 +82,33 @@ public class NoteCarouselScript : MonoBehaviour
             {
                 
                 t.position = rightMaskTransform.position;
-                if(currentNoteIndex >= 0) t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getCurrentNoteSprite();
+                if (currentNoteIndex + 5 >= 0) 
+                {
+                    t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length-1);
+                }
                 if(currentNoteIndex < RandomPieceGeneratorScript.noteAmount) currentNoteIndex++;
             }
-            if (lastChangedNoteHasSpawned) return;
             t.Translate(moveVector);
         }
+        /*
+        for(int i = 0; i < noteblocks.Length; i++)
+        {
+            Transform t = noteblocks[i];
+
+            if (t.position.x <= leftMaskTransform.position.x)
+            {
+                t.position = rightMaskTransform.position;
+                if (currentNoteIndex >= 0) t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getCurrentNoteSprite();
+                if (currentNoteIndex < RandomPieceGeneratorScript.noteAmount) currentNoteIndex++;
+            }
+            t.Translate(moveVector);
+
+        }*/
     }
 
-    public Sprite getCurrentNoteSprite()
+    public Sprite getNoteSprite(int noteIndex)
     {
-        string strCurrentNote = generatedPiece[currentNoteIndex];
+        string strCurrentNote = generatedPiece[noteIndex];
         Sprite sprite;
 
         //Set sprite var to right image, according to the current note (strCurrentNote)
