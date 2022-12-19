@@ -66,11 +66,13 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     {
         int shortestNoteLength = 16;
         int amountOfZeros;
-        if ((noteLength - 1) != 0) amountOfZeros = shortestNoteLength/(noteLength -1);
+        
+        if (noteLength != 0) amountOfZeros = (shortestNoteLength/noteLength) -1;
         else amountOfZeros = 0;
+       
         for(int i = 1; i < amountOfZeros+1; i++)
         {
-            generatedPiece.Add("0"); ;
+            generatedPiece.Add("0");
         }
     }
 
