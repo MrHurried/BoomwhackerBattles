@@ -47,6 +47,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
         
     }
 
+    private int pieceGenIndex;
     void GeneratePiece()
     {
         //get all the notes in
@@ -55,7 +56,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
             int rnd = Random.Range(0, availableNotes.Length - 1);
             generatedPiece.Add(availableNotes[rnd]);
 
-            AddZeroNotes(getNoteOrRestLength(generatedPiece[i]));
+            AddZeroNotes(getNoteOrRestLength(generatedPiece[generatedPiece.Count-1]));
         }
 
     }
