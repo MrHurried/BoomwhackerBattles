@@ -26,8 +26,6 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //temp, delete this after testing
-        Debug.Log(int.Parse("r2".Replace("r", "")));
 
         GeneratePiece();
         string testStr = "";
