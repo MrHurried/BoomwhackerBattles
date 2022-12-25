@@ -78,10 +78,14 @@ public class NoteCarouselScript : MonoBehaviour
 
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
+        
+
+        //while ()
         //CHECK IF WE SHOULD PRESS OR NOT PRESS
         if (strCurrentNote.Contains("r"))
         {
-
+            if (Input.GetKey(KeyCode.Q)) Debug.Log(">:( you should'nt have pressed");
+            else Debug.Log(":) you didn't press");
         }
 
 
