@@ -35,6 +35,8 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
 
+    bool didCorrecInputForCurrentNote = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +51,6 @@ public class NoteCarouselScript : MonoBehaviour
 
         //THIS DOES NOT APPLY ANYMORE: minus one cus there is one nb to the left of the arrow
         currentNoteIndex = -(noteblocks.Length-1) ;
-
-        
     }
 
     //FIXEDUPDATE VARS
@@ -76,19 +76,38 @@ public class NoteCarouselScript : MonoBehaviour
         //check if the index is below 0 (start of the game)
         if (currentNoteIndex < 0) return;
 
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-
-        
-
-        //while ()
-        //CHECK IF WE SHOULD PRESS OR NOT PRESS
-        if (strCurrentNote.Contains("r"))
+        foreach (Transform t in noteblocks)
         {
-            if (Input.GetKey(KeyCode.Q)) Debug.Log(">:( you should'nt have pressed");
-            else Debug.Log(":) you didn't press");
+            if (t.position.x <= leftMaskTransform.position.x) didCorrecInputForCurrentNote = false;
         }
 
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
+        int tempI = currentNoteIndex;
+        while (currentNoteIndex == tempI && !didCorrecInputForCurrentNote)
+        {
+            //CHECK IF WE SHOULD PRESS OR NOT PRESS
+            if (strCurrentNote.Contains("r"))
+            {
+                if (Input.GetKey(KeyCode.Q)) Debug.Log(">:( you should'nt have pressed");
+                else 
+                { 
+                    Debug.Log(":) you didn't press"); 
+                    didCorrecInputForCurrentNote = true;
+                }
+
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    Debug.Log(":) you didn't press");
+                    didCorrecInputForCurrentNote= true; 
+                }
+                else Debug.Log(">:( you should'nt have pressed");
+            }
+        }
+        
     }
 
     private void MoveNBAndChangeNBSprites()
