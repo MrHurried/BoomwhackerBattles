@@ -25,6 +25,11 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Sprite rest8;
     [SerializeField] Sprite rest16;
 
+    //SLIDER SPRITES
+    [SerializeField] Sprite noteSlider;
+    [SerializeField] Sprite restSlider;
+
+
     Transform[] noteblocks;
 
     [SerializeField] Transform leftMaskTransform;
@@ -45,11 +50,7 @@ public class NoteCarouselScript : MonoBehaviour
         //THIS DOES NOT APPLY ANYMORE: minus one cus there is one nb to the left of the arrow
         currentNoteIndex = -(noteblocks.Length-1) ;
 
-        //temporary test
-        //currentNoteIndex = 0;
-
-
-        //StartCoroutine(tempAutomaticProceedCarousel());
+        
     }
 
     //FIXEDUPDATE VARS
@@ -65,43 +66,61 @@ public class NoteCarouselScript : MonoBehaviour
         //update the seconds since carousel start
         secondsSinceCarouselStart += 1f * Time.deltaTime;
 
+
+        MoveNBAndChangeNBSprites();
+        CheckForCorrectButtonPress();
+    }
+
+    private void CheckForCorrectButtonPress()
+    {
+        //check if the index is below 0 (start of the game)
+        if (currentNoteIndex < 0) return;
+
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        //CHECK IF WE SHOULD PRESS OR NOT PRESS
+        if (strCurrentNote.Contains("r"))
+        {
+
+        }
+
+
+    }
+
+    private void MoveNBAndChangeNBSprites()
+    {      
         //distance to move each nb :p
         const float nbDistance = 1.1f;
         // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
-        float unitsToMove = nbDistance * Time.deltaTime / (60f/bpm);
+        float unitsToMove = nbDistance * Time.deltaTime / (60f / bpm);
 
         //make a vector3 for t.Translating purposes
         Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
 
         foreach (Transform t in noteblocks)
         {
-            if (t.position.x <= leftMaskTransform.position.x) 
+            if (t.position.x <= leftMaskTransform.position.x)
             {
                 //zet de nb aan de andere kant van de carousel
                 t.position = rightMaskTransform.position;
                 //
-                if (currentNoteIndex + 5 >= 0) 
+                if (currentNoteIndex + 5 >= 0)
                 {
-                    t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length-1);
+                    t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length - 1);
+                    if (getNoteSprite(currentNoteIndex + noteblocks.Length - 1) == note0)
+                    {
+                        if (placeNoteSlider()) t.GetChild(1).GetComponent<SpriteRenderer>().sprite = noteSlider;
+                        else t.GetChild(1).GetComponent<SpriteRenderer>().sprite = restSlider;
+                    }
+                    else
+                    {
+                        t.GetChild(1).GetComponent<SpriteRenderer>().sprite = note0;
+                    }
                 }
-                if(currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
+                if (currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
             t.Translate(moveVector);
         }
-        /*
-        for(int i = 0; i < noteblocks.Length; i++)
-        {
-            Transform t = noteblocks[i];
-
-            if (t.position.x <= leftMaskTransform.position.x)
-            {
-                t.position = rightMaskTransform.position;
-                if (currentNoteIndex >= 0) t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getCurrentNoteSprite();
-                if (currentNoteIndex < RandomPieceGeneratorScript.noteAmount) currentNoteIndex++;
-            }
-            t.Translate(moveVector);
-
-        }*/
     }
 
     public Sprite getNoteSprite(int noteIndex)
@@ -149,6 +168,29 @@ public class NoteCarouselScript : MonoBehaviour
         }
 
         return sprite;
+    }
+
+    private bool placeNoteSlider()
+    {
+        string strCurrentNote = "0";
+        /*if (currentNoteIndex+5 >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
+        {
+            strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+        }*/
+        int index = currentNoteIndex + 5;
+        while (strCurrentNote == "0")
+        {
+            index--;
+            strCurrentNote = RandomPieceGeneratorScript.generatedPiece[index];
+        }
+
+        if (strCurrentNote.Contains("r")){
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public int getNoteOrRestLength(string strNote)
