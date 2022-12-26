@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
 {
+    /// <summary>
+    /// BUGS I NEED TO FIX:
+    /// When a correct note is pressed, only do the procedure ONCE, not more
+    /// </summary>
+
+
     //private RandomPieceGeneratorScript randPieceScript;
 
     public int bpm = 60;
@@ -79,8 +85,7 @@ public class NoteCarouselScript : MonoBehaviour
 
     private void doButtonPressProcedure(bool inputWasCorrect)
     {
-        didCorrecInputForCurrentNote = false;
-        if (inputWasCorrect) {
+        if (inputWasCorrect && !didCorrecInputForCurrentNote) {
             //decrease health
             Debug.Log("great job yo, you did the correct input");
         }
@@ -88,6 +93,7 @@ public class NoteCarouselScript : MonoBehaviour
         {
             Debug.Log("hmm you need to practice more :/");
         }
+        //didCorrecInputForCurrentNote = false;
     }
 
     private void CheckForCorrectButtonPress()
@@ -110,7 +116,7 @@ public class NoteCarouselScript : MonoBehaviour
         //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
         if (strCurrentNote.Contains("r") || !pressedDuringRest)
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 
                 pressedDuringRest = true;
@@ -127,7 +133,7 @@ public class NoteCarouselScript : MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 //Debug.Log(":) you didn't press");
                 didCorrecInputForCurrentNote = true;
@@ -178,6 +184,7 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (t.position.x <= leftMaskTransform.position.x)
             {
+                didCorrecInputForCurrentNote = false;
                 /*
                 if (didCorrecInputForCurrentNote == true) {
                     doButtonPressProcedure(true); 
