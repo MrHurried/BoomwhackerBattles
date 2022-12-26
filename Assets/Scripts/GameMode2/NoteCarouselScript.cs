@@ -36,6 +36,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform rightMaskTransform;
 
     bool didCorrecInputForCurrentNote = false;
+    bool pressedDuringRest = false;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,11 @@ public class NoteCarouselScript : MonoBehaviour
 
         MoveNBAndChangeNBSprites();
         CheckForCorrectButtonPress();
+
+        //for testing, remove after testing
+        if (currentNoteIndex < 0) return;
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+        Debug.Log(strCurrentNote);
     }
 
     private void doButtonPressProcedure(bool inputWasCorrect)
@@ -101,11 +107,19 @@ public class NoteCarouselScript : MonoBehaviour
 
         int tempI = currentNoteIndex;
 
-        if (strCurrentNote.Contains("r"))
+        //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
+        if (strCurrentNote.Contains("r") || !pressedDuringRest)
         {
-            if (Input.GetKey(KeyCode.Q)) ; //Debug.Log(">:( you should'nt have pressed");
+            if (Input.GetKey(KeyCode.Q))
+            {
+                
+                pressedDuringRest = true;
+                //Debug.Log(">:( you should'nt have pressed");
+                doButtonPressProcedure(false);
+            }
             else
             {
+                doButtonPressProcedure(true);
                 //Debug.Log(":) you didn't press");
                 didCorrecInputForCurrentNote = true;
             }
@@ -117,8 +131,10 @@ public class NoteCarouselScript : MonoBehaviour
             {
                 //Debug.Log(":) you didn't press");
                 didCorrecInputForCurrentNote = true;
+                doButtonPressProcedure(true);
             }
-            else;//Debug.Log(">:( you should'nt have pressed");
+            else
+                doButtonPressProcedure(false);//Debug.Log(">:( you should'nt have pressed");
         }
 
         /*
@@ -162,8 +178,12 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (t.position.x <= leftMaskTransform.position.x)
             {
-                //
-                if (didCorrecInputForCurrentNote == true) { doButtonPressProcedure(true); Debug.Log("doing the buttonpressprocedure :p"); }
+                /*
+                if (didCorrecInputForCurrentNote == true) {
+                    doButtonPressProcedure(true); 
+                    Debug.Log("doing the buttonpressprocedure :p");
+                    pressedDuringRest = false;
+                }*/
 
                 //zet de nb aan de andere kant van de carousel
                 t.position = rightMaskTransform.position;
