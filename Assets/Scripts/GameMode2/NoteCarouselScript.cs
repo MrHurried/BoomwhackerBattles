@@ -71,8 +71,24 @@ public class NoteCarouselScript : MonoBehaviour
         CheckForCorrectButtonPress();
     }
 
+    private void doButtonPressProcedure(bool inputWasCorrect)
+    {
+        didCorrecInputForCurrentNote = false;
+        if (inputWasCorrect) {
+            //decrease health
+            Debug.Log("great job yo, you did the correct input");
+        }
+        else
+        {
+            Debug.Log("hmm you need to practice more :/");
+        }
+    }
+
     private void CheckForCorrectButtonPress()
     {
+        /// how i'm going to do this
+        /// 
+
         //check if the index is below 0 (start of the game)
         if (currentNoteIndex < 0) return;
 
@@ -84,6 +100,28 @@ public class NoteCarouselScript : MonoBehaviour
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
         int tempI = currentNoteIndex;
+
+        if (strCurrentNote.Contains("r"))
+        {
+            if (Input.GetKey(KeyCode.Q)) ; //Debug.Log(">:( you should'nt have pressed");
+            else
+            {
+                //Debug.Log(":) you didn't press");
+                didCorrecInputForCurrentNote = true;
+            }
+
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                //Debug.Log(":) you didn't press");
+                didCorrecInputForCurrentNote = true;
+            }
+            else;//Debug.Log(">:( you should'nt have pressed");
+        }
+
+        /*
         while (currentNoteIndex == tempI && !didCorrecInputForCurrentNote)
         {
             //CHECK IF WE SHOULD PRESS OR NOT PRESS
@@ -106,8 +144,8 @@ public class NoteCarouselScript : MonoBehaviour
                 }
                 else Debug.Log(">:( you should'nt have pressed");
             }
-        }
-        
+        }*/
+
     }
 
     private void MoveNBAndChangeNBSprites()
@@ -124,6 +162,9 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (t.position.x <= leftMaskTransform.position.x)
             {
+                //
+                if (didCorrecInputForCurrentNote == true) { doButtonPressProcedure(true); Debug.Log("doing the buttonpressprocedure :p"); }
+
                 //zet de nb aan de andere kant van de carousel
                 t.position = rightMaskTransform.position;
                 //
