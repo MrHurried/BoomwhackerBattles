@@ -98,7 +98,12 @@ public class NoteCarouselScript : MonoBehaviour
     private void CheckForRightRestPressOrWrongNotePress()
     {
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+        //check if rest is not pressed
+        /*if(strCurrentNote == "0" && !wasNoteBeforeZero(false) && )
+        {
 
+        }*/
+        //check if rest is not pressed when a new note spawns
         if (strCurrentNote.Contains("r") && pressedDuringRest == false)
         {
             doButtonPressProcedure(true);
@@ -119,10 +124,30 @@ public class NoteCarouselScript : MonoBehaviour
 
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        int tempI = currentNoteIndex;
+        //int tempI = currentNoteIndex;
 
         //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
-        if (strCurrentNote.Contains("r") && !pressedDuringRest && !didCorrecInputForCurrentNote)
+        if(strCurrentNote == "0" && !didCorrecInputForCurrentNote)
+        {
+            if (wasNoteBeforeZero(false))
+            {
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    //Debug.Log(":) you didn't press");
+                    didCorrecInputForCurrentNote = true;
+                    doButtonPressProcedure(true);
+                }
+            }
+            else if (!wasNoteBeforeZero(false))
+            {
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    pressedDuringRest = true;
+                    doButtonPressProcedure(false);
+                }
+            }
+        }
+        else if (strCurrentNote.Contains("r") && !pressedDuringRest && !didCorrecInputForCurrentNote)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -177,7 +202,7 @@ public class NoteCarouselScript : MonoBehaviour
                     t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length - 1);
                     if (getNoteSprite(currentNoteIndex + noteblocks.Length - 1) == note0)
                     {
-                        if (placeNoteSlider()) t.GetChild(1).GetComponent<SpriteRenderer>().sprite = noteSlider;
+                        if (wasNoteBeforeZero(true)) t.GetChild(1).GetComponent<SpriteRenderer>().sprite = noteSlider;
                         else t.GetChild(1).GetComponent<SpriteRenderer>().sprite = restSlider;
                     }
                     else
@@ -238,14 +263,15 @@ public class NoteCarouselScript : MonoBehaviour
         return sprite;
     }
 
-    private bool placeNoteSlider()
+    //CHECKS IF THE NOTE BEFORE THE 0 WAS A NOTE (true) AND NOT A REST (false)
+    private bool wasNoteBeforeZero(bool startFromNewestNote)
     {
         string strCurrentNote = "0";
-        /*if (currentNoteIndex+5 >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
-        {
-            strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-        }*/
-        int index = currentNoteIndex + 5;
+
+        //if we need to start from the newest note, add 5
+        int index = currentNoteIndex;
+        if (startFromNewestNote) index = currentNoteIndex + 5;
+
         while (strCurrentNote == "0")
         {
             index--;
