@@ -78,8 +78,6 @@ public class NoteCarouselScript : MonoBehaviour
         CheckForButtonPress();
 
         //for testing, remove after testing
-        
-
         if (currentNoteIndex < 0) return;
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
         //Debug.Log("current note: " + strCurrentNote);
@@ -87,7 +85,11 @@ public class NoteCarouselScript : MonoBehaviour
 
     private void doButtonPressProcedure(bool inputWasCorrect)
     {
-        Debug.Log("did correct input? " + inputWasCorrect);
+        //TESTING
+        if (currentNoteIndex < 0) return;
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        Debug.Log("did correct input? " + inputWasCorrect + "`\n note : " + strCurrentNote);
         if (inputWasCorrect && !didCorrecInputForCurrentNote) {
             //decrease health
             //Debug.Log("great job yo, you did the correct input");
@@ -99,39 +101,46 @@ public class NoteCarouselScript : MonoBehaviour
     {
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
         //check if rest is not pressed
-        /*if(strCurrentNote == "0" && !wasNoteBeforeZero(false) && )
+        if(strCurrentNote == "0" && pressedDuringRest && !wasNoteBeforeZero(false))
         {
-
-        }*/
+            doButtonPressProcedure(false);
+            Debug.Log("you pressed during a rest slider. \n pressedDuringRest? " + pressedDuringRest +
+                " \n !wasnotenbeforezero(false)" + !wasNoteBeforeZero(false));
+            //do nothing :) might clean this function up later for better looking code   
+        }
+        if (strCurrentNote == "0" && !didCorrecInputForCurrentNote && wasNoteBeforeZero(false))
+        {
+            doButtonPressProcedure(false);
+            Debug.Log("you didn't press during a note slider. \n !didcorrectinput? " + !didCorrecInputForCurrentNote +
+                " \n wasnotenbeforezero(false)" + wasNoteBeforeZero(false));
+            //do nothing :) might clean this function up later for better looking code   
+        }
         //check if rest is not pressed when a new note spawns
         if (strCurrentNote.Contains("r") && pressedDuringRest == false)
         {
             doButtonPressProcedure(true);
         }
-        if(!strCurrentNote.Contains("r") && didCorrecInputForCurrentNote == false)
+        if(!strCurrentNote.Contains("r") && strCurrentNote != "0" && didCorrecInputForCurrentNote == false)
         {
             doButtonPressProcedure(false);
+            Debug.Log("this should be a non-zero note, tehc urrent note is: " + strCurrentNote);
         }
     }
 
     private void CheckForButtonPress()
     {
-        /// how i'm going to do this
-        /// 
 
         //check if the index is below 0 (start of the game)
         if (currentNoteIndex < 0) return;
 
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        //int tempI = currentNoteIndex;
-
         //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
-        if(strCurrentNote == "0" && !didCorrecInputForCurrentNote)
+        if (strCurrentNote == "0" && !didCorrecInputForCurrentNote && !pressedDuringRest)
         {
             if (wasNoteBeforeZero(false))
             {
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKey(KeyCode.Q))
                 {
                     //Debug.Log(":) you didn't press");
                     didCorrecInputForCurrentNote = true;
@@ -140,7 +149,7 @@ public class NoteCarouselScript : MonoBehaviour
             }
             else if (!wasNoteBeforeZero(false))
             {
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKey(KeyCode.Q))
                 {
                     pressedDuringRest = true;
                     doButtonPressProcedure(false);
@@ -149,7 +158,7 @@ public class NoteCarouselScript : MonoBehaviour
         }
         else if (strCurrentNote.Contains("r") && !pressedDuringRest && !didCorrecInputForCurrentNote)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKey(KeyCode.Q))
             {
                 
                 pressedDuringRest = true;
@@ -160,7 +169,7 @@ public class NoteCarouselScript : MonoBehaviour
         }
         else if(!strCurrentNote.Contains("r") && !didCorrecInputForCurrentNote)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKey(KeyCode.Q))
             {
                 //Debug.Log(":) you didn't press");
                 didCorrecInputForCurrentNote = true;
