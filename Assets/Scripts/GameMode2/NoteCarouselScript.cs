@@ -78,20 +78,23 @@ public class NoteCarouselScript : MonoBehaviour
         CheckForCorrectButtonPress();
 
         //for testing, remove after testing
+        
+
         if (currentNoteIndex < 0) return;
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-        Debug.Log(strCurrentNote);
+        //Debug.Log("current note: " + strCurrentNote);
     }
 
     private void doButtonPressProcedure(bool inputWasCorrect)
     {
+        Debug.Log("did correct input? " + didCorrecInputForCurrentNote);
         if (inputWasCorrect && !didCorrecInputForCurrentNote) {
             //decrease health
-            Debug.Log("great job yo, you did the correct input");
+            //Debug.Log("great job yo, you did the correct input");
         }
         else
         {
-            Debug.Log("hmm you need to practice more :/");
+            //Debug.Log("hmm you need to practice more :/");
         }
         //didCorrecInputForCurrentNote = false;
     }
@@ -114,7 +117,7 @@ public class NoteCarouselScript : MonoBehaviour
         int tempI = currentNoteIndex;
 
         //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
-        if (strCurrentNote.Contains("r") || !pressedDuringRest)
+        if (strCurrentNote.Contains("r") && !pressedDuringRest && !didCorrecInputForCurrentNote)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -123,15 +126,15 @@ public class NoteCarouselScript : MonoBehaviour
                 //Debug.Log(">:( you should'nt have pressed");
                 doButtonPressProcedure(false);
             }
-            else
+            /*else
             {
                 doButtonPressProcedure(true);
                 //Debug.Log(":) you didn't press");
                 didCorrecInputForCurrentNote = true;
-            }
+            }*/
 
         }
-        else
+        else if(!strCurrentNote.Contains("r") && !didCorrecInputForCurrentNote)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -139,8 +142,8 @@ public class NoteCarouselScript : MonoBehaviour
                 didCorrecInputForCurrentNote = true;
                 doButtonPressProcedure(true);
             }
-            else
-                doButtonPressProcedure(false);//Debug.Log(">:( you should'nt have pressed");
+            /*else
+                doButtonPressProcedure(false);//Debug.Log(">:( you should'nt have pressed");*/
         }
 
         /*
@@ -185,6 +188,7 @@ public class NoteCarouselScript : MonoBehaviour
             if (t.position.x <= leftMaskTransform.position.x)
             {
                 didCorrecInputForCurrentNote = false;
+                pressedDuringRest = false;
                 /*
                 if (didCorrecInputForCurrentNote == true) {
                     doButtonPressProcedure(true); 
