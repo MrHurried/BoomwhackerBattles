@@ -10,6 +10,8 @@ public class NoteCarouselScript : MonoBehaviour
 
     //private RandomPieceGeneratorScript randPieceScript;
 
+    [SerializeField] HealthScript healthScript;
+
     public int bpm = 60;
     public int currentNoteIndex;
 
@@ -67,7 +69,9 @@ public class NoteCarouselScript : MonoBehaviour
 
         MoveNBAndChangeNBSprites();
 
-        checkForWrongInputDuringRest();
+        checkForWrongInputDuringRestAndRestHolder();
+
+        checkForWrongInputDuringNote();
     }
 
 
@@ -95,10 +99,10 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (t.position.x <= leftMaskTransform.position.x)
             {
-                //check if we've passed the empty bars at the start of a round
-                if(currentNoteIndex >= 0)
+
+                if( currentNoteIndex > 0)
                 {
-                    checkForRightInputDuringNote();
+                    checkForWrongInputDuringNoteholder();
                 }
 
                 t.position = rightMaskTransform.position;
@@ -109,7 +113,7 @@ public class NoteCarouselScript : MonoBehaviour
                 {
                     //set the notesprite sprite (P.S. t.getchild(0) is the notesprite GO that is a child of every NB)
                     //... to the currentnoteindex + 5, which is the next note to be revealed
-                    SpriteRenderer newestNoteSpriteRenderer= t.GetChild(0).GetComponent<SpriteRenderer>();
+                    SpriteRenderer newestNoteSpriteRenderer = t.GetChild(0).GetComponent<SpriteRenderer>();
                     newestNoteSpriteRenderer.sprite = getNoteSprite(currentNoteIndex + noteblockTransforms.Length - 1);
 
                     //index of the newest note
@@ -142,7 +146,21 @@ public class NoteCarouselScript : MonoBehaviour
         }
     }
 
-    void checkForRightInputDuringNote()
+    void checkForWrongInputDuringNoteholder()
+    {
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        if(strCurrentNote == "0" && wasNoteBeforeHold(false))
+        {
+            if (!Input.GetKey(KeyCode.Q))
+            {
+                doButtonPressProcedure(false);
+            }
+        }
+        
+    }
+
+    void checkForWrongInputDuringNote()
     {
         if (currentNoteIndex < 0) return;
 
@@ -152,23 +170,14 @@ public class NoteCarouselScript : MonoBehaviour
         //check if the current note is a rest, if it is: return
         if (strCurrentNote.Contains("r")) return;
 
-        if(strCurrentNote == "0" && wasNoteBeforeHold(false))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                doButtonPressProcedure(true);
-            }
+            doButtonPressProcedure(true);
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                doButtonPressProcedure(true);
-            }
-        }
+
     }
 
-    void checkForWrongInputDuringRest()
+    void checkForWrongInputDuringRestAndRestHolder()
     {
         if (currentNoteIndex < 0) return;
 
@@ -197,10 +206,13 @@ public class NoteCarouselScript : MonoBehaviour
     void doButtonPressProcedure(bool didCorrectInput)
     {
         //TESTING
+
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        Debug.Log("did correct input? " + didCorrectInput + "\n note: " +strCurrentNote);
+        Debug.Log("did correct input? " + didCorrectInput + "\n note: " + strCurrentNote);
         //health should be decreased here
+
+       if(didCorrectInput == false) healthScript.removeHealth(1);
     }
 
     private bool wasNoteBeforeHold(bool startFromNewestNote)

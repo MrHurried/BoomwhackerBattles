@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     [SerializeField] Transform heartHolder;
+
     [SerializeField] Sprite fullHeartSprite;
     [SerializeField] Sprite halfHeartSprite;
     [SerializeField] Sprite emptyHeartSprite;
