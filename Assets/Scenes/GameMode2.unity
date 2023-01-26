@@ -1064,8 +1064,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthScript: {fileID: 1427142617}
-  bpm: 40
+  randomPieceGeneratorScript: {fileID: 0}
+  bpm: 600
   currentNoteIndex: 0
+  bpmIncreaseAmount: 30
+  invincibile: 1
   nbHolder: {fileID: 930924564}
   emptySprite: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
   note2sprite: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}

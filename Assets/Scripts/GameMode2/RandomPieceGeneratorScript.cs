@@ -27,7 +27,7 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     void Start()
     {
 
-        GeneratePiece();
+        generatePiece();
         string testStr = "";
         foreach( string str in generatedPiece)
         {
@@ -46,22 +46,23 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     }
 
     private int pieceGenIndex;
-    void GeneratePiece()
+    public void generatePiece()
     {
+        generatedPiece.Clear();
         //get all the notes in
         for (int i = 0; i < noteAmount; i++)
         {
             int rnd = Random.Range(0, availableNotes.Length - 1);
             generatedPiece.Add(availableNotes[rnd]);
 
-            AddZeroNotes(getNoteOrRestLength(generatedPiece[generatedPiece.Count-1]));
+            addZeroNotes(getNoteOrRestLength(generatedPiece[generatedPiece.Count-1]));
         }
 
     }
 
 
     //int iPiece represents the current index of the generatedPiece list initialization process
-    private void AddZeroNotes(int noteLength)
+    private void addZeroNotes(int noteLength)
     {
         int shortestNoteLength = 16;
         int amountOfZeros;

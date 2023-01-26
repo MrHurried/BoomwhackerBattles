@@ -11,9 +11,13 @@ public class NoteCarouselScript : MonoBehaviour
     //private RandomPieceGeneratorScript randPieceScript;
 
     [SerializeField] HealthScript healthScript;
+    [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
 
     public int bpm = 60;
     public int currentNoteIndex;
+    public int bpmIncreaseAmount = 30;
+
+    public bool invincibile;
 
     [SerializeField] Transform nbHolder;
     Transform nb0, nb1, nb2, nb3, nb4, nb5;
@@ -72,6 +76,14 @@ public class NoteCarouselScript : MonoBehaviour
         checkForWrongInputDuringRestAndRestHolder();
 
         checkForWrongInputDuringNote();
+
+        //testing
+        Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
+        //check if the full piece is played, then run the according procedure
+        if(currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+        {
+            doNextRoundProcedure();
+        }
     }
 
 
@@ -139,7 +151,7 @@ public class NoteCarouselScript : MonoBehaviour
                     }
                 }
                 //when a new note spawns: advance the currentNoteIndex
-                if (currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
+                if (currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
             //move the noteblock a little to the left
             t.Translate(moveVector);
@@ -205,6 +217,8 @@ public class NoteCarouselScript : MonoBehaviour
 
     void doButtonPressProcedure(bool didCorrectInput)
     {
+        if (invincibile) return;
+
         //TESTING
 
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -285,5 +299,16 @@ public class NoteCarouselScript : MonoBehaviour
         }
 
         return sprite;
+    }
+
+    void doNextRoundProcedure()
+    {
+        Debug.Log("advancing to next round");
+
+        randomPieceGeneratorScript.generatePiece();
+        currentNoteIndex = -(noteblockTransforms.Length - 1);
+        secondsSinceLaunch = 0f;
+
+        bpm += bpmIncreaseAmount;
     }
 }
