@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
@@ -21,30 +17,26 @@ public class NoteCarouselScript : MonoBehaviour
     Transform nb0, nb1, nb2, nb3, nb4, nb5;
 
     //NOTE SPRITES
-    [SerializeField] Sprite note0;
-    [SerializeField] Sprite note2;
-    [SerializeField] Sprite note4;
-    [SerializeField] Sprite note8;
-    [SerializeField] Sprite note16;
-    [SerializeField] Sprite rest2;
-    [SerializeField] Sprite rest4;
-    [SerializeField] Sprite rest8;
-    [SerializeField] Sprite rest16;
+    [SerializeField] Sprite emptySprite;
+    [SerializeField] Sprite note2sprite;
+    [SerializeField] Sprite note4sprite;
+    [SerializeField] Sprite note8sprite;
+    [SerializeField] Sprite note16sprite;
+    [SerializeField] Sprite rest2sprite;
+    [SerializeField] Sprite rest4sprite;
+    [SerializeField] Sprite rest8sprite;
+    [SerializeField] Sprite rest16sprite;
 
     //SLIDER SPRITES
-    [SerializeField] Sprite noteSlider;
-    [SerializeField] Sprite restSlider;
+    [SerializeField] Sprite noteSliderSprite;
+    [SerializeField] Sprite restSliderSprite;
 
 
-    Transform[] noteblocks;
+    Transform[] noteblockTransforms;
 
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
 
-    bool didCorrecInputForCurrentNote = false;
-    bool pressedDuringRest = false;
-
-    // Start is called before the first frame update
     void Start()
     {
         nb0 = nbHolder.GetChild(0);
@@ -54,135 +46,43 @@ public class NoteCarouselScript : MonoBehaviour
         nb4 = nbHolder.GetChild(4);
         nb5 = nbHolder.GetChild(5);
 
-        noteblocks = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
+        noteblockTransforms = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
-        //THIS DOES NOT APPLY ANYMORE: minus one cus there is one nb to the left of the arrow
-        currentNoteIndex = -(noteblocks.Length-1) ;
+        //start the currentnodeindex to -[length of the notebar minus 1] (currently 5)
+        //minus one cus there is one nb to the left of the arrow
+        //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
+        currentNoteIndex = -(noteblockTransforms.Length - 1);
+
+
     }
 
-    //FIXEDUPDATE VARS
+    //UPDATE VARS
     const float tempSpeed = 0.001f;
     float secondsSinceLaunch = 0f;
-    float secondsSinceCarouselStart = 0f;
-    bool lastChangedNoteHasSpawned = false;
     void Update()
     {
-        //used for waiting 3 secs, eliminates bugs
+        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
         secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
-        //update the seconds since carousel start
-        secondsSinceCarouselStart += 1f * Time.deltaTime;
-
 
         MoveNBAndChangeNBSprites();
-        CheckForButtonPress();
 
-        //for testing, remove after testing
-        if (currentNoteIndex < 0) return;
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-        //Debug.Log("current note: " + strCurrentNote);
+        checkForWrongInputDuringRest();
     }
 
-    private void doButtonPressProcedure(bool inputWasCorrect)
-    {
-        //TESTING
-        if (currentNoteIndex < 0) return;
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        Debug.Log("did correct input? " + inputWasCorrect + "`\n note : " + strCurrentNote);
-        if (inputWasCorrect && !didCorrecInputForCurrentNote) {
-            //decrease health
-            //Debug.Log("great job yo, you did the correct input");
-        }
-    }
-
-    //THIS METHOD IS CALLED EVERY TIME A NEW NOTE COMES
-    private void CheckForRightRestPressOrWrongNotePress()
-    {
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-        //check if rest is not pressed
-        if(strCurrentNote == "0" && pressedDuringRest && !wasNoteBeforeZero(false))
-        {
-            doButtonPressProcedure(false);
-            Debug.Log("you pressed during a rest slider. \n pressedDuringRest? " + pressedDuringRest +
-                " \n !wasnotenbeforezero(false)" + !wasNoteBeforeZero(false));
-            //do nothing :) might clean this function up later for better looking code   
-        }
-        if (strCurrentNote == "0" && !didCorrecInputForCurrentNote && wasNoteBeforeZero(false))
-        {
-            doButtonPressProcedure(false);
-            Debug.Log("you didn't press during a note slider. \n !didcorrectinput? " + !didCorrecInputForCurrentNote +
-                " \n wasnotenbeforezero(false)" + wasNoteBeforeZero(false));
-            //do nothing :) might clean this function up later for better looking code   
-        }
-        //check if rest is not pressed when a new note spawns
-        if (strCurrentNote.Contains("r") && pressedDuringRest == false)
-        {
-            doButtonPressProcedure(true);
-        }
-        if(!strCurrentNote.Contains("r") && strCurrentNote != "0" && didCorrecInputForCurrentNote == false)
-        {
-            doButtonPressProcedure(false);
-            Debug.Log("this should be a non-zero note, tehc urrent note is: " + strCurrentNote);
-        }
-    }
-
-    private void CheckForButtonPress()
-    {
-
-        //check if the index is below 0 (start of the game)
-        if (currentNoteIndex < 0) return;
-
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
-
-        //THIS DOESN'T ACCOUNT FOR IF THE CURRENTNOTE IS A 0
-        if (strCurrentNote == "0" && !didCorrecInputForCurrentNote && !pressedDuringRest)
-        {
-            if (wasNoteBeforeZero(false))
-            {
-                if (Input.GetKey(KeyCode.Q))
-                {
-                    //Debug.Log(":) you didn't press");
-                    didCorrecInputForCurrentNote = true;
-                    doButtonPressProcedure(true);
-                }
-            }
-            else if (!wasNoteBeforeZero(false))
-            {
-                if (Input.GetKey(KeyCode.Q))
-                {
-                    pressedDuringRest = true;
-                    doButtonPressProcedure(false);
-                }
-            }
-        }
-        else if (strCurrentNote.Contains("r") && !pressedDuringRest && !didCorrecInputForCurrentNote)
-        {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                
-                pressedDuringRest = true;
-                //Debug.Log(">:( you should'nt have pressed");
-                doButtonPressProcedure(false);
-            }
-
-        }
-        else if(!strCurrentNote.Contains("r") && !didCorrecInputForCurrentNote)
-        {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                //Debug.Log(":) you didn't press");
-                didCorrecInputForCurrentNote = true;
-                doButtonPressProcedure(true);
-            }
-           
-        }
-
-   
-    }
-
+    /// <summary>
+    /// what does this function do?
+    /// 1. advance currentNoteIndex
+    /// 2. move all nb's to the left
+    ///     2.1 moves the nb to the right mask when it goes in the left mask
+    /// 3. change the sprite of the to-be-revealed note 
+    ///     3.1 if the note is a hold note, check if the note before the hold note(s) is
+    ///         a note. if so, give the notesprite GO a 
+    /// 4. checks when a new note spawns. when it does: call the "CheckForRightInputDuringNote" method
+    /// </summary>
     private void MoveNBAndChangeNBSprites()
-    {      
+    {
         //distance to move each nb :p
         const float nbDistance = 1.1f;
         // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
@@ -191,89 +91,119 @@ public class NoteCarouselScript : MonoBehaviour
         //make a vector3 for t.Translating purposes
         Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
 
-        foreach (Transform t in noteblocks)
+        foreach (Transform t in noteblockTransforms)
         {
             if (t.position.x <= leftMaskTransform.position.x)
             {
-                
-                pressedDuringRest = false;
+                //check if we've passed the empty bars at the start of a round
                 if(currentNoteIndex >= 0)
                 {
-                    CheckForRightRestPressOrWrongNotePress();
+                    checkForRightInputDuringNote();
                 }
 
-                didCorrecInputForCurrentNote = false;
-                //zet de nb aan de andere kant van de carousel
                 t.position = rightMaskTransform.position;
-                //
+
+                //if the currentnoteindex + 5 (aka the note that will appear soon) is greater than 0
+                // this is checked so that things don't get out of bounds
                 if (currentNoteIndex + 5 >= 0)
                 {
-                    t.GetChild(0).GetComponent<SpriteRenderer>().sprite = getNoteSprite(currentNoteIndex + noteblocks.Length - 1);
-                    if (getNoteSprite(currentNoteIndex + noteblocks.Length - 1) == note0)
+                    //set the notesprite sprite (P.S. t.getchild(0) is the notesprite GO that is a child of every NB)
+                    //... to the currentnoteindex + 5, which is the next note to be revealed
+                    SpriteRenderer newestNoteSpriteRenderer= t.GetChild(0).GetComponent<SpriteRenderer>();
+                    newestNoteSpriteRenderer.sprite = getNoteSprite(currentNoteIndex + noteblockTransforms.Length - 1);
+
+                    //index of the newest note
+                    int newestNoteIndex = currentNoteIndex + noteblockTransforms.Length - 1;
+
+                    //check if the note is a hold
+                    if (getNoteSprite(newestNoteIndex) == emptySprite)
                     {
-                        if (wasNoteBeforeZero(true)) t.GetChild(1).GetComponent<SpriteRenderer>().sprite = noteSlider;
-                        else t.GetChild(1).GetComponent<SpriteRenderer>().sprite = restSlider;
+                        //Give the newest note a red or green note slider sprite. this sprite is
+                        //inserted in the "noteholdsprite" GO (that is the second child of any noteblock)
+
+                        if (wasNoteBeforeHold(true))
+                            t.GetChild(1).GetComponent<SpriteRenderer>().sprite = noteSliderSprite;
+                        else
+                            t.GetChild(1).GetComponent<SpriteRenderer>().sprite = restSliderSprite;
                     }
                     else
                     {
-                        t.GetChild(1).GetComponent<SpriteRenderer>().sprite = note0;
+                        //this is run when the newest note isn't a hold.
+                        // set the noteholdsprite to an empty pixel. 
+                        // this way there is no slider overlay on top of a non-hold sprite
+                        t.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptySprite;
                     }
                 }
+                //when a new note spawns: advance the currentNoteIndex
                 if (currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
+            //move the noteblock a little to the left
             t.Translate(moveVector);
         }
     }
 
-    public Sprite getNoteSprite(int noteIndex)
+    void checkForRightInputDuringNote()
     {
-        string strCurrentNote= "0";
-        if (noteIndex <= RandomPieceGeneratorScript.generatedPiece.Count-1)
-        {
-            strCurrentNote = RandomPieceGeneratorScript.generatedPiece[noteIndex];
-        }
-        Sprite sprite;
+        if (currentNoteIndex < 0) return;
 
-        //Set sprite var to right image, according to the current note (strCurrentNote)
-        switch (strCurrentNote)
-        {
-            case "0":
-                sprite = note0;
-                break;
-            case "2":
-                sprite = note2;
-                break;
-            case "4":
-                sprite = note4;
-                break;
-            case "8":
-                sprite = note8;
-                break;
-            case "16":
-                sprite = note16;
-                break;
-            case "r2":
-                sprite = rest2;
-                break;
-            case "r4":
-                sprite = rest4;
-                break;
-            case "r8":
-                sprite = rest8;
-                break;
-            case "r16":
-                sprite = rest16;
-                break;
-            default:
-                sprite = note2;
-                break;
-        }
+        //get the string value of the current note (aka the note under the arrow)
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        return sprite;
+        //check if the current note is a rest, if it is: return
+        if (strCurrentNote.Contains("r")) return;
+
+        if(strCurrentNote == "0" && wasNoteBeforeHold(false))
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                doButtonPressProcedure(true);
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                doButtonPressProcedure(true);
+            }
+        }
     }
 
-    //CHECKS IF THE NOTE BEFORE THE 0 WAS A NOTE (true) AND NOT A REST (false)
-    private bool wasNoteBeforeZero(bool startFromNewestNote)
+    void checkForWrongInputDuringRest()
+    {
+        if (currentNoteIndex < 0) return;
+
+        //get the string value of the current note (aka the note under the arrow)
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        //checks if the current note is a red hold note
+        if (strCurrentNote == "0" && wasNoteBeforeHold(false) == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                doButtonPressProcedure(false);
+            }
+        }
+        //check to see if the current note is a rest
+        if (strCurrentNote.Contains("r"))
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                doButtonPressProcedure(false);
+            }
+        }
+
+    }
+
+    void doButtonPressProcedure(bool didCorrectInput)
+    {
+        //TESTING
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        Debug.Log("did correct input? " + didCorrectInput + "\n note: " +strCurrentNote);
+        //health should be decreased here
+    }
+
+    private bool wasNoteBeforeHold(bool startFromNewestNote)
     {
         string strCurrentNote = "0";
 
@@ -287,7 +217,8 @@ public class NoteCarouselScript : MonoBehaviour
             strCurrentNote = RandomPieceGeneratorScript.generatedPiece[index];
         }
 
-        if (strCurrentNote.Contains("r")){
+        if (strCurrentNote.Contains("r"))
+        {
             return false;
         }
         else
@@ -296,41 +227,51 @@ public class NoteCarouselScript : MonoBehaviour
         }
     }
 
-    public int getNoteOrRestLength(string strNote)
+    public Sprite getNoteSprite(int noteIndex)
     {
-        if (strNote[0] == 'r')
+        string noteString = "0";
+        //check if the noteindex isn't greater than the piece's length
+        if (noteIndex <= RandomPieceGeneratorScript.generatedPiece.Count - 1)
         {
-            return int.Parse(strNote.Replace("r", ""));
+            noteString = RandomPieceGeneratorScript.generatedPiece[noteIndex];
         }
-        else
+        Sprite sprite;
+
+        //Set sprite var to right image, according to the current note (strCurrentNote)
+        switch (noteString)
         {
-            return int.Parse(strNote);
+            case "0":
+                sprite = emptySprite;
+                break;
+            case "2":
+                sprite = note2sprite;
+                break;
+            case "4":
+                sprite = note4sprite;
+                break;
+            case "8":
+                sprite = note8sprite;
+                break;
+            case "16":
+                sprite = note16sprite;
+                break;
+            case "r2":
+                sprite = rest2sprite;
+                break;
+            case "r4":
+                sprite = rest4sprite;
+                break;
+            case "r8":
+                sprite = rest8sprite;
+                break;
+            case "r16":
+                sprite = rest16sprite;
+                break;
+            default:
+                sprite = note2sprite;
+                break;
         }
+
+        return sprite;
     }
-
-
-
-    /* IEnumerator tempAutomaticProceedCarousel()
-     {
-
-         for (; ; )
-         {
-             int symbolLength = getNoteOrRestLength(generatedPiece[currentNoteIndex]);
-             Debug.Log("symbol length: " + symbolLength);
-
-
-             //epic gamer formula
-             float beatspersecond = 0f;
-             float temp = 0f;
-             float secondsToWait = (bpm / 60f) / (symbolLength / 4f);
-
-             Debug.Log(secondsToWait);
-
-             yield return new WaitForSeconds(secondsToWait);
-
-             if (RandomPieceGeneratorScript.noteAmount - 1 > currentNoteIndex) currentNoteIndex++;
-             else break;
-         }
-
-     } */
 }
