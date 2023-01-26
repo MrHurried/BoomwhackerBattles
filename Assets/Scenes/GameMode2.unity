@@ -1063,20 +1063,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56060719c071bb44689b46a3e252c4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthScript: {fileID: 1427142617}
   bpm: 40
   currentNoteIndex: 0
   nbHolder: {fileID: 930924564}
-  note0: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
-  note2: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note4: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note8: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note16: {fileID: -1018728149, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest2: {fileID: 944920225, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest4: {fileID: -251561653, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest8: {fileID: -756303684, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest16: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  noteSlider: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
-  restSlider: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
+  emptySprite: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
+  note2sprite: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note4sprite: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note8sprite: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note16sprite: {fileID: -1018728149, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest2sprite: {fileID: 944920225, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest4sprite: {fileID: -251561653, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest8sprite: {fileID: -756303684, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest16sprite: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  noteSliderSprite: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
+  restSliderSprite: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
   leftMaskTransform: {fileID: 916560227}
   rightMaskTransform: {fileID: 603426322}
 --- !u!1 &760100323
