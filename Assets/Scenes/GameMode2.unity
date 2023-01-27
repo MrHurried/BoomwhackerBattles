@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthScript: {fileID: 1427142617}
   randomPieceGeneratorScript: {fileID: 0}
-  bpm: 30
+  bpm: 700
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
   invincibile: 1

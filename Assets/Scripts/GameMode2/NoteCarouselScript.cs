@@ -13,7 +13,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] HealthScript healthScript;
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
 
-    public int bpm = 60;
+    public float bpm = 60f;
     public int currentNoteIndex;
     public int bpmIncreaseAmount = 30;
 
@@ -63,24 +63,27 @@ public class NoteCarouselScript : MonoBehaviour
     }
 
     //UPDATE VARS
-    const float tempSpeed = 0.001f;
     float secondsSinceLaunch = 0f;
+    float secondsAfterFirstUpdate = 0f;
     void Update()
     {
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
         secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
 
-        MoveNBAndChangeNBSprites();
+        secondsAfterFirstUpdate += 1f * Time.deltaTime;
+        //if (secondsAfterFirstUpdate > 1) return;
 
         checkForWrongInputDuringRestAndRestHolder();
 
         checkForWrongInputDuringNote();
 
+        MoveNBAndChangeNBSprites();
+
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
         //check if the full piece is played, then run the according procedure
-        if(currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
         {
             doNextRoundProcedure();
         }
@@ -97,22 +100,18 @@ public class NoteCarouselScript : MonoBehaviour
     ///         a note. if so, give the notesprite GO a 
     /// 4. checks when a new note spawns. when it does: call the "CheckForRightInputDuringNote" method
     /// </summary>
+    /// 
+    Vector3 current;
     private void MoveNBAndChangeNBSprites()
     {
-        //distance to move each nb :p
-        const float nbDistance = 1.1f;
-        // I want to make the blocks move the blocks one "space" (= nb2 gets nb2's position) in bpm / 60f seconds
-        float unitsToMove = nbDistance * Time.deltaTime / (60f / bpm);
-
-        //make a vector3 for t.Translating purposes
-        Vector3 moveVector = new Vector3(-unitsToMove, 0f, 0f);
+        //RIP old movement system
 
         foreach (Transform t in noteblockTransforms)
         {
             if (t.position.x == leftMaskTransform.position.x)
             {
 
-                if( currentNoteIndex > 0)
+                if (currentNoteIndex > 0)
                 {
                     checkForWrongInputDuringNoteholder();
                 }
@@ -154,22 +153,47 @@ public class NoteCarouselScript : MonoBehaviour
                 if (currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
             //move the noteblock a little to the left
-            t.Translate(moveVector);
+            //t.Translate(moveVector);
+
+            const float nbDistance = 1.1f;
+
+            float moveIncrement = nbDistance / (60f / bpm);
+            current = Vector3.MoveTowards(t.position, leftMaskTransform.position, moveIncrement * Time.deltaTime);
+
+            t.position = current;
+            Debug.Log("joe");
+        }
+
+        
+    }
+
+    private void FixedUpdate()
+    {
+        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
+        secondsSinceLaunch += 1f * Time.deltaTime;
+        if (secondsSinceLaunch < 3) return;
+
+        foreach (Transform t in noteblockTransforms)
+        {
+
+            
+
         }
     }
 
     void checkForWrongInputDuringNoteholder()
     {
+        if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count) return;
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        if(strCurrentNote == "0" && wasNoteBeforeHold(false))
+        if (strCurrentNote == "0" && wasNoteBeforeHold(false))
         {
             if (!Input.GetKey(KeyCode.Q))
             {
                 doButtonPressProcedure(false);
             }
         }
-        
+
     }
 
     void checkForWrongInputDuringNote()
@@ -226,7 +250,7 @@ public class NoteCarouselScript : MonoBehaviour
         Debug.Log("did correct input? " + didCorrectInput + "\n note: " + strCurrentNote);
         //health should be decreased here
 
-       if(didCorrectInput == false) healthScript.removeHealth(1);
+        if (didCorrectInput == false) healthScript.removeHealth(1);
     }
 
     private bool wasNoteBeforeHold(bool startFromNewestNote)
