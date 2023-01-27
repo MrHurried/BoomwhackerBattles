@@ -109,7 +109,7 @@ public class NoteCarouselScript : MonoBehaviour
 
         foreach (Transform t in noteblockTransforms)
         {
-            if (t.position.x <= leftMaskTransform.position.x)
+            if (t.position.x == leftMaskTransform.position.x)
             {
 
                 if( currentNoteIndex > 0)
