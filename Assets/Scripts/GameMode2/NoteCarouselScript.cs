@@ -157,8 +157,18 @@ public class NoteCarouselScript : MonoBehaviour
 
             const float nbDistance = 1.1f;
 
-            float moveIncrement = nbDistance / (60f / bpm);
-            current = Vector3.MoveTowards(t.position, leftMaskTransform.position, moveIncrement * Time.deltaTime);
+            float result = //multiply force by time
+            float modulus = result % 0.01f;
+            result -= modulus; //you will do this in any case
+            if (modulus >= 0.005f)
+            {   /*round up. if you want it to only round down, remove
+                the next 2 lines, if you want it to only round up, remove
+                the conditional statement*/
+                result += 0.01f;
+            }
+
+            float moveIncrement = (nbDistance / (60f / bpm)) * Time.deltaTime;
+            current = Vector3.MoveTowards(t.position, leftMaskTransform.position, moveIncrement );
 
             t.position = current;
             Debug.Log("joe");
