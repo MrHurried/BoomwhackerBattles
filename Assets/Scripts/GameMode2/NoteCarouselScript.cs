@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
@@ -43,6 +44,12 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
 
+    double tempNameSeconds = 0;
+
+    const float nbDistance = 1.1f;
+    const float moveIncrement = 0.1f;
+    const float movesPerSecond = nbDistance / moveIncrement;
+
     void Start()
     {
         nb0 = nbHolder.GetChild(0);
@@ -65,13 +72,16 @@ public class NoteCarouselScript : MonoBehaviour
     //UPDATE VARS
     float secondsSinceLaunch = 0f;
     float secondsAfterFirstUpdate = 0f;
+
+    bool running = true;
     void Update()
     {
+
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
-        secondsSinceLaunch += 1f * Time.deltaTime;
+        secondsSinceLaunch += Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
 
-        secondsAfterFirstUpdate += 1f * Time.deltaTime;
+        secondsAfterFirstUpdate += Time.deltaTime;
         //if (secondsAfterFirstUpdate > 1) return;
 
         checkForWrongInputDuringRestAndRestHolder();
@@ -102,9 +112,32 @@ public class NoteCarouselScript : MonoBehaviour
     /// </summary>
     /// 
     Vector3 current;
+    int frames = 0;
     private void MoveNBAndChangeNBSprites()
     {
         //RIP old movement system
+
+        //if (!running) return;
+        if (frames == 11) return;
+
+        //tempNameSeconds += Time.deltaTime;
+        tempNameSeconds = 1f;
+
+
+        if (tempNameSeconds >= 1f / (movesPerSecond * (bpm / 60f)))
+        {
+            foreach(Transform t in noteblockTransforms)
+            {
+                int xpos Mathf.Round(transform.position.x);
+                t.position.x = xpos;
+
+                t.position = new Vector3()
+
+                tempNameSeconds = 0f;
+            }
+
+        }
+
 
         foreach (Transform t in noteblockTransforms)
         {
@@ -155,40 +188,14 @@ public class NoteCarouselScript : MonoBehaviour
             //move the noteblock a little to the left
             //t.Translate(moveVector);
 
-            const float nbDistance = 1.1f;
 
-            float result = //multiply force by time
-            float modulus = result % 0.01f;
-            result -= modulus; //you will do this in any case
-            if (modulus >= 0.005f)
-            {   /*round up. if you want it to only round down, remove
-                the next 2 lines, if you want it to only round up, remove
-                the conditional statement*/
-                result += 0.01f;
-            }
-
-            float moveIncrement = (nbDistance / (60f / bpm)) * Time.deltaTime;
-            current = Vector3.MoveTowards(t.position, leftMaskTransform.position, moveIncrement );
-
-            t.position = current;
-            Debug.Log("joe");
+            // OLD METHOD:
+            //float moveIncrement = (nbDistance / (60f / bpm)) * Time.deltaTime;
         }
 
-        
-    }
-
-    private void FixedUpdate()
-    {
-        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
-        secondsSinceLaunch += 1f * Time.deltaTime;
-        if (secondsSinceLaunch < 3) return;
-
-        foreach (Transform t in noteblockTransforms)
-        {
-
-            
-
-        }
+        frames++;
+        running = false;
+        Debug.Log("running set to false lol");
     }
 
     void checkForWrongInputDuringNoteholder()

@@ -1,0 +1,18 @@
+11 moves per beat
+var moveincrement = 0.1
+nbMovesPerSecond = nbDistance / moveIncrement
+
+in 1 seconde moet de nb op 60 BPM nbdistance travellen
+de nb gaat versprint in intervallen van 0.1
+
+in 1 seconde moet de nb op 60 BPM 1.1 units travellen
+in 1 seconde moet de nb 11 keer moven
+de nb moet 1 keer moven per 1 seconde/11
+
+
+in 1 seconde moet de nb op 120BPM 2.2 units travellen
+in 1 seconde moet de nb 22 keer moven
+de nb moet 1 keer moven per 1seconde/ 22
+de nb moet 1 keer moven per 1 secode / (movesPerSecond*(bpm/60f))
+
+if(tempNameSeconds > 
