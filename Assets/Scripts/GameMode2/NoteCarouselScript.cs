@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
@@ -83,8 +84,9 @@ public class NoteCarouselScript : MonoBehaviour
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
         //check if the full piece is played, then run the according procedure
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count-1)
         {
+            Debug.Log("should be doin the procedure now");
             doNextRoundProcedure();
         }
     }
@@ -101,10 +103,13 @@ public class NoteCarouselScript : MonoBehaviour
     /// 4. checks when a new note spawns. when it does: call the "CheckForRightInputDuringNote" method
     /// </summary>
     /// 
-    Vector3 current;
+    float current;
     private void MoveNBAndChangeNBSprites()
     {
         //RIP old movement system
+
+        //index of the newest note
+        int newestNoteIndex = currentNoteIndex + noteblockTransforms.Length - 1;
 
         foreach (Transform t in noteblockTransforms)
         {
@@ -118,6 +123,8 @@ public class NoteCarouselScript : MonoBehaviour
 
                 t.position = rightMaskTransform.position;
 
+                
+
                 //if the currentnoteindex + 5 (aka the note that will appear soon) is greater than 0
                 // this is checked so that things don't get out of bounds
                 if (currentNoteIndex + 5 >= 0)
@@ -125,11 +132,9 @@ public class NoteCarouselScript : MonoBehaviour
                     //set the notesprite sprite (P.S. t.getchild(0) is the notesprite GO that is a child of every NB)
                     //... to the currentnoteindex + 5, which is the next note to be revealed
                     SpriteRenderer newestNoteSpriteRenderer = t.GetChild(0).GetComponent<SpriteRenderer>();
-                    newestNoteSpriteRenderer.sprite = getNoteSprite(currentNoteIndex + noteblockTransforms.Length - 1);
+                    newestNoteSpriteRenderer.sprite = getNoteSprite(newestNoteIndex);
 
-                    //index of the newest note
-                    int newestNoteIndex = currentNoteIndex + noteblockTransforms.Length - 1;
-
+                   
                     //check if the note is a hold
                     if (getNoteSprite(newestNoteIndex) == emptySprite)
                     {
@@ -149,29 +154,35 @@ public class NoteCarouselScript : MonoBehaviour
                         t.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptySprite;
                     }
                 }
+
+                if (newestNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+                {
+                    t.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptySprite;
+                    t.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptySprite;
+                }
+
                 //when a new note spawns: advance the currentNoteIndex
                 if (currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count) currentNoteIndex++;
             }
             //move the noteblock a little to the left
             //t.Translate(moveVector);
 
-            const float nbDistance = 1.1f;
+            
 
-            float result = //multiply force by time
-            float modulus = result % 0.01f;
-            result -= modulus; //you will do this in any case
-            if (modulus >= 0.005f)
-            {   /*round up. if you want it to only round down, remove
-                the next 2 lines, if you want it to only round up, remove
-                the conditional statement*/
-                result += 0.01f;
-            }
+            const double nbDistance = 1.1d;
 
-            float moveIncrement = (nbDistance / (60f / bpm)) * Time.deltaTime;
-            current = Vector3.MoveTowards(t.position, leftMaskTransform.position, moveIncrement );
+            double moveIncrement = (nbDistance / (60d / bpm)) * Time.deltaTime;
+            //moveIncrement = (Math.Round(moveIncrement,1));
+            //current = Mathf.MoveTowards(t.position.x, leftMaskTransform.position.x, moveIncrement);
 
-            t.position = current;
-            Debug.Log("joe");
+            //SmoveIncrement = Math.Round(moveIncrement, 1);
+
+            t.Translate((Vector3)(new Vector3d(-moveIncrement, 0d, 0d)));
+
+            double xpos = Mathf.Clamp(t.position.x, leftMaskTransform.position.x, rightMaskTransform.position.x);
+            t.position = ((Vector3)(new Vector3d(xpos, 0d, 0d)));
+
+            Debug.Log("still moving lololol");
         }
 
         
@@ -275,6 +286,7 @@ public class NoteCarouselScript : MonoBehaviour
         {
             index--;
             strCurrentNote = RandomPieceGeneratorScript.generatedPiece[index];
+            //Debug.Log("inside the wasNoteBeforeHoldCheck: " + strCurrentNote);
         }
 
         if (strCurrentNote.Contains("r"))

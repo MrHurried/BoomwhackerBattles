@@ -1,0 +1,1 @@
+als de nieuwste noot (t) een hogere index heeft dan generatedpiece.count-1, start de volgende ronde
