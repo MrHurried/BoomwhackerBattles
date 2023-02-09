@@ -44,6 +44,11 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
 
+    Vector2 _movement = Vector2.zero;
+    public int moveSpeed = 1;
+    float moveIncrement;
+
+
     void Start()
     {
         nb0 = nbHolder.GetChild(0);
@@ -84,7 +89,7 @@ public class NoteCarouselScript : MonoBehaviour
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
         //check if the full piece is played, then run the according procedure
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count-1)
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
         {
             Debug.Log("should be doin the procedure now");
             doNextRoundProcedure();
@@ -123,7 +128,7 @@ public class NoteCarouselScript : MonoBehaviour
 
                 t.position = rightMaskTransform.position;
 
-                
+
 
                 //if the currentnoteindex + 5 (aka the note that will appear soon) is greater than 0
                 // this is checked so that things don't get out of bounds
@@ -134,7 +139,7 @@ public class NoteCarouselScript : MonoBehaviour
                     SpriteRenderer newestNoteSpriteRenderer = t.GetChild(0).GetComponent<SpriteRenderer>();
                     newestNoteSpriteRenderer.sprite = getNoteSprite(newestNoteIndex);
 
-                   
+
                     //check if the note is a hold
                     if (getNoteSprite(newestNoteIndex) == emptySprite && newestNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count)
                     {
@@ -167,25 +172,66 @@ public class NoteCarouselScript : MonoBehaviour
             //move the noteblock a little to the left
             //t.Translate(moveVector);
 
-            
 
-            const double nbDistance = 1.1d;
 
-            double moveIncrement = (nbDistance / (60d / bpm)) * Time.deltaTime;
-            //moveIncrement = (Math.Round(moveIncrement,1));
-            //current = Mathf.MoveTowards(t.position.x, leftMaskTransform.position.x, moveIncrement);
+            const float nbDistance = 1.1f;
+
+            moveIncrement = (nbDistance / (60f / bpm)); //* Time.deltaTime;
+                                                        //moveIncrement = (Math.Round(moveIncrement,1));
+                                                        //current = Mathf.MoveTowards(t.position.x, leftMaskTransform.position.x, moveIncrement);
 
             //SmoveIncrement = Math.Round(moveIncrement, 1);
 
-            t.Translate((Vector3)(new Vector3d(-moveIncrement, 0d, 0d)));
+            //t.Translate((Vector3)(new Vector3d(-moveIncrement, 0d, 0d)));
 
-            double xpos = Mathf.Clamp(t.position.x, leftMaskTransform.position.x, rightMaskTransform.position.x);
-            t.position = ((Vector3)(new Vector3d(xpos, 0d, 0d)));
+            //double xpos = Mathf.Clamp(t.position.x, leftMaskTransform.position.x, rightMaskTransform.position.x);
+            //t.position = ((Vector3)(new Vector3d(xpos, 0d, 0d)));
+
+
 
             Debug.Log("still moving lololol");
         }
 
-        
+
+    }
+
+    private void LateUpdate()
+    {
+
+        GoLeft();
+
+        // Clamp the current movement
+
+        //EDITED: second param of vector2 construct
+        Vector2 clamped_movement = new Vector2((int)_movement.x, (int)0);
+        // Check if a movement is needed (more than 1px move)
+        if (clamped_movement.magnitude >= 1.0f)
+        {
+            // Update velocity, removing the actual movement
+            _movement = _movement - clamped_movement;
+            if (clamped_movement != Vector2.zero)
+            {
+                foreach (Transform t in noteblockTransforms)
+                {
+                    //TESTING
+                    Debug.Log("_movement = " + _movement);
+
+
+                    // Move to the new position
+
+                    //EDITED: ClampVector(transform.position) to 
+                    t.position = new Vector2((int)t.position.x, (int)t.position.y) + clamped_movement;
+                }
+
+            }
+        }
+    }
+
+    public void GoLeft()
+    {
+        // speed is defined in pixel per second.
+        _movement.x -= moveSpeed * Time.deltaTime;
+        //_movement.x -= moveSpeed * Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -197,7 +243,7 @@ public class NoteCarouselScript : MonoBehaviour
         foreach (Transform t in noteblockTransforms)
         {
 
-            
+
 
         }
     }
