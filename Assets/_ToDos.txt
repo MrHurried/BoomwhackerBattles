@@ -1,5 +1,5 @@
 -zorg ervoor dat de NB's een constante distance tussen elkaar hebben (volgens mij is dat 1.1 units)
--zorg ervoor dat na 1 stuk is gespeeld:
-1 een nieuw stuk generate wordt
-2 er wordt 3 seconden gewacht
-3 speel het nieuwe stuk
+V-zorg ervoor dat na 1 stuk is gespeeld:
+V1 een nieuw stuk generate wordt
+V2 er wordt 3 seconden gewacht
+V3 speel het nieuwe stuk

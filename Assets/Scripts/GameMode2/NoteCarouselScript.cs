@@ -136,7 +136,7 @@ public class NoteCarouselScript : MonoBehaviour
 
                    
                     //check if the note is a hold
-                    if (getNoteSprite(newestNoteIndex) == emptySprite)
+                    if (getNoteSprite(newestNoteIndex) == emptySprite && newestNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count)
                     {
                         //Give the newest note a red or green note slider sprite. this sprite is
                         //inserted in the "noteholdsprite" GO (that is the second child of any noteblock)
