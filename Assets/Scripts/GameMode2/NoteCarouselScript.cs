@@ -45,9 +45,9 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform rightMaskTransform;
 
     Vector2 _movement = Vector2.zero;
-    public int moveSpeed = 1;
+    public float moveSpeed = 1;
     float moveIncrement;
-
+    const float nbDistance = 1.1f;
 
     void Start()
     {
@@ -83,8 +83,6 @@ public class NoteCarouselScript : MonoBehaviour
         checkForWrongInputDuringRestAndRestHolder();
 
         checkForWrongInputDuringNote();
-
-        MoveNBAndChangeNBSprites();
 
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
@@ -172,10 +170,6 @@ public class NoteCarouselScript : MonoBehaviour
             //move the noteblock a little to the left
             //t.Translate(moveVector);
 
-
-
-            const float nbDistance = 1.1f;
-
             moveIncrement = (nbDistance / (60f / bpm)); //* Time.deltaTime;
                                                         //moveIncrement = (Math.Round(moveIncrement,1));
                                                         //current = Mathf.MoveTowards(t.position.x, leftMaskTransform.position.x, moveIncrement);
@@ -199,6 +193,8 @@ public class NoteCarouselScript : MonoBehaviour
     {
 
         GoLeft();
+
+        MoveNBAndChangeNBSprites();
 
         // Clamp the current movement
 
@@ -229,23 +225,13 @@ public class NoteCarouselScript : MonoBehaviour
 
     public void GoLeft()
     {
+        //Possible Method?
+        //float moveSpeed = (nbDistance / (60f / bpm)) * Time.deltaTime;
+
+        moveSpeed = 540*(nbDistance/ (60f / bpm));
         // speed is defined in pixel per second.
         _movement.x -= moveSpeed * Time.deltaTime;
         //_movement.x -= moveSpeed * Time.deltaTime;
-    }
-
-    private void FixedUpdate()
-    {
-        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
-        secondsSinceLaunch += 1f * Time.deltaTime;
-        if (secondsSinceLaunch < 3) return;
-
-        foreach (Transform t in noteblockTransforms)
-        {
-
-
-
-        }
     }
 
     void checkForWrongInputDuringNoteholder()
