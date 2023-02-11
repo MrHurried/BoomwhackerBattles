@@ -1,5 +1,8 @@
--zorg ervoor dat de NB's een constante distance tussen elkaar hebben (volgens mij is dat 1.1 units)
+Vzorg ervoor dat de NB's een constante distance tussen elkaar hebben (volgens mij is dat 1.1 units)
 V-zorg ervoor dat na 1 stuk is gespeeld:
 V1 een nieuw stuk generate wordt
 V2 er wordt 3 seconden gewacht
 V3 speel het nieuwe stuk
+
+ADDING JUICE
+- add an animated streak indicator

@@ -200,8 +200,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128599252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.7796, y: -2.3577, z: 0}
-  m_LocalScale: {x: 98.81332, y: 98.81332, z: 98.81332}
+  m_LocalPosition: {x: -10.591, y: 5.8541, z: 0}
+  m_LocalScale: {x: 100.31169, y: 100.339096, z: 98.81332}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthScript: {fileID: 1427142617}
   randomPieceGeneratorScript: {fileID: 1427142615}
-  bpm: 330
+  bpm: 60
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
   invincibile: 1
