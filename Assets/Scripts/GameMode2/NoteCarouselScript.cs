@@ -84,6 +84,11 @@ public class NoteCarouselScript : MonoBehaviour
 
         checkForWrongInputDuringNote();
 
+        GoLeft();
+
+        MoveNBAndChangeNBSprites();
+
+
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
         //check if the full piece is played, then run the according procedure
@@ -116,7 +121,9 @@ public class NoteCarouselScript : MonoBehaviour
 
         foreach (Transform t in noteblockTransforms)
         {
-            if (t.position.x == leftMaskTransform.position.x)
+
+            //MASSIVE CHANGE HERE: == to <=. this will hopefully put an end to the headaches the past few weeks in turn for a (slightly) worse accuracy
+            if (t.position.x <= leftMaskTransform.position.x)
             {
 
                 if (currentNoteIndex > 0)
@@ -125,7 +132,8 @@ public class NoteCarouselScript : MonoBehaviour
                 }
 
                 t.position = rightMaskTransform.position;
-
+                Debug.Log("nb xpos: " + t.position.x);
+                Debug.Log("rightmaskpos x: " + rightMaskTransform.position.x);
 
 
                 //if the currentnoteindex + 5 (aka the note that will appear soon) is greater than 0
@@ -170,7 +178,7 @@ public class NoteCarouselScript : MonoBehaviour
             //move the noteblock a little to the left
             //t.Translate(moveVector);
 
-            moveIncrement = (nbDistance / (60f / bpm)); //* Time.deltaTime;
+            //moveIncrement = (nbDistance / (60f / bpm)); //* Time.deltaTime;
                                                         //moveIncrement = (Math.Round(moveIncrement,1));
                                                         //current = Mathf.MoveTowards(t.position.x, leftMaskTransform.position.x, moveIncrement);
 
@@ -180,21 +188,21 @@ public class NoteCarouselScript : MonoBehaviour
 
             //double xpos = Mathf.Clamp(t.position.x, leftMaskTransform.position.x, rightMaskTransform.position.x);
             //t.position = ((Vector3)(new Vector3d(xpos, 0d, 0d)));
-
-
-
-            Debug.Log("still moving lololol");
         }
 
 
     }
 
+    float lateupdate_secondsSinceLaunch = 0f;
     private void LateUpdate()
     {
+        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
+        lateupdate_secondsSinceLaunch += 1f * Time.deltaTime;
+        if (secondsSinceLaunch < 3) return;
 
-        GoLeft();
-
-        MoveNBAndChangeNBSprites();
+        moveSpeed = 108 * (nbDistance / (60f / bpm));
+        // speed is defined in pixel per second.
+        _movement.x -= moveSpeed * Time.unscaledDeltaTime;
 
         // Clamp the current movement
 
@@ -203,20 +211,24 @@ public class NoteCarouselScript : MonoBehaviour
         // Check if a movement is needed (more than 1px move)
         if (clamped_movement.magnitude >= 1.0f)
         {
+            Debug.Log("_movement before velocity update:  " + _movement);
+
             // Update velocity, removing the actual movement
             _movement = _movement - clamped_movement;
+
+            Debug.Log("clamped_movement: " + clamped_movement);
+            Debug.Log("_movement - clamped_movement:  " + _movement);
             if (clamped_movement != Vector2.zero)
             {
                 foreach (Transform t in noteblockTransforms)
                 {
-                    //TESTING
-                    Debug.Log("_movement = " + _movement);
+                   
 
 
                     // Move to the new position
 
                     //EDITED: ClampVector(transform.position) to 
-                    t.position = new Vector2((int)t.position.x, (int)t.position.y) + clamped_movement;
+                    t.position = new Vector2((int)t.position.x, 0) + clamped_movement;
                 }
 
             }
@@ -225,13 +237,12 @@ public class NoteCarouselScript : MonoBehaviour
 
     public void GoLeft()
     {
-        //Possible Method?
+       /* //Possible Method?
         //float moveSpeed = (nbDistance / (60f / bpm)) * Time.deltaTime;
 
-        moveSpeed = 540*(nbDistance/ (60f / bpm));
+        moveSpeed = 540 * (nbDistance/ (60f / bpm));
         // speed is defined in pixel per second.
-        _movement.x -= moveSpeed * Time.deltaTime;
-        //_movement.x -= moveSpeed * Time.deltaTime;
+        _movement.x -= moveSpeed * Time.deltaTime;*/
     }
 
     void checkForWrongInputDuringNoteholder()

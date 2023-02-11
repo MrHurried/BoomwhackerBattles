@@ -17,10 +17,14 @@ public class ThreeTwoOneGoScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bgMusicAudioSrc.volume = 0f;
-        bgMusicAudioSrc.Pause();
+        if (bgMusicAudioSrc != null && bwScript != null)
+        {
+            bgMusicAudioSrc.volume = 0f;
+            bgMusicAudioSrc.Pause();
 
-        bwScript.enabled = false;
+            bwScript.enabled = false;
+        }
+
 
         animator = GetComponent<Animator>();
         textGameObject = GetComponent<TextMeshProUGUI>();
@@ -40,9 +44,13 @@ public class ThreeTwoOneGoScript : MonoBehaviour
         yield return new WaitForSeconds(1f);
         textGameObject.text = "GO!";
 
-        bwScript.enabled = true;
-        bgMusicAudioSrc.UnPause();
-        StartCoroutine(fadeInBGMusic());
+
+        if (bgMusicAudioSrc != null && bwScript != null)
+        {
+            bwScript.enabled = true;
+            bgMusicAudioSrc.UnPause();
+            StartCoroutine(fadeInBGMusic());
+        }
 
         yield return new WaitForSeconds(1.3f);
         textGameObject.text = "";
