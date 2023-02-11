@@ -6,7 +6,7 @@ public class GM2BoomwhackerScript : MonoBehaviour
 {
     //AUDIO RELATED
     [SerializeField] AudioClip bonk;
-    [SerializeField] AudioSource audioSrc;
+    private AudioSource audioSrc;
 
     //SPRITES
     [SerializeField] Sprite BWSwingSprite;
@@ -33,7 +33,7 @@ public class GM2BoomwhackerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSrc = GetComponent<AudioSource>();      
     }
 
     // Update is called once per frame
@@ -53,6 +53,7 @@ public class GM2BoomwhackerScript : MonoBehaviour
 
     IEnumerator whackCoroutine(bool whackMatisse)
     {
+        audioSrc.Play();
         if (whackMatisse)
         {
             BW_SR_MAT.sprite = BWSwingSprite;
