@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class NoteCarouselScript : MonoBehaviour
@@ -14,7 +16,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] HealthScript healthScript;
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
 
-    public float bpm = 60f;
+    public int bpm = 60;
     public int currentNoteIndex;
     public int bpmIncreaseAmount = 30;
 
@@ -44,13 +46,24 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform leftMaskTransform;
     [SerializeField] Transform rightMaskTransform;
 
+    
+    
+
+
     Vector2 _movement = Vector2.zero;
-    public float moveSpeed = 1f;
+    public int moveSpeed = 1;
     float moveIncrement;
-    const float nbDistance = 1.1f;
+    const int nbDistance = 110;
+
+    //The distance between rightmask and leftmask is Debug.Log'ed in Start()
+    private Vector3[] possibleNBSpawns;
+    private int amountOfSpawns;
 
     void Start()
     {
+        //TESTING, REMOVE IMMEDIATELY AFTER TESTING
+        rightMaskTransform.position += new Vector3(-110, 0, 0);
+
         nb0 = nbHolder.GetChild(0);
         nb1 = nbHolder.GetChild(1);
         nb2 = nbHolder.GetChild(2);
@@ -65,6 +78,13 @@ public class NoteCarouselScript : MonoBehaviour
         //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
         currentNoteIndex = -(noteblockTransforms.Length - 1);
 
+        Debug.Log("Position Units diff rightmask - leftmask: " + (rightMaskTransform.position.x - leftMaskTransform.position.x));
+        
+        //aka 60 (arbitrary number) * (times) noteblocks.length+1 (amount amount of nb's, excluding the one underneath right mask and including both masks)
+        //this whole thing is kinda arbitrary, BUT there are technically 60 spawns from one NB position to another
+        amountOfSpawns = 60 * noteblockTransforms.Length+1.
+
+        possibleNBSpawns = new Vector3[amountOfSpawns];
 
     }
 
@@ -200,7 +220,7 @@ public class NoteCarouselScript : MonoBehaviour
         lateupdate_secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
 
-        moveSpeed = 108 * (nbDistance / (60f / bpm));
+        moveSpeed = 108 * (nbDistance / (60 / bpm));
         // speed is defined in pixel per second.
         _movement.x -= moveSpeed * Time.unscaledDeltaTime;
 
