@@ -200,7 +200,7 @@ public class NoteCarouselScript : MonoBehaviour
         lateupdate_secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
 
-        moveSpeed = 108 * (nbDistance / (60f / bpm));
+        moveSpeed = 10.8f* (nbDistance / (60f / bpm));
         // speed is defined in pixel per second.
         _movement.x -= moveSpeed * Time.unscaledDeltaTime;
 

@@ -27,22 +27,32 @@ public class StreakScript : MonoBehaviour
     private const float H_BottomDefault = 256f/360f;
 
     //Measured in degrees (max = 360; min = 0)
-    public float HueChangeMagnitude = 2/360;
+    public float HueChangeMagnitude = 2f/360f;
     // Start is called before the first frame update
     void Start()
     {
         resetGradient(); 
     }
 
+    private float seconds = 0f;
+
     // Update is called once per frame
     void Update()
     {
         updateTextColor();
+        
+        seconds += Time.deltaTime;
+        if(seconds >= 1f)
+        {
+            seconds = 0f;
+            shiftHue(false);
+            Debug.Log("1 second elapsed :p");
+        }
     }
 
     void updateTextColor()
     {
-        //streakOnderIsaText.colorGradient = new VertexGradient(isaTopColor, isaTopColor, isaBottomColor, isaBottomColor);
+        streakOnderIsaText.colorGradient = new VertexGradient(isaTopColor, isaTopColor, isaBottomColor, isaBottomColor);
     }
 
     void resetGradient()
@@ -52,13 +62,6 @@ public class StreakScript : MonoBehaviour
 
         isaTopColor = Color.HSVToRGB(H_TopDefault, S_TopColor, V_TopColor);
         isaBottomColor = Color.HSVToRGB(H_BottomDefault, S_BottomColor, V_BottomColor);
-
-        topTester_SR.color = isaTopColor;
-        bottomTester_SR.color = isaBottomColor;
-
-        Debug.Log("H_default bottom: " + H_BottomDefault);
-        Debug.Log("S_default bottom: " + S_BottomColor);
-        Debug.Log("V_default bottom: " + V_BottomColor);
 
         streakOnderIsaText.enableVertexGradient = true;
         streakOnderIsaText.colorGradient = new VertexGradient(isaTopColor, isaTopColor, isaBottomColor, isaBottomColor);
@@ -76,9 +79,16 @@ public class StreakScript : MonoBehaviour
         else
         {
             Color.RGBToHSV(isaBottomColor, out H, out S, out V);
-            if ((H - HueChangeMagnitude < 0)) isaBottomColor = Color.HSVToRGB(0, S_BottomColor, V_BottomColor);
+            Debug.Log("H: " + H + " S: " + " V: " + V);
+            if (H - HueChangeMagnitude < 0)
+            {
+                isaBottomColor = Color.HSVToRGB(0, S_BottomColor, V_BottomColor);
+                isaTopColor = Color.HSVToRGB(0, S_TopColor, V_TopColor);
+            }
             else
             {
+                Debug.Log("H: " + H + " S: " + " V: " + V);
+
                 isaBottomColor = Color.HSVToRGB(H - HueChangeMagnitude, S_BottomColor, V_BottomColor);
                 isaTopColor = Color.HSVToRGB(H - HueChangeMagnitude, S_TopColor, V_TopColor);
             }
