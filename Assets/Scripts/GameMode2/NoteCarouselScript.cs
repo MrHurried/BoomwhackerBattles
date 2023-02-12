@@ -45,7 +45,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform rightMaskTransform;
 
     Vector2 _movement = Vector2.zero;
-    public float moveSpeed = 1;
+    public float moveSpeed = 1f;
     float moveIncrement;
     const float nbDistance = 1.1f;
 
@@ -200,7 +200,7 @@ public class NoteCarouselScript : MonoBehaviour
         lateupdate_secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
 
-        moveSpeed = 10.8f* (nbDistance / (60f / bpm));
+        moveSpeed = 108 * (nbDistance / (60f / bpm));
         // speed is defined in pixel per second.
         _movement.x -= moveSpeed * Time.unscaledDeltaTime;
 
