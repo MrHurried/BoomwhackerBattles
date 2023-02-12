@@ -6,3 +6,4 @@ V3 speel het nieuwe stuk
 
 ADDING JUICE
 - add an animated streak indicator
+1 fix de bug die zorgt dat de numbered text zwart is
