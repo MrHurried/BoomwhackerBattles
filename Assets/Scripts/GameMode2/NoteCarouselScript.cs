@@ -79,13 +79,18 @@ public class NoteCarouselScript : MonoBehaviour
         currentNoteIndex = -(noteblockTransforms.Length - 1);
 
         Debug.Log("Position Units diff rightmask - leftmask: " + (rightMaskTransform.position.x - leftMaskTransform.position.x));
-        
+
         //aka 60 (arbitrary number) * (times) noteblocks.length+1 (amount amount of nb's, excluding the one underneath right mask and including both masks)
         //this whole thing is kinda arbitrary, BUT there are technically 60 spawns from one NB position to another
-        amountOfSpawns = 60 * noteblockTransforms.Length+1.
+        amountOfSpawns = 60 * noteblockTransforms.Length + 1;
 
-        possibleNBSpawns = new Vector3[amountOfSpawns];
+        //int[] possibleNBXPositions= new int[];
 
+    }
+
+    void MakeSpawnList() 
+    { 
+    
     }
 
     //UPDATE VARS
