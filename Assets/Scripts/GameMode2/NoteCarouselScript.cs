@@ -6,14 +6,6 @@ using BoomWhackerBattles;
 
 public class NoteCarouselScript : MonoBehaviour
 {
-    /// <summary>
-    /// BUGS I NEED TO FIX:
-    /// When a correct note is pressed, only do the procedure ONCE, not more
-    /// </summary>
-
-
-    //private RandomPieceGeneratorScript randPieceScript;
-
     [SerializeField] HealthScript healthScript;
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
 
@@ -24,7 +16,7 @@ public class NoteCarouselScript : MonoBehaviour
     public bool invincibile;
 
     [SerializeField] Transform nbHolder;
-    Transform nb0, nb1, nb2, nb3, nb4, nb5;
+    NoteBlock nb0, nb1, nb2, nb3, nb4, nb5;
 
     //NOTE SPRITES
     [SerializeField] Sprite emptySprite;
@@ -42,10 +34,9 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Sprite restSliderSprite;
 
 
-    Transform[] noteblockTransforms;
+    NoteBlock[] noteblocks;
 
-    [SerializeField] Transform leftMaskTransform;
-    [SerializeField] Transform rightMaskTransform;
+    public float leftSpawnX = -213f;
 
     
     
@@ -62,36 +53,20 @@ public class NoteCarouselScript : MonoBehaviour
 
     void Start()
     {
-        //TESTING, REMOVE IMMEDIATELY AFTER TESTING
-        rightMaskTransform.position += new Vector3(-110, 0, 0);
+        nb0 = new NoteBlock(0, true);
+        nb1 = new NoteBlock(1, true);
+        nb2 = new NoteBlock(2, true);
+        nb3 = new NoteBlock(3, true);
+        nb4 = new NoteBlock(4, true);
+        nb5 = new NoteBlock(5, true);
 
-        nb0 = nbHolder.GetChild(0);
-        nb1 = nbHolder.GetChild(1);
-        nb2 = nbHolder.GetChild(2);
-        nb3 = nbHolder.GetChild(3);
-        nb4 = nbHolder.GetChild(4);
-        nb5 = nbHolder.GetChild(5);
-
-        noteblockTransforms = new Transform[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
+        noteblocks = new NoteBlock[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
 
         //start the currentnodeindex to -[length of the notebar minus 1] (currently 5)
         //minus one cus there is one nb to the left of the arrow
         //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
-        currentNoteIndex = -(noteblockTransforms.Length - 1);
+        currentNoteIndex = -(noteblocks.Length - 1);
 
-        Debug.Log("Position Units diff rightmask - leftmask: " + (rightMaskTransform.position.x - leftMaskTransform.position.x));
-
-        //aka 60 (arbitrary number) * (times) noteblocks.length+1 (amount amount of nb's, excluding the one underneath right mask and including both masks)
-        //this whole thing is kinda arbitrary, BUT there are technically 60 spawns from one NB position to another
-        amountOfSpawns = 60 * noteblockTransforms.Length + 1;
-
-        //int[] possibleNBXPositions= new int[];
-
-    }
-
-    void MakeSpawnList() 
-    { 
-    
     }
 
     //UPDATE VARS
@@ -112,7 +87,7 @@ public class NoteCarouselScript : MonoBehaviour
 
         GoLeft();
 
-        MoveNBAndChangeNBSprites();
+        ChangeNBSprites();
 
 
         //testing
@@ -137,19 +112,18 @@ public class NoteCarouselScript : MonoBehaviour
     /// 4. checks when a new note spawns. when it does: call the "CheckForRightInputDuringNote" method
     /// </summary>
     /// 
-    float current;
-    private void MoveNBAndChangeNBSprites()
+    private void ChangeNBSprites()
     {
         //RIP old movement system
 
         //index of the newest note
-        int newestNoteIndex = currentNoteIndex + noteblockTransforms.Length - 1;
+        int newestNoteIndex = currentNoteIndex + noteblocks.Length - 1;
 
-        foreach (Transform t in noteblockTransforms)
+        foreach (NoteBlock nb in noteblocks)
         {
 
             //MASSIVE CHANGE HERE: == to <=. this will hopefully put an end to the headaches the past few weeks in turn for a (slightly) worse accuracy
-            if (t.position.x <= leftMaskTransform.position.x)
+            if (nb.getCurrentXCoord() <= leftSpawnX)
             {
 
                 if (currentNoteIndex > 0)
@@ -157,7 +131,7 @@ public class NoteCarouselScript : MonoBehaviour
                     checkForWrongInputDuringNoteholder();
                 }
 
-                t.position = rightMaskTransform.position;
+                nb.position = rightMaskTransform.position;
                 Debug.Log("nb xpos: " + t.position.x);
                 Debug.Log("rightmaskpos x: " + rightMaskTransform.position.x);
 
@@ -219,56 +193,9 @@ public class NoteCarouselScript : MonoBehaviour
 
     }
 
-    float lateupdate_secondsSinceLaunch = 0f;
-    private void LateUpdate()
-    {
-        //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
-        lateupdate_secondsSinceLaunch += 1f * Time.deltaTime;
-        if (secondsSinceLaunch < 3) return;
-
-        moveSpeed = 108 * (nbDistance / (60 / bpm));
-        // speed is defined in pixel per second.
-        _movement.x -= moveSpeed * Time.unscaledDeltaTime;
-
-        // Clamp the current movement
-
-        //EDITED: second param of vector2 construct
-        Vector2 clamped_movement = new Vector2((int)_movement.x, (int)0);
-        // Check if a movement is needed (more than 1px move)
-        if (clamped_movement.magnitude >= 1.0f)
-        {
-            Debug.Log("_movement before velocity update:  " + _movement);
-
-            // Update velocity, removing the actual movement
-            _movement = _movement - clamped_movement;
-
-            Debug.Log("clamped_movement: " + clamped_movement);
-            Debug.Log("_movement - clamped_movement:  " + _movement);
-            if (clamped_movement != Vector2.zero)
-            {
-                foreach (Transform t in noteblockTransforms)
-                {
-                   
-
-
-                    // Move to the new position
-
-                    //EDITED: ClampVector(transform.position) to 
-                    t.position = new Vector2((int)t.position.x, 0) + clamped_movement;
-                }
-
-            }
-        }
-    }
-
     public void GoLeft()
     {
-       /* //Possible Method?
-        //float moveSpeed = (nbDistance / (60f / bpm)) * Time.deltaTime;
-
-        moveSpeed = 540 * (nbDistance/ (60f / bpm));
-        // speed is defined in pixel per second.
-        _movement.x -= moveSpeed * Time.deltaTime;*/
+       
     }
 
     void checkForWrongInputDuringNoteholder()

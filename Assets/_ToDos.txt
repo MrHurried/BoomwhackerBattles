@@ -1,3 +1,6 @@
+THINK ABOUT SPLITTING UP NoteCarouselScript into multiple scripts
+
+
 Vzorg ervoor dat de NB's een constante distance tussen elkaar hebben (volgens mij is dat 1.1 units)
 V-zorg ervoor dat na 1 stuk is gespeeld:
 V1 een nieuw stuk generate wordt
