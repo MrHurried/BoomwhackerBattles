@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using BoomWhackerBattles;
 
 public class NoteCarouselScript : MonoBehaviour
 {
