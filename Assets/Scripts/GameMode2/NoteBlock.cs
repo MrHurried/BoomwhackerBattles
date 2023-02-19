@@ -18,7 +18,7 @@ public class NoteBlock: MonoBehaviour
         if (fromIsa)
         {
             GameObject nbholder = GameObject.Find("NotenBovenIsaHolder");
-            go = nbholder.transform.GetChild(parentIndex).gameObject;
+            go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
         else
         {

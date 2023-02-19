@@ -1,1 +1,9 @@
-als de nieuwste noot (t) een hogere index heeft dan generatedpiece.count-1, start de volgende ronde
+in 60 seconds, at 60 BPM, we should advance 110 units
+in 60 seconds, at 60 BPM, advancePosition() should be called 110 times
+
+seconds += time.deltatime
+if(seconds >= 60f/bpm) // if 1 second passes -> advanceposition will only be called once every second
+
+if(seconds >= nbDistance/(60f/bpm) // if 110 seconds pass, advancepos will be called -> definitely not what we wana
+
+if(seconds >= (60f/bpm)/nbDistance) // THIS is the stuff, will be called 110 times a second (I believe)
