@@ -1712,7 +1712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthScript: {fileID: 1427142617}
   randomPieceGeneratorScript: {fileID: 1427142615}
-  bpm: 60
+  bpm: 6000
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
   invincibile: 1
@@ -1728,8 +1728,7 @@ MonoBehaviour:
   rest16sprite: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
   noteSliderSprite: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
   restSliderSprite: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
-  leftMaskTransform: {fileID: 916560227}
-  rightMaskTransform: {fileID: 603426322}
+  leftSpawnX: -873
   moveSpeed: 1
 --- !u!1 &760100323
 GameObject:
