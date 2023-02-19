@@ -16,7 +16,7 @@ public class NoteCarouselScript : MonoBehaviour
     public bool invincibile;
 
     [SerializeField] Transform nbHolder;
-    NoteBlock nb0, nb1, nb2, nb3, nb4, nb5;
+    NoteBlock isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5;
 
     //NOTE SPRITES
     [SerializeField] Sprite emptySprite;
@@ -34,38 +34,38 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Sprite restSliderSprite;
 
 
-    NoteBlock[] noteblocks;
+    NoteBlock[] noteblocksIsa;
+    NoteBlock[] noteblocksMat;
 
-    public float leftSpawnX = -873.0f;
+    public float leftSpawnX;
 
-    
-    
-
-
-    Vector2 _movement = Vector2.zero;
-    public int moveSpeed = 1;
-    float moveIncrement;
     const double nbDistance = 110.0d;
-
-    //The distance between rightmask and leftmask is Debug.Log'ed in Start()
-    private Vector3[] possibleNBSpawns;
-    private int amountOfSpawns;
 
     void Start()
     {
-        nb0 = new NoteBlock(0, true);
-        nb1 = new NoteBlock(1, true);
-        nb2 = new NoteBlock(2, true);
-        nb3 = new NoteBlock(3, true);
-        nb4 = new NoteBlock(4, true);
-        nb5 = new NoteBlock(5, true);
+        isanb0 = new NoteBlock(0, true);
+        isanb1 = new NoteBlock(1, true);
+        isanb2 = new NoteBlock(2, true);
+        isanb3 = new NoteBlock(3, true);
+        isanb4 = new NoteBlock(4, true);
+        isanb5 = new NoteBlock(5, true);
 
-        noteblocks = new NoteBlock[6] { nb0, nb1, nb2, nb3, nb4, nb5 };
+        matnb0 = new NoteBlock(0, false);
+        matnb1 = new NoteBlock(1, false);
+        matnb2 = new NoteBlock(2, false);
+        matnb3 = new NoteBlock(3, false);
+        matnb4 = new NoteBlock(4, false);
+        matnb5 = new NoteBlock(5, false);
+
+        noteblocksIsa = new NoteBlock[6] { isanb0, isanb1, isanb2, isanb3, isanb4, isanb5 };
+        noteblocksMat = new NoteBlock[6] { matnb0, matnb1, matnb2, matnb3, matnb4, matnb5 };
+
+        leftSpawnX = transform.GetChild(0).GetChild(noteblocksIsa.Length).transform.position.x; // the first child ("noteblocks") last child "leftboundmask". check in the hierarchy for a better insight
 
         //start the currentnodeindex to -[length of the notebar minus 1] (currently 5)
         //minus one cus there is one nb to the left of the arrow
         //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
-        currentNoteIndex = -(noteblocks.Length - 1);
+        currentNoteIndex = -(noteblocksIsa.Length - 1);
 
     }
 
@@ -116,17 +116,14 @@ public class NoteCarouselScript : MonoBehaviour
         //RIP old movement system
 
         //index of the newest note
-        int newestNoteIndex = currentNoteIndex + noteblocks.Length - 1;
+        int newestNoteIndex = currentNoteIndex + noteblocksIsa.Length - 1;
 
-        foreach (NoteBlock nb in noteblocks)
+        foreach (NoteBlock nb in noteblocksIsa)
         {
 
             //MASSIVE CHANGE HERE: == to <=. this will hopefully put an end to the headaches the past few weeks in turn for a (slightly) worse accuracy
             if (/*nb.getCurrentXCoord() */ -763f <= leftSpawnX)
             {
-                Debug.Log("leftSpawnX = " + leftSpawnX);
-                Debug.Log("nbXcoord = " + nb.getCurrentXCoord() + " nb.getCurrentXCoord() <= leftSpawnX : " + (nb.getCurrentXCoord() <= leftSpawnX));
-
 
                 if (currentNoteIndex > 0)
                 {
@@ -168,7 +165,6 @@ public class NoteCarouselScript : MonoBehaviour
                 if (currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count)
                 {
                     currentNoteIndex++;
-                    Debug.Log("currentnoteindex upped by 1");
                 }
             }
         }
@@ -180,16 +176,13 @@ public class NoteCarouselScript : MonoBehaviour
     public void GoLeft()
     {
        seconds += Time.deltaTime;
-        Debug.Log("seconds = " + seconds
-            + "\n secondsToWait = " + ((60.0d / bpm) / nbDistance));
-        double secondsToWait = ((60.0d / bpm) / nbDistance);
+       double secondsToWait = ((60.0d / bpm) / nbDistance);
        if (seconds >= secondsToWait)
        {
             int amountOfMovements = (int)MathF.Floor((float)(seconds / secondsToWait));
-            Debug.Log("amountOfMovements = " + amountOfMovements);
             for(int i = 0; i < amountOfMovements; i++)
             {
-                foreach (NoteBlock nb in noteblocks)
+                foreach (NoteBlock nb in noteblocksIsa)
                 {
                     nb.advancePosition();
                 }
@@ -348,7 +341,7 @@ public class NoteCarouselScript : MonoBehaviour
         Debug.Log("advancing to next round");
 
         randomPieceGeneratorScript.generatePiece();
-        currentNoteIndex = -(noteblocks.Length - 1);
+        currentNoteIndex = -(noteblocksIsa.Length - 1);
         secondsSinceLaunch = 0f;
 
         bpm += bpmIncreaseAmount;

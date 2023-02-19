@@ -9,20 +9,23 @@ public class NoteBlock: MonoBehaviour
     public int parentIndex; //eg. "nb0" -> that is the name of the GameObject underneath NoteblockHolder
     public int spawnIndex; //eg. 0 -> that is the left mask spawn index
     public string note;
+    public bool fromIsa;
 
-    public NoteBlock(int ParentIndex, bool fromIsa)
+    public NoteBlock(int ParentIndex, bool FromIsa)
     {
         this.parentIndex = ParentIndex;
         this.spawnIndex = 110 * ParentIndex; // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
+        this.fromIsa = FromIsa;
 
-        if (fromIsa)
+        if (FromIsa)
         {
             GameObject nbholder = GameObject.Find("NotenBovenIsaHolder");
             go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
         else
         {
-            //foo
+            GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
+            go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
     }
 
@@ -35,7 +38,7 @@ public class NoteBlock: MonoBehaviour
     }
     public void setSlider(Sprite slider)
     {
-        Transform noteSpriteHolder = go.transform.GetChild(0);
+        Transform noteSpriteHolder = go.transform.GetChild(1);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
 
         sr.sprite = slider;
@@ -43,16 +46,22 @@ public class NoteBlock: MonoBehaviour
 
     public void advancePosition()
     {
-        if (spawnIndex < SavedPossibleSpawns.possibleSpawns.Length - 1)
+        if (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) // I believe this doesn't have to have a "possibleSpawnsMat" alternative
         {
             spawnIndex++;
         }
+        else spawnIndex = 0;
+
+        float xCoord;
+
+        if (fromIsa)
+        {
+            xCoord = SavedPossibleSpawns.possibleSpawnsIsa[spawnIndex];
+        }
         else
         {
-            spawnIndex = 0;
-        }
-
-        float xCoord = SavedPossibleSpawns.possibleSpawns[spawnIndex];
+            xCoord = SavedPossibleSpawns.possibleSpawnsMat[spawnIndex];
+        } 
         float yCoord = go.transform.position.y;
         float zCoord = go.transform.position.z;
 
@@ -61,7 +70,15 @@ public class NoteBlock: MonoBehaviour
 
     public float getCurrentXCoord()
     {
-        float xCoord = SavedPossibleSpawns.possibleSpawns[spawnIndex];
+        float xCoord;
+        if (fromIsa)
+        {
+            xCoord = SavedPossibleSpawns.possibleSpawnsIsa[spawnIndex];
+        }
+        else
+        {
+            xCoord = SavedPossibleSpawns.possibleSpawnsMat[spawnIndex];
+        }
         return xCoord;
     }
 
