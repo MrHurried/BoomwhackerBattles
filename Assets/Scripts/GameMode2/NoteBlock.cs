@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoomWhackerBattles;
 
-public class NoteBlock: MonoBehaviour
+public class NoteBlock /*: MonoBehaviour*/
 {
     public GameObject go; // this will be the name of the game object
     public int parentIndex; //eg. "nb0" -> that is the name of the GameObject underneath NoteblockHolder
@@ -11,11 +11,35 @@ public class NoteBlock: MonoBehaviour
     public string note;
     public bool fromIsa;
 
+    NoteCarouselScript isaNoteCarouselScript;
+    NoteCarouselScript matNoteCarouselScript;
+    NoteBlockFunctions noteBlockFunctions; //= new NoteBlockFunctions();
+
     public NoteBlock(int ParentIndex, bool FromIsa)
     {
+        isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
+        matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+
         this.parentIndex = ParentIndex;
-        this.spawnIndex = 110 * ParentIndex; // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
         this.fromIsa = FromIsa;
+        if (FromIsa)
+        {
+            this.spawnIndex =   110 * (5 - ParentIndex); // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
+            Debug.Log("New NoteBlock created. info:"
+            + "\n parentIndex = " + ParentIndex
+            + "\n spawnIndex = " + spawnIndex
+            + "\n fromIsa = " + fromIsa
+            + "\n global position = " + SavedPossibleSpawns.possibleSpawnsIsa[spawnIndex]);
+        }
+        
+        else
+        {
+            Debug.Log("New NoteBlock created"
+                + "\n parentIndex = " + ParentIndex
+                + "\n spawnIndex = " + spawnIndex
+                + "\n fromIsa = " + fromIsa
+                +"\n global position = " + SavedPossibleSpawns.possibleSpawnsMat[spawnIndex]);
+        }
 
         if (FromIsa)
         {
@@ -29,12 +53,17 @@ public class NoteBlock: MonoBehaviour
         }
     }
 
-    public void setNote(Sprite note)
+    public void setNextNote()
     {
         Transform noteSpriteHolder = go.transform.GetChild(0);
+        Debug.Log(noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
 
-        sr.sprite = note;
+        int index = isaNoteCarouselScript.currentNoteIndex; //i believe this doesn't have to have a "mat" equivalent
+
+        Sprite sprite = noteBlockFunctions.getNoteSprite(index);
+
+        sr.sprite = sprite;
     }
     public void setSlider(Sprite slider)
     {
@@ -46,12 +75,37 @@ public class NoteBlock: MonoBehaviour
 
     public void advancePosition()
     {
-        if (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) // I believe this doesn't have to have a "possibleSpawnsMat" alternative
+        if (fromIsa)
         {
-            spawnIndex++;
+            if (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) // I believe this doesn't have to have a "possibleSpawnsMat" alternative
+            {
+                spawnIndex++;
+            }
+            else
+            {
+                spawnIndex = 0;
+                Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) is false" +
+                    "\n spawnindex = " + spawnIndex +
+                    "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length + 
+                    "\n parentIndex = " + parentIndex);
+                isaNoteCarouselScript.currentNoteIndex++;
+            }
         }
-        else spawnIndex = 0;
-
+        else
+        {
+            if (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) // I believe this doesn't have to have a "possibleSpawnsMat" alternative
+            {
+                spawnIndex++;
+            }
+            else
+            {
+                spawnIndex = 0;
+                Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) is false" +
+                    "\n spawnindex = " + spawnIndex +
+                    "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);
+                matNoteCarouselScript.currentNoteIndex++;
+            }
+        }
         float xCoord;
 
         if (fromIsa)

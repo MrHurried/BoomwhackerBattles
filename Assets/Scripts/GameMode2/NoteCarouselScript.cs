@@ -10,7 +10,7 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
 
     public int bpm = 60;
-    public int currentNoteIndex;
+    public int currentNoteIndex; // might want to make this private if a bug concerning the noteindex persists
     public int bpmIncreaseAmount = 30;
 
     public bool invincibile;
@@ -18,55 +18,62 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform nbHolder;
     NoteBlock isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5;
 
-    //NOTE SPRITES
-    [SerializeField] Sprite emptySprite;
-    [SerializeField] Sprite note2sprite;
-    [SerializeField] Sprite note4sprite;
-    [SerializeField] Sprite note8sprite;
-    [SerializeField] Sprite note16sprite;
-    [SerializeField] Sprite rest2sprite;
-    [SerializeField] Sprite rest4sprite;
-    [SerializeField] Sprite rest8sprite;
-    [SerializeField] Sprite rest16sprite;
-
-    //SLIDER SPRITES
-    [SerializeField] Sprite noteSliderSprite;
-    [SerializeField] Sprite restSliderSprite;
-
 
     NoteBlock[] noteblocksIsa;
     NoteBlock[] noteblocksMat;
+    NoteBlock[] noteblocks;
 
-    public float leftSpawnX;
+    [SerializeField] private float leftSpawnX;
 
     const double nbDistance = 110.0d;
 
+    bool debugRunning = true;
+    int debugInt = 0;
+    void runDebug()
+    {
+        //LOGGING THE noteblocks array
+        foreach(NoteBlock nb in noteblocks)
+        {
+            Debug.Log("GO name = " + gameObject.name +
+                "\n fromIsa? " + nb.fromIsa);
+        } 
+    }
+
     void Start()
     {
-        isanb0 = new NoteBlock(0, true);
-        isanb1 = new NoteBlock(1, true);
-        isanb2 = new NoteBlock(2, true);
-        isanb3 = new NoteBlock(3, true);
-        isanb4 = new NoteBlock(4, true);
-        isanb5 = new NoteBlock(5, true);
+        //this is done to prevent bugs
+        if (nbHolder.name.Contains("Isa"))
+        {
+            isanb0 = new NoteBlock(0, true);
+            isanb1 = new NoteBlock(1, true);
+            isanb2 = new NoteBlock(2, true);
+            isanb3 = new NoteBlock(3, true);
+            isanb4 = new NoteBlock(4, true);
+            isanb5 = new NoteBlock(5, true);
+            noteblocksIsa = new NoteBlock[6] { isanb0, isanb1, isanb2, isanb3, isanb4, isanb5 };
+            noteblocks = noteblocksIsa;
+        }
+        else
+        { 
+            matnb0 = new NoteBlock(0, false);
+            matnb1 = new NoteBlock(1, false);
+            matnb2 = new NoteBlock(2, false);
+            matnb3 = new NoteBlock(3, false);
+            matnb4 = new NoteBlock(4, false);
+            matnb5 = new NoteBlock(5, false);
+            noteblocksMat = new NoteBlock[6] { matnb0, matnb1, matnb2, matnb3, matnb4, matnb5 };
+            noteblocks = noteblocksMat;
+        }
 
-        matnb0 = new NoteBlock(0, false);
-        matnb1 = new NoteBlock(1, false);
-        matnb2 = new NoteBlock(2, false);
-        matnb3 = new NoteBlock(3, false);
-        matnb4 = new NoteBlock(4, false);
-        matnb5 = new NoteBlock(5, false);
 
-        noteblocksIsa = new NoteBlock[6] { isanb0, isanb1, isanb2, isanb3, isanb4, isanb5 };
-        noteblocksMat = new NoteBlock[6] { matnb0, matnb1, matnb2, matnb3, matnb4, matnb5 };
-
-        leftSpawnX = transform.GetChild(0).GetChild(noteblocksIsa.Length).transform.position.x; // the first child ("noteblocks") last child "leftboundmask". check in the hierarchy for a better insight
+        //noteblocks = new NoteBlock[] { isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5 };
 
         //start the currentnodeindex to -[length of the notebar minus 1] (currently 5)
         //minus one cus there is one nb to the left of the arrow
         //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
-        currentNoteIndex = -(noteblocksIsa.Length - 1);
+        currentNoteIndex =  -(noteblocks.Length - 1);
 
+        //runDebug();
     }
 
     //UPDATE VARS
@@ -74,6 +81,7 @@ public class NoteCarouselScript : MonoBehaviour
     float secondsAfterFirstUpdate = 0f;
     void Update()
     {
+        if (debugRunning == false) return;
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
         secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
@@ -85,9 +93,11 @@ public class NoteCarouselScript : MonoBehaviour
 
         checkForWrongInputDuringNote();
 
-        GoLeft();
+        //GoLeft();
 
-        ChangeNBSprites();
+        //ChangeNBSprites();
+
+        //advanceIndex();
 
         //testing
         Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
@@ -116,13 +126,13 @@ public class NoteCarouselScript : MonoBehaviour
         //RIP old movement system
 
         //index of the newest note
-        int newestNoteIndex = currentNoteIndex + noteblocksIsa.Length - 1;
+        int newestNoteIndex = currentNoteIndex + noteblocks.Length - 1;
 
-        foreach (NoteBlock nb in noteblocksIsa)
+        foreach (NoteBlock nb in noteblocks)
         {
 
             //MASSIVE CHANGE HERE: == to <=. this will hopefully put an end to the headaches the past few weeks in turn for a (slightly) worse accuracy
-            if (/*nb.getCurrentXCoord() */ -763f <= leftSpawnX)
+            if (nb.getCurrentXCoord() <= leftSpawnX)
             {
 
                 if (currentNoteIndex > 0)
@@ -155,52 +165,73 @@ public class NoteCarouselScript : MonoBehaviour
                     }
                 }
 
-                if (newestNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+                //MAJOR CHANGE: changed >= into <= . this MIGHT BREAK THE GAME
+                if (newestNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count)
                 {
                     nb.setNote(emptySprite);
                     nb.setSlider(emptySprite);
                 }
 
-                //when a new note spawns: advance the currentNoteIndex
-                if (currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count)
-                {
-                    currentNoteIndex++;
-                }
+                //debugInt++;
+                if(debugInt == 2) debugRunning = false ;
             }
         }
 
+    }
 
+    int lastParentIdexToHitLeftMask = 5; //this is set to 5 because 5 hits the LM last, thus allowing the nb0 to up the index. see "advanceIndex()" for more info
+    public void advanceIndex()
+    {
+        //dit wordt alleen voor Isa's NB gedaan omdat de noteindex anders meerdere keren wordt geupt
+        foreach (NoteBlock nb in noteblocks)
+        {
+            //when a new note spawns: advance the currentNoteIndex
+            if (lastParentIdexToHitLeftMask != nb.parentIndex && nb.getCurrentXCoord() <= leftSpawnX && currentNoteIndex < RandomPieceGeneratorScript.generatedPiece.Count)
+            {
+                currentNoteIndex++;
+                lastParentIdexToHitLeftMask = nb.parentIndex;
+                Debug.Log("index upped. " +
+                    "\nparentIndex = " + nb.parentIndex +
+                    "\n nb.getCurrentXcoord = "+ nb.getCurrentXCoord() +
+                    "\n leftSpawnX = " + leftSpawnX +
+                    "\n fromIsa? " + nb.fromIsa);
+            }
+        }
     }
 
     double seconds = 0d;
     public void GoLeft()
     {
-       seconds += Time.deltaTime;
-       double secondsToWait = ((60.0d / bpm) / nbDistance);
-       if (seconds >= secondsToWait)
-       {
+        seconds += Time.deltaTime;
+        double secondsToWait = ((60.0d / bpm) / nbDistance);
+        if (seconds >= secondsToWait)
+        {
             int amountOfMovements = (int)MathF.Floor((float)(seconds / secondsToWait));
-            for(int i = 0; i < amountOfMovements; i++)
+            for (int i = 0; i < amountOfMovements; i++)
             {
-                foreach (NoteBlock nb in noteblocksIsa)
+                foreach (NoteBlock nb in noteblocks)
                 {
                     nb.advancePosition();
                 }
             }
-            seconds = seconds%secondsToWait;
-       }
+            seconds = seconds % secondsToWait;
+        }
     }
 
     void checkForWrongInputDuringNoteholder()
     {
         if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count) return;
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex]; ;
 
         if (strCurrentNote == "0" && wasNoteBeforeHold(false))
         {
             if (!Input.GetKey(KeyCode.Q))
             {
-                doButtonPressProcedure(false);
+                doButtonPressProcedure(false, false);
+            }
+            if (!Input.GetKey(KeyCode.P))
+            {
+                doButtonPressProcedure(false, false);
             }
         }
 
@@ -218,7 +249,11 @@ public class NoteCarouselScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            doButtonPressProcedure(true);
+            doButtonPressProcedure(true, true);
+        }
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            doButtonPressProcedure(true, true);
         }
 
     }
@@ -235,7 +270,11 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                doButtonPressProcedure(false);
+                doButtonPressProcedure(false, true);
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                doButtonPressProcedure(false, false);
             }
         }
         //check to see if the current note is a rest
@@ -243,13 +282,18 @@ public class NoteCarouselScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                doButtonPressProcedure(false);
+                doButtonPressProcedure(false, true);
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                doButtonPressProcedure(false, false);
             }
         }
 
     }
 
-    void doButtonPressProcedure(bool didCorrectInput)
+    void doButtonPressProcedure(bool didCorrectInput, bool fromIsa)
     {
         if (invincibile) return;
 
@@ -286,54 +330,6 @@ public class NoteCarouselScript : MonoBehaviour
         {
             return true;
         }
-    }
-
-    public Sprite getNoteSprite(int noteIndex)
-    {
-        string noteString = "0";
-        //check if the noteindex isn't greater than the piece's length
-        if (noteIndex <= RandomPieceGeneratorScript.generatedPiece.Count - 1)
-        {
-            noteString = RandomPieceGeneratorScript.generatedPiece[noteIndex];
-        }
-        Sprite sprite;
-
-        //Set sprite var to right image, according to the current note (strCurrentNote)
-        switch (noteString)
-        {
-            case "0":
-                sprite = emptySprite;
-                break;
-            case "2":
-                sprite = note2sprite;
-                break;
-            case "4":
-                sprite = note4sprite;
-                break;
-            case "8":
-                sprite = note8sprite;
-                break;
-            case "16":
-                sprite = note16sprite;
-                break;
-            case "r2":
-                sprite = rest2sprite;
-                break;
-            case "r4":
-                sprite = rest4sprite;
-                break;
-            case "r8":
-                sprite = rest8sprite;
-                break;
-            case "r16":
-                sprite = rest16sprite;
-                break;
-            default:
-                sprite = note2sprite;
-                break;
-        }
-
-        return sprite;
     }
 
     void doNextRoundProcedure()
