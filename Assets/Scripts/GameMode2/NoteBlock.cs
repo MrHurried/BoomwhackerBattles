@@ -13,12 +13,13 @@ public class NoteBlock /*: MonoBehaviour*/
 
     NoteCarouselScript isaNoteCarouselScript;
     NoteCarouselScript matNoteCarouselScript;
-    NoteBlockFunctions noteBlockFunctions; //= new NoteBlockFunctions();
+    NoteBlockFunctions noteBlockFunctions;
 
     public NoteBlock(int ParentIndex, bool FromIsa)
     {
         isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
-        matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+        //matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
 
         this.parentIndex = ParentIndex;
         this.fromIsa = FromIsa;
@@ -59,16 +60,33 @@ public class NoteBlock /*: MonoBehaviour*/
         Debug.Log(noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
 
-        int index = isaNoteCarouselScript.currentNoteIndex; //i believe this doesn't have to have a "mat" equivalent
+        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 5; //i believe this doesn't have to have a "mat" equivalent
 
-        Sprite sprite = noteBlockFunctions.getNoteSprite(index);
+        if (newestNoteIndex >= 0)
+        {
+            Sprite sprite = noteBlockFunctions.getNoteSprite(newestNoteIndex);
 
-        sr.sprite = sprite;
+            sr.sprite = sprite;
+        }
     }
-    public void setSlider(Sprite slider)
+    public void setSlider()
     {
         Transform noteSpriteHolder = go.transform.GetChild(1);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
+        Sprite slider;
+
+        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 5; //i believe this doesn't have to have a "mat" equivalent
+
+        if (RandomPieceGeneratorScript.generatedPiece[newestNoteIndex] != "0")
+        {
+            sr.sprite = noteBlockFunctions.emptySprite;
+            return;
+        }
+
+        if (noteBlockFunctions.wasNoteBeforeHold(true))
+            slider = noteBlockFunctions.noteSliderSprite;
+        else
+            slider = noteBlockFunctions.restSliderSprite;
 
         sr.sprite = slider;
     }
@@ -89,6 +107,8 @@ public class NoteBlock /*: MonoBehaviour*/
                     "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length + 
                     "\n parentIndex = " + parentIndex);
                 isaNoteCarouselScript.currentNoteIndex++;
+                this.setNextNote();
+                setSlider();
             }
         }
         else
@@ -104,6 +124,8 @@ public class NoteBlock /*: MonoBehaviour*/
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);
                 matNoteCarouselScript.currentNoteIndex++;
+                this.setNextNote();
+                setSlider();
             }
         }
         float xCoord;

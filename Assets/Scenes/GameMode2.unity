@@ -2563,22 +2563,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthScript: {fileID: 1427142617}
   randomPieceGeneratorScript: {fileID: 1427142615}
-  bpm: 60060
+  bpm: 60
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
   invincibile: 1
   nbHolder: {fileID: 732542725}
-  emptySprite: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
-  note2sprite: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note4sprite: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note8sprite: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note16sprite: {fileID: -1018728149, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest2sprite: {fileID: 944920225, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest4sprite: {fileID: -251561653, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest8sprite: {fileID: -756303684, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest16sprite: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  noteSliderSprite: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
-  restSliderSprite: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
   leftSpawnX: 0
 --- !u!1 &760100323
 GameObject:
@@ -4547,8 +4536,9 @@ GameObject:
   - component: {fileID: 1427142616}
   - component: {fileID: 1427142615}
   - component: {fileID: 1427142617}
+  - component: {fileID: 1427142618}
   m_Layer: 0
-  m_Name: TempManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4599,6 +4589,30 @@ MonoBehaviour:
   halfHeartSprite: {fileID: -1368117738, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   emptyHeartSprite: {fileID: 1255897263, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   health: 6
+--- !u!114 &1427142618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427142614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28560ef9813ad847b47e270c2537b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptySprite: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
+  note2sprite: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note4sprite: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note8sprite: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  note16sprite: {fileID: -1018728149, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest2sprite: {fileID: 944920225, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest4sprite: {fileID: -251561653, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest8sprite: {fileID: -756303684, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  rest16sprite: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
+  noteSliderSprite: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
+  restSliderSprite: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
+  isaNoteCarouselScript: {fileID: 732542726}
 --- !u!1 &1453287958
 GameObject:
   m_ObjectHideFlags: 0
@@ -4719,17 +4733,6 @@ MonoBehaviour:
   bpmIncreaseAmount: 30
   invincibile: 1
   nbHolder: {fileID: 1515791458}
-  emptySprite: {fileID: 21300000, guid: 0e27ac862fb59354ab5abedb3b9a51c6, type: 3}
-  note2sprite: {fileID: 802635626, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note4sprite: {fileID: -573471633, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note8sprite: {fileID: 592673090, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  note16sprite: {fileID: -1018728149, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest2sprite: {fileID: 944920225, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest4sprite: {fileID: -251561653, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest8sprite: {fileID: -756303684, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  rest16sprite: {fileID: -1699470958, guid: ec670af443eb0e44f8e66040c249d196, type: 3}
-  noteSliderSprite: {fileID: 218393240, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
-  restSliderSprite: {fileID: 1183189495, guid: 8f0af10993c6fba47983fdeacbf36ee9, type: 3}
   leftSpawnX: 0
 --- !u!4 &1515791458
 Transform:

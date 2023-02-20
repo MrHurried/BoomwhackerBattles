@@ -1,0 +1,5 @@
+
+Inside NoteBlock constructor:
+//matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+
+you will need to uncomment this after you enabled Matisse's NBHolder again

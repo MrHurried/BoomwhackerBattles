@@ -5,10 +5,10 @@ using UnityEngine;
 /// <summary>
 /// THIS SCRIPT CONTAINS ALL SORTS OF USEFUL FUNCTIONS THAT HAVE TO DO WITH GAMEMODE 2'S NOTEBLOCKS
 /// </summary>
-public class NoteBlockFunctions
+public class NoteBlockFunctions : MonoBehaviour
 {
     //NOTE SPRITES
-    [SerializeField] Sprite emptySprite;
+    [SerializeField] public Sprite emptySprite;
     [SerializeField] Sprite note2sprite;
     [SerializeField] Sprite note4sprite;
     [SerializeField] Sprite note8sprite;
@@ -19,10 +19,15 @@ public class NoteBlockFunctions
     [SerializeField] Sprite rest16sprite;
 
     //SLIDER SPRITES
-    [SerializeField] Sprite noteSliderSprite;
-    [SerializeField] Sprite restSliderSprite;
+    [SerializeField] public Sprite noteSliderSprite;
+    [SerializeField] public Sprite restSliderSprite;
 
     [SerializeField] NoteCarouselScript isaNoteCarouselScript;
+
+    private void Start()
+    {
+       isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
+    }
 
     public Sprite getNoteSprite(int noteIndex)
     {
@@ -72,7 +77,7 @@ public class NoteBlockFunctions
         return sprite;
     }
 
-    private bool wasNoteBeforeHold(bool startFromNewestNote)
+    public bool wasNoteBeforeHold(bool startFromNewestNote)
     {
         string strCurrentNote = "0";
 
