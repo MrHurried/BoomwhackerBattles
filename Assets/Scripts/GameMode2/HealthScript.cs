@@ -10,7 +10,7 @@ public class HealthScript : MonoBehaviour
     [SerializeField] Sprite halfHeartSprite;
     [SerializeField] Sprite emptyHeartSprite;
 
-    public int health = 6;
+    private int health = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +39,7 @@ public class HealthScript : MonoBehaviour
                 heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
                 break;
             case 5:
+                Debug.Log("we at five health lolol");
                 heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
                 heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
                 heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
@@ -63,7 +64,7 @@ public class HealthScript : MonoBehaviour
                 heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
-            case 0:
+            case 0 :
                 heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;

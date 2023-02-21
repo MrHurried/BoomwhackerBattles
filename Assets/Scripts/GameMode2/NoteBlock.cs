@@ -18,7 +18,7 @@ public class NoteBlock /*: MonoBehaviour*/
     public NoteBlock(int ParentIndex, bool FromIsa)
     {
         isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
-        //matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+        matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
         noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
 
         this.parentIndex = ParentIndex;
@@ -35,6 +35,7 @@ public class NoteBlock /*: MonoBehaviour*/
         
         else
         {
+            this.spawnIndex = 110 * (5 - ParentIndex); // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
             Debug.Log("New NoteBlock created"
                 + "\n parentIndex = " + ParentIndex
                 + "\n spawnIndex = " + spawnIndex
