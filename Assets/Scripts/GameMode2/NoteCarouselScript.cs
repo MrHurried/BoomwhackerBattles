@@ -95,7 +95,7 @@ public class NoteCarouselScript : MonoBehaviour
         //if (secondsAfterFirstUpdate > 1) return;
 
         checkForWrongInputDuringRestAndRestHolder();
-
+        checkForWrongInputDuringNoteholder();
         checkForWrongInputDuringNote();
 
         GoLeft();
@@ -135,8 +135,8 @@ public class NoteCarouselScript : MonoBehaviour
 
     void checkForWrongInputDuringNoteholder()
     {
-        if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count) return;
-        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex]; ;
+        if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count || currentNoteIndex < 0) return;
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
         if (strCurrentNote == "0" && noteBlockFunctions.wasNoteBeforeHold(false))
         {
@@ -221,6 +221,7 @@ public class NoteCarouselScript : MonoBehaviour
 
         Debug.Log("didCorrectInput == false && nbHolder.name.Contains(Isa) && fromIsa = " + (didCorrectInput == false && nbHolder.name.Contains("Isa") && fromIsa));
         if (didCorrectInput == false && nbHolder.name.Contains("Isa") && fromIsa) isaHealthScript.removeHealth(1);
+        Debug.Log("didCorrectInput == false && nbHolder.name.Contains(Mat) && !fromIsa = " + (didCorrectInput == false && nbHolder.name.Contains("Mat") && !fromIsa));
         if (didCorrectInput == false && nbHolder.name.Contains("Mat") && !fromIsa) matHealthScript.removeHealth(1);
     }
 

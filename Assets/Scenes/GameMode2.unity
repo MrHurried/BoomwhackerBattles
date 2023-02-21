@@ -2566,7 +2566,9 @@ MonoBehaviour:
   fullHeartSprite: {fileID: 2080096510, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   halfHeartSprite: {fileID: -1368117738, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   emptyHeartSprite: {fileID: 1255897263, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
-  health: 6
+  heart0SpriteRenderer: {fileID: 0}
+  heart1SpriteRenderer: {fileID: 0}
+  heart2SpriteRenderer: {fileID: 0}
 --- !u!1 &728063871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,7 +2913,9 @@ MonoBehaviour:
   fullHeartSprite: {fileID: 2080096510, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   halfHeartSprite: {fileID: -1368117738, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
   emptyHeartSprite: {fileID: 1255897263, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
-  health: 6
+  heart0SpriteRenderer: {fileID: 0}
+  heart1SpriteRenderer: {fileID: 0}
+  heart2SpriteRenderer: {fileID: 0}
 --- !u!1 &855719477
 GameObject:
   m_ObjectHideFlags: 0
@@ -4774,7 +4778,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1427142616}
   - component: {fileID: 1427142615}
-  - component: {fileID: 1427142617}
   - component: {fileID: 1427142618}
   m_Layer: 0
   m_Name: GameManager
@@ -4811,23 +4814,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1427142617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427142614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83f8066adec2fb34db01ff62c3a388c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heartHolder: {fileID: 789250876}
-  fullHeartSprite: {fileID: 2080096510, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
-  halfHeartSprite: {fileID: -1368117738, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
-  emptyHeartSprite: {fileID: 1255897263, guid: 1908da8ea74d06c419910fc95e0b2b09, type: 3}
-  health: 6
 --- !u!114 &1427142618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5055,7 +5041,7 @@ MonoBehaviour:
   bpm: 60
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
-  invincibile: 1
+  invincibile: 0
   nbHolder: {fileID: 1515791458}
   leftSpawnX: 0
 --- !u!4 &1515791458

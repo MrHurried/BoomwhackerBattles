@@ -1,3 +1,6 @@
+MAKING THE HEALTH DROP AT THE CORRECT TIME
+
+
 
 THINK ABOUT SPLITTING UP NoteCarouselScript into multiple scripts
 v: done :)

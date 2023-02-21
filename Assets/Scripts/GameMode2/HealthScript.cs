@@ -12,10 +12,16 @@ public class HealthScript : MonoBehaviour
 
     private int health = 6;
 
+    public SpriteRenderer heart0SpriteRenderer;
+    public SpriteRenderer heart1SpriteRenderer;
+    public SpriteRenderer heart2SpriteRenderer;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-      
+        heart0SpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        heart1SpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        heart2SpriteRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -34,45 +40,45 @@ public class HealthScript : MonoBehaviour
         switch (health)
         {
             case 6:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
+                heart0SpriteRenderer.sprite = fullHeartSprite;
+                heart1SpriteRenderer.sprite = fullHeartSprite;
+                heart2SpriteRenderer.sprite = fullHeartSprite;
                 break;
             case 5:
                 Debug.Log("we at five health lolol");
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
+                heart0SpriteRenderer.sprite = fullHeartSprite;
+                heart1SpriteRenderer.sprite = fullHeartSprite;
+                heart2SpriteRenderer.sprite = halfHeartSprite;
                 break;
             case 4:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
             case 3:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
             case 2:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = fullHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
             case 1:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = halfHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
             case 0 :
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
             default:
-                heartHolder.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
-                heartHolder.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
+                transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
         }
     }
