@@ -19,12 +19,12 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] Transform nbHolder;
     NoteBlock isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5;
 
+    public bool isaDidCorrectInputDuringNote = false;
+    public bool matDidCorrectInputDuringNote = false;
 
     NoteBlock[] noteblocksIsa;
     NoteBlock[] noteblocksMat;
     NoteBlock[] noteblocks;
-
-    [SerializeField] private float leftSpawnX;
 
     const double nbDistance = 110.0d;
 
@@ -44,6 +44,7 @@ public class NoteCarouselScript : MonoBehaviour
     {
         noteBlockFunctions = gameObject.AddComponent<NoteBlockFunctions>();
 
+        currentNoteIndex = -5;
 
         //this is done to prevent bugs
         if (nbHolder.name.Contains("Isa"))
@@ -76,7 +77,6 @@ public class NoteCarouselScript : MonoBehaviour
         //minus one cus there is one nb to the left of the arrow
         //setting the noteindex to something negative means we'll have a bit of time to see the notes coming
         //MAJOR CHANGE: i removed the "-1". I think this fixed a bug
-        currentNoteIndex =  -(noteblocks.Length);
 
         //runDebug();
     }
@@ -95,8 +95,8 @@ public class NoteCarouselScript : MonoBehaviour
         //if (secondsAfterFirstUpdate > 1) return;
 
         checkForWrongInputDuringRestAndRestHolder();
-        checkForWrongInputDuringNoteholder();
-        checkForWrongInputDuringNote();
+
+        handleInputDuringNote();
 
         GoLeft();
 
@@ -133,18 +133,20 @@ public class NoteCarouselScript : MonoBehaviour
         }
     }
 
-    void checkForWrongInputDuringNoteholder()
+    public void checkForWrongInputDuringNoteholder()
     {
         if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count || currentNoteIndex < 0) return;
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
-        if (strCurrentNote == "0" && noteBlockFunctions.wasNoteBeforeHold(false))
+        if (strCurrentNote != "0" || !noteBlockFunctions.wasNoteBeforeHold(false)) return;
+
+        if (noteBlockFunctions.wasNoteBeforeHold(false))
         {
-            if (!Input.GetKey(KeyCode.Q))
+            if (!Input.GetKey(KeyCode.Q) && nbHolder.name.Contains("Isa"))
             {
-                doButtonPressProcedure(false, false);
+                doButtonPressProcedure(false, true);
             }
-            if (!Input.GetKey(KeyCode.P))
+            if (!Input.GetKey(KeyCode.P) && nbHolder.name.Contains("Mat"))
             {
                 doButtonPressProcedure(false, false);
             }
@@ -152,7 +154,7 @@ public class NoteCarouselScript : MonoBehaviour
 
     }
 
-    void checkForWrongInputDuringNote()
+    public void checkForWrongInputDuringNote()
     {
         if (currentNoteIndex < 0) return;
 
@@ -161,16 +163,42 @@ public class NoteCarouselScript : MonoBehaviour
 
         //check if the current note is a rest, if it is: return
         if (strCurrentNote.Contains("r")) return;
+        if (strCurrentNote == "0") return;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (isaDidCorrectInputDuringNote == false &&  nbHolder.name.Contains("Isa"))
         {
-            doButtonPressProcedure(true, true);
+            doButtonPressProcedure(false, true);
         }
-        if (Input.GetKeyUp(KeyCode.P))
+        if(matDidCorrectInputDuringNote == false && nbHolder.name.Contains("Mat"))
         {
-            doButtonPressProcedure(true, true);
+            doButtonPressProcedure(false, false);
         }
+    }
 
+    void handleInputDuringNote()
+    {
+        if (currentNoteIndex < 0) return;
+
+        //get the string value of the current note (aka the note under the arrow)
+        string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
+
+        //check if the current note is a rest, if it is: return
+        if (strCurrentNote.Contains("r")) return;
+        if (strCurrentNote == "0") return;
+        if (!isaDidCorrectInputDuringNote && nbHolder.name.Contains("Isa"))
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                isaDidCorrectInputDuringNote = true;
+            }
+        }
+        if (!matDidCorrectInputDuringNote && nbHolder.name.Contains("Mat"))
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                matDidCorrectInputDuringNote = true;
+            }
+        }
     }
 
     void checkForWrongInputDuringRestAndRestHolder()
@@ -198,11 +226,13 @@ public class NoteCarouselScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 doButtonPressProcedure(false, true);
+                Debug.Log("Isa pressed on the rest >:(");
             }
 
             if (Input.GetKeyDown(KeyCode.P))
             {
                 doButtonPressProcedure(false, false);
+                Debug.Log("Matisse pressed on the rest :|");
             }
         }
 
@@ -230,7 +260,7 @@ public class NoteCarouselScript : MonoBehaviour
         Debug.Log("advancing to next round");
 
         randomPieceGeneratorScript.generatePiece();
-        currentNoteIndex = -(noteblocksIsa.Length);
+        currentNoteIndex = -(noteblocksIsa.Length-1);
         secondsSinceLaunch = 0f;
 
         bpm += bpmIncreaseAmount;

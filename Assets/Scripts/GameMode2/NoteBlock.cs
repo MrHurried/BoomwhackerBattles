@@ -53,6 +53,8 @@ public class NoteBlock /*: MonoBehaviour*/
             GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
             go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
+
+        //setNextNote();
     }
 
     public void setNextNote()
@@ -68,6 +70,10 @@ public class NoteBlock /*: MonoBehaviour*/
             Sprite sprite = noteBlockFunctions.getNoteSprite(newestNoteIndex);
 
             sr.sprite = sprite;
+
+            Debug.Log("newest note : " + noteBlockFunctions.getNoteSprite(newestNoteIndex) +
+                "\n newest note index: " + newestNoteIndex+
+                "\n current note index = " + isaNoteCarouselScript.currentNoteIndex);
         }
     }
     public void setSlider()
@@ -107,9 +113,13 @@ public class NoteBlock /*: MonoBehaviour*/
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length + 
                     "\n parentIndex = " + parentIndex);
+                isaNoteCarouselScript.checkForWrongInputDuringNote();
+                isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 isaNoteCarouselScript.currentNoteIndex++;
                 this.setNextNote();
                 setSlider();
+                isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
+                matNoteCarouselScript.matDidCorrectInputDuringNote = false;
             }
         }
         else
@@ -124,6 +134,8 @@ public class NoteBlock /*: MonoBehaviour*/
                 Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) is false" +
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);
+                matNoteCarouselScript.checkForWrongInputDuringNote();
+                matNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 matNoteCarouselScript.currentNoteIndex++;
                 this.setNextNote();
                 setSlider();
