@@ -53,17 +53,25 @@ public class NoteBlock /*: MonoBehaviour*/
             GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
             go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
-
-        //setNextNote();
     }
 
-    public void setNextNote()
+    public void setNextNote(bool doStarterNote)
     {
         Transform noteSpriteHolder = go.transform.GetChild(0);
         Debug.Log(noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
 
-        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 5; //i believe this doesn't have to have a "mat" equivalent
+        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 4; //i believe this doesn't have to have a "mat" equivalent
+
+        if (doStarterNote && this.parentIndex == 5)
+        {
+            Debug.Log("parentindex? mine is: " + parentIndex + 
+                "\n my GO's name? that's : " + go.name);
+            Sprite sprite = noteBlockFunctions.getNoteSprite(newestNoteIndex);
+
+            sr.sprite = sprite;
+            return;
+        }
 
         if (newestNoteIndex >= 0)
         {
@@ -82,7 +90,7 @@ public class NoteBlock /*: MonoBehaviour*/
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
         Sprite slider;
 
-        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 5; //i believe this doesn't have to have a "mat" equivalent
+        int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 4; //i believe this doesn't have to have a "mat" equivalent
 
         if (RandomPieceGeneratorScript.generatedPiece[newestNoteIndex] != "0")
         {
@@ -116,7 +124,7 @@ public class NoteBlock /*: MonoBehaviour*/
                 isaNoteCarouselScript.checkForWrongInputDuringNote();
                 isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 isaNoteCarouselScript.currentNoteIndex++;
-                this.setNextNote();
+                this.setNextNote(false);
                 setSlider();
                 isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
                 matNoteCarouselScript.matDidCorrectInputDuringNote = false;
@@ -137,7 +145,7 @@ public class NoteBlock /*: MonoBehaviour*/
                 matNoteCarouselScript.checkForWrongInputDuringNote();
                 matNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 matNoteCarouselScript.currentNoteIndex++;
-                this.setNextNote();
+                this.setNextNote(false);
                 setSlider();
             }
         }

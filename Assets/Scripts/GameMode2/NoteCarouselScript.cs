@@ -42,9 +42,9 @@ public class NoteCarouselScript : MonoBehaviour
 
     void Start()
     {
-        noteBlockFunctions = gameObject.AddComponent<NoteBlockFunctions>();
+        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
 
-        currentNoteIndex = -5;
+        currentNoteIndex = -4;
 
         //this is done to prevent bugs
         if (nbHolder.name.Contains("Isa"))
@@ -55,6 +55,7 @@ public class NoteCarouselScript : MonoBehaviour
             isanb3 = new NoteBlock(3, true);
             isanb4 = new NoteBlock(4, true);
             isanb5 = new NoteBlock(5, true);
+            isanb5.setNextNote(true);
             noteblocksIsa = new NoteBlock[6] { isanb0, isanb1, isanb2, isanb3, isanb4, isanb5 };
             noteblocks = noteblocksIsa;
         }
@@ -66,6 +67,7 @@ public class NoteCarouselScript : MonoBehaviour
             matnb3 = new NoteBlock(3, false);
             matnb4 = new NoteBlock(4, false);
             matnb5 = new NoteBlock(5, false);
+            matnb5.setNextNote(true);
             noteblocksMat = new NoteBlock[6] { matnb0, matnb1, matnb2, matnb3, matnb4, matnb5 };
             noteblocks = noteblocksMat;
         }
