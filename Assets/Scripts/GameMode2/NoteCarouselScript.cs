@@ -43,7 +43,6 @@ public class NoteCarouselScript : MonoBehaviour
     void Start()
     {
         noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
-
         currentNoteIndex = -4;
 
         //this is done to prevent bugs

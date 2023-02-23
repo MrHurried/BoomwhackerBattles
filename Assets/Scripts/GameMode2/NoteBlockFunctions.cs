@@ -83,7 +83,7 @@ public class NoteBlockFunctions : MonoBehaviour
 
         //if we need to start from the newest note, add 5
         int index = isaNoteCarouselScript.currentNoteIndex;
-        if (startFromNewestNote) index = isaNoteCarouselScript.currentNoteIndex + 5;
+        if (startFromNewestNote) index = isaNoteCarouselScript.currentNoteIndex + 4;
 
         while (strCurrentNote == "0")
         {

@@ -2707,7 +2707,8 @@ MonoBehaviour:
   bpmIncreaseAmount: 30
   invincibile: 0
   nbHolder: {fileID: 732542725}
-  leftSpawnX: 0
+  isaDidCorrectInputDuringNote: 0
+  matDidCorrectInputDuringNote: 0
 --- !u!1 &760100323
 GameObject:
   m_ObjectHideFlags: 0
@@ -5043,7 +5044,8 @@ MonoBehaviour:
   bpmIncreaseAmount: 30
   invincibile: 0
   nbHolder: {fileID: 1515791458}
-  leftSpawnX: 0
+  isaDidCorrectInputDuringNote: 0
+  matDidCorrectInputDuringNote: 0
 --- !u!4 &1515791458
 Transform:
   m_ObjectHideFlags: 0
