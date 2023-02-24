@@ -127,13 +127,12 @@ public class NoteBlock
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length +
                     "\n parentIndex = " + parentIndex);
-                isaNoteCarouselScript.checkForWrongInputDuringNote();
-                isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
+                if(isaNoteCarouselScript.currentNoteIndex > 1) isaNoteCarouselScript.checkForWrongInputDuringNote();
                 isaNoteCarouselScript.currentNoteIndex++;
+                if (isaNoteCarouselScript.currentNoteIndex > 0 && RandomPieceGeneratorScript.generatedPiece[matNoteCarouselScript.currentNoteIndex] == "0") isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 this.setNextNote(false);
                 setSlider();
                 isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
-                matNoteCarouselScript.matDidCorrectInputDuringNote = false;
             }
         }
         else
@@ -148,11 +147,13 @@ public class NoteBlock
                 Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) is false" +
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);
-                matNoteCarouselScript.checkForWrongInputDuringNote();
-                matNoteCarouselScript.checkForWrongInputDuringNoteholder();
+
+                if (isaNoteCarouselScript.currentNoteIndex > 1) matNoteCarouselScript.checkForWrongInputDuringNote();
                 matNoteCarouselScript.currentNoteIndex++;
+                if (isaNoteCarouselScript.currentNoteIndex > 0 && RandomPieceGeneratorScript.generatedPiece[matNoteCarouselScript.currentNoteIndex] == "0") matNoteCarouselScript.checkForWrongInputDuringNoteholder();
                 this.setNextNote(false);
                 setSlider();
+                matNoteCarouselScript.matDidCorrectInputDuringNote = false;
             }
         }
         float xCoord;

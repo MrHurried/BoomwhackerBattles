@@ -95,7 +95,7 @@ public class NoteCarouselScript : MonoBehaviour
         secondsAfterFirstUpdate += 1f * Time.deltaTime;
         //if (secondsAfterFirstUpdate > 1) return;
 
-        checkForWrongInputDuringRestAndRestHolder();
+        checkForWrongInputDuringRestAndHolder();
 
         handleInputDuringNote();
 
@@ -146,10 +146,12 @@ public class NoteCarouselScript : MonoBehaviour
             if (!Input.GetKey(KeyCode.Q) && nbHolder.name.Contains("Isa"))
             {
                 doButtonPressProcedure(false, true);
+                Debug.Log("Isabel did a wrong input during a note holder");
             }
             if (!Input.GetKey(KeyCode.P) && nbHolder.name.Contains("Mat"))
             {
                 doButtonPressProcedure(false, false);
+                Debug.Log("Matisse did a wrong input during a note holder");
             }
         }
 
@@ -188,21 +190,23 @@ public class NoteCarouselScript : MonoBehaviour
         if (strCurrentNote == "0") return;
         if (!isaDidCorrectInputDuringNote && nbHolder.name.Contains("Isa"))
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 isaDidCorrectInputDuringNote = true;
+                Debug.Log("Isabel did correct input during this note");
             }
         }
         if (!matDidCorrectInputDuringNote && nbHolder.name.Contains("Mat"))
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 matDidCorrectInputDuringNote = true;
+                Debug.Log("matisse did correct input during this note");
             }
         }
     }
 
-    void checkForWrongInputDuringRestAndRestHolder()
+    void checkForWrongInputDuringRestAndHolder()
     {
         if (currentNoteIndex < 0) return;
 
