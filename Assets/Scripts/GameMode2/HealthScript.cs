@@ -16,6 +16,8 @@ public class HealthScript : MonoBehaviour
     public SpriteRenderer heart1SpriteRenderer;
     public SpriteRenderer heart2SpriteRenderer;
 
+    public GM2WinnerScript winScript;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,6 +30,7 @@ public class HealthScript : MonoBehaviour
     void Update()
     {
         displayHealth();
+        checkForLossAndDoProcedure();
     }
 
     public void removeHealth(int amount)
@@ -80,6 +83,18 @@ public class HealthScript : MonoBehaviour
                 transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 transform.GetChild(2).GetComponent<SpriteRenderer>().sprite = emptyHeartSprite;
                 break;
+        }
+    }
+
+    void checkForLossAndDoProcedure()
+    {
+        if (health <= 0 && heartHolder.gameObject.name.Contains("Isa"))
+        {
+            winScript.doMatWinSequence();
+        }
+        else if( health <= 0 && heartHolder.gameObject.name.Contains("Mat"))
+        {
+            winScript.doIsaWinSequence();
         }
     }
 }

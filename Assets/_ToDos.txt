@@ -1,5 +1,5 @@
 MAKING THE HEALTH DROP AT THE CORRECT TIME
-
+It still doesn't work 100% correctly, Isabel has invincibility on the first note i believe
 
 
 THINK ABOUT SPLITTING UP NoteCarouselScript into multiple scripts
