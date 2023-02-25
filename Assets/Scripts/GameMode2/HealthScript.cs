@@ -12,6 +12,8 @@ public class HealthScript : MonoBehaviour
 
     private int health = 6;
 
+    public static bool someoneWon = false;
+
     public SpriteRenderer heart0SpriteRenderer;
     public SpriteRenderer heart1SpriteRenderer;
     public SpriteRenderer heart2SpriteRenderer;
@@ -88,13 +90,15 @@ public class HealthScript : MonoBehaviour
 
     void checkForLossAndDoProcedure()
     {
-        if (health <= 0 && heartHolder.gameObject.name.Contains("Isa"))
+        if (health <= 0 && heartHolder.gameObject.name.Contains("Isa") && !someoneWon)
         {
             winScript.doMatWinSequence();
+            someoneWon = true;
         }
-        else if( health <= 0 && heartHolder.gameObject.name.Contains("Mat"))
+        else if( health <= 0 && heartHolder.gameObject.name.Contains("Mat") && !someoneWon)
         {
             winScript.doIsaWinSequence();
+            someoneWon = true;
         }
     }
 }

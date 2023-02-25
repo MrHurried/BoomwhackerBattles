@@ -40,7 +40,7 @@ public class GM2WinnerScript : MonoBehaviour
         //set matisse's sprite to one with a crown
         matSpriteRenderer.sprite = matisseWinSprite;
         //play the matisse win animation
-        matAnimator.Play("MatisseWins");
+        //matAnimator.Play("MatisseWins");
         // invoke victory sound
         Invoke("playVictorySound", victorySoundDelay);
         //Enable texts and button
@@ -54,7 +54,8 @@ public class GM2WinnerScript : MonoBehaviour
         //set matisse's sprite to one with a crown
         isaSpriteRenderer.sprite = isabelWinSprite;
         //play the matisse win animation
-        isaAnimator.Play("IsabelWins");
+        isaAnimator.applyRootMotion = false;
+        isaAnimator.Play("isabelWinsGM2");
         // invoke victory sound
         Invoke("playVictorySound", victorySoundDelay);
         //Enable texts
