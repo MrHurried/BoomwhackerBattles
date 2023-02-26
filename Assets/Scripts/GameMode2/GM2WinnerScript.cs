@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GM2WinnerScript : MonoBehaviour
@@ -12,6 +10,10 @@ public class GM2WinnerScript : MonoBehaviour
 
     //OTHER UI
     [SerializeField] GameObject WinnerContinueHolder;
+    [SerializeField] GameObject isaHeartHolder;
+    [SerializeField] GameObject matHeartHolder;
+    [SerializeField] GameObject matNoteBlocks;
+    [SerializeField] GameObject isaNoteBlocks;
 
     //SPRITES
     [SerializeField] Sprite matisseWinSprite;
@@ -19,6 +21,9 @@ public class GM2WinnerScript : MonoBehaviour
 
     [SerializeField] SpriteRenderer matSpriteRenderer;
     [SerializeField] SpriteRenderer isaSpriteRenderer;
+
+    [SerializeField] GameObject isaBW;
+    [SerializeField] GameObject matBW;
 
     //ANIMATIONS
     [SerializeField] Animator matAnimator;
@@ -40,13 +45,10 @@ public class GM2WinnerScript : MonoBehaviour
         //set matisse's sprite to one with a crown
         matSpriteRenderer.sprite = matisseWinSprite;
         //play the matisse win animation
-        //matAnimator.Play("MatisseWins");
-        // invoke victory sound
-        Invoke("playVictorySound", victorySoundDelay);
-        //Enable texts and button
-        winnerHeader.SetActive(true);
-        //WinnerContinueHolder.SetActive(true);
-        //matWinText.SetActive(true);
+        matAnimator.applyRootMotion = false;
+        matAnimator.Play("matisseWinsGM2");
+        
+        doUniversalWinSequenceTasks();
     }
 
     public void doIsaWinSequence()
@@ -56,10 +58,24 @@ public class GM2WinnerScript : MonoBehaviour
         //play the matisse win animation
         isaAnimator.applyRootMotion = false;
         isaAnimator.Play("isabelWinsGM2");
+        
+        doUniversalWinSequenceTasks();
+
+    }
+
+    //A function to avoid boilerplate code
+    public void doUniversalWinSequenceTasks()
+    {
         // invoke victory sound
         Invoke("playVictorySound", victorySoundDelay);
         //Enable texts
         winnerHeader.SetActive(true);
+        matHeartHolder.SetActive(false);
+        isaHeartHolder.SetActive(false);
+        matNoteBlocks.SetActive(false);
+        isaNoteBlocks.SetActive(false);
+        isaBW.SetActive(false);
+        matBW.SetActive(false);
         //WinnerContinueHolder.SetActive(true);
         //isaWinText.SetActive(true);
     }

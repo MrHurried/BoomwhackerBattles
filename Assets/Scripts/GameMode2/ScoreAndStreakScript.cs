@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class StreakScript : MonoBehaviour
+public class ScoreAndStreakScript : MonoBehaviour
 {
-    public TextMeshProUGUI streakOnderIsaText;
+    //SCORES
+    public int matScore = 0;
+    public int isaScore = 0;
+
+    public TextMeshProUGUI scoreOnderIsaText;
 
     //TESTING
 

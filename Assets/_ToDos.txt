@@ -1,16 +1,10 @@
 MAKING THE HEALTH DROP AT THE CORRECT TIME
 It still doesn't work 100% correctly, Isabel has invincibility on the first note i believe
 
-
-THINK ABOUT SPLITTING UP NoteCarouselScript into multiple scripts
-v: done :)
-
-Vzorg ervoor dat de NB's een constante distance tussen elkaar hebben (volgens mij is dat 1.1 units)
-V-zorg ervoor dat na 1 stuk is gespeeld:
-V1 een nieuw stuk generate wordt
-V2 er wordt 3 seconden gewacht
-V3 speel het nieuwe stuk
-
 ADDING JUICE
 - add an animated streak indicator
 1 fix de bug die zorgt dat de numbered text zwart is
+
+
+RETEXTURING
+- teken een sprite voor boven de notenbalk

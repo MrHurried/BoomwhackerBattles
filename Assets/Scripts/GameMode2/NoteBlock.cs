@@ -26,21 +26,21 @@ public class NoteBlock
         if (FromIsa)
         {
             this.spawnIndex = 110 * (5 - ParentIndex); // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
-            Debug.Log("New NoteBlock created. info:"
+            /*Debug.Log("New NoteBlock created. info:"
             + "\n parentIndex = " + ParentIndex
             + "\n spawnIndex = " + spawnIndex
             + "\n fromIsa = " + fromIsa
-            + "\n global position = " + SavedPossibleSpawns.possibleSpawnsIsa[spawnIndex]);
+            + "\n global position = " + SavedPossibleSpawns.possibleSpawnsIsa[spawnIndex]);*/
         }
 
         else
         {
             this.spawnIndex = 110 * (5 - ParentIndex); // 110 cus there are 110.0f units between each NB core. if ParentIndex = 0 spawnindex will also be zero. 
-            Debug.Log("New NoteBlock created"
+            /*Debug.Log("New NoteBlock created"
                 + "\n parentIndex = " + ParentIndex
                 + "\n spawnIndex = " + spawnIndex
                 + "\n fromIsa = " + fromIsa
-                + "\n global position = " + SavedPossibleSpawns.possibleSpawnsMat[spawnIndex]);
+                + "\n global position = " + SavedPossibleSpawns.possibleSpawnsMat[spawnIndex]);*/
         }
 
         if (FromIsa)
@@ -58,7 +58,7 @@ public class NoteBlock
     public void setNextNote(bool doStarterNote)
     {
         Transform noteSpriteHolder = go.transform.GetChild(0);
-        Debug.Log("notespritehodler name = " + noteSpriteHolder.name);
+        //Debug.Log("notespritehodler name = " + noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
 
         int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 4; //i believe this doesn't have to have a "mat" equivalent
@@ -68,12 +68,12 @@ public class NoteBlock
             newestNoteIndex = 0;
             Sprite sprite = noteBlockFunctions.getNoteSprite(newestNoteIndex);
             
-            Debug.Log("Doing starternote sprite setting. fromIsa? " + this.fromIsa +
+            /*Debug.Log("Doing starternote sprite setting. fromIsa? " + this.fromIsa +
                 "\n parentindex? mine is: " + parentIndex +
                 "\n my GO's name? that's : " + go.name +
                 "\n newestnoteindex = " + newestNoteIndex
                 + "\n fromIsa ? " + fromIsa + ". this nb will get this sprite: " + sprite+
-                "\n the character for newestNoteIndex = " + RandomPieceGeneratorScript.generatedPiece[newestNoteIndex]);
+                "\n the character for newestNoteIndex = " + RandomPieceGeneratorScript.generatedPiece[newestNoteIndex]);*/
 
             sr.sprite = sprite;
             return;
@@ -85,9 +85,9 @@ public class NoteBlock
 
             sr.sprite = sprite;
 
-            Debug.Log("newest note : " + noteBlockFunctions.getNoteSprite(newestNoteIndex) +
+            /*Debug.Log("newest note : " + noteBlockFunctions.getNoteSprite(newestNoteIndex) +
                 "\n newest note index: " + newestNoteIndex +
-                "\n current note index = " + isaNoteCarouselScript.currentNoteIndex);
+                "\n current note index = " + isaNoteCarouselScript.currentNoteIndex);*/
         }
     }
     public void setSlider()
@@ -123,10 +123,10 @@ public class NoteBlock
             else
             {
                 spawnIndex = 0;
-                Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) is false" +
+                /*Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) is false" +
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length +
-                    "\n parentIndex = " + parentIndex);
+                    "\n parentIndex = " + parentIndex);*/
                 if(isaNoteCarouselScript.currentNoteIndex > 1) isaNoteCarouselScript.checkForWrongInputDuringNote();
                 isaNoteCarouselScript.currentNoteIndex++;
                 if (isaNoteCarouselScript.currentNoteIndex > 0 && RandomPieceGeneratorScript.generatedPiece[matNoteCarouselScript.currentNoteIndex] == "0") isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
@@ -144,9 +144,9 @@ public class NoteBlock
             else
             {
                 spawnIndex = 0;
-                Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) is false" +
+                /*Debug.Log("spawnindex set to 0 because: (spawnIndex < SavedPossibleSpawns.possibleSpawnsMat.Length - 1) is false" +
                     "\n spawnindex = " + spawnIndex +
-                    "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);
+                    "\n SavedPossibleSpawns.possibleSpawnsMat.Length = " + SavedPossibleSpawns.possibleSpawnsMat.Length);*/
 
                 if (isaNoteCarouselScript.currentNoteIndex > 1) matNoteCarouselScript.checkForWrongInputDuringNote();
                 matNoteCarouselScript.currentNoteIndex++;
