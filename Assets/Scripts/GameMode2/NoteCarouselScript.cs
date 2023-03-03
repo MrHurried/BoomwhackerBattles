@@ -168,7 +168,7 @@ public class NoteCarouselScript : MonoBehaviour
         if (strCurrentNote.Contains("r")) return;
         if (strCurrentNote == "0") return;
 
-        if (isaDidCorrectInputDuringNote == false &&  nbHolder.name.Contains("Isa"))
+        if (isaDidCorrectInputDuringNote == false && nbHolder.name.Contains("Isa"))
         {
             doButtonPressProcedure(false, true);
         }
@@ -198,7 +198,7 @@ public class NoteCarouselScript : MonoBehaviour
         }
         if (!matDidCorrectInputDuringNote && nbHolder.name.Contains("Mat"))
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 matDidCorrectInputDuringNote = true;
                 Debug.Log("matisse did correct input during this note");

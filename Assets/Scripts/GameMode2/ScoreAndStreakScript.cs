@@ -4,7 +4,8 @@ using UnityEngine;
 using TMPro;
 
 public class ScoreAndStreakScript : MonoBehaviour
-{
+{ 
+    /*
     //SCORES
     public int matScore = 0;
     public int isaScore = 0;
@@ -98,5 +99,5 @@ public class ScoreAndStreakScript : MonoBehaviour
             }
             //streakOnderIsaText.color = new VertexGradient()
         }
-    }
+    }*/
 }

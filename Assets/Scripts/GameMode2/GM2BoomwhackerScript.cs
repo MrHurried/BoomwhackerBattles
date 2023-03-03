@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GM2BoomwhackerScript : MonoBehaviour
-{
+{ 
     //AUDIO RELATED
     [SerializeField] AudioClip bonk;
     private AudioSource audioSrc;
@@ -36,19 +36,14 @@ public class GM2BoomwhackerScript : MonoBehaviour
         audioSrc = GetComponent<AudioSource>();      
     }
 
-    // Update is called once per frame
-    void Update()
+    public void whackMatisse()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            //whack Isabel
-            StartCoroutine(whackCoroutine(false));
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //Whack Matisse
-            StartCoroutine(whackCoroutine(true));
-        }
+        StartCoroutine(whackCoroutine(true));
+    }
+   
+    public void whackIsabel()
+    {
+        StartCoroutine(whackCoroutine(false));
     }
 
     IEnumerator whackCoroutine(bool whackMatisse)

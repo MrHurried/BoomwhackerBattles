@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OptionsScriptGM2 : MonoBehaviour
 {
-    public bool doCameraShake;
+    public bool doCameraSway;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,7 @@ public class OptionsScriptGM2 : MonoBehaviour
 
     void ChangeCameraShake()
     {
-        if (!doCameraShake)
+        if (!doCameraSway)
         {
             GameObject mainCamera = GameObject.Find("Main Camera");
             mainCamera.GetComponent<Animator>().enabled = false;

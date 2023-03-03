@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HealthScript : MonoBehaviour
 {
+
+
     [SerializeField] Transform heartHolder;
 
     [SerializeField] Sprite fullHeartSprite;
@@ -19,6 +21,7 @@ public class HealthScript : MonoBehaviour
     public SpriteRenderer heart2SpriteRenderer;
 
     public GM2WinnerScript winScript;
+    [SerializeField] GM2BoomwhackerScript BWScript;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,6 +41,20 @@ public class HealthScript : MonoBehaviour
     public void removeHealth(int amount)
     {
         health -= amount;
+        hitBoomWhacker();
+    }
+
+    //to be called when someone does a wrong input
+    public void hitBoomWhacker()
+    {
+        if (heartHolder.name.Contains("Mat"))
+        {
+            BWScript.whackMatisse();
+        }
+        else
+        {
+            BWScript.whackIsabel();
+        }
     }
 
     private void displayHealth()
