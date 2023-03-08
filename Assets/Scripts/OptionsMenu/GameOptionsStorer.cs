@@ -20,7 +20,7 @@ public class GameOptionsStorer : MonoBehaviour
 
 
     //this function is called when the "continue" button in the OptionsMenu scene is pressed
-    public void SaveGameOptions() 
+    public void SaveGameOptionsGM1() 
     {
         string ptwText = pointsToWinInputfield.text;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionsScriptGM2 : MonoBehaviour
+public class OptionsApplierScriptGM2 : MonoBehaviour
 {
     public bool doCameraSway;
     public int startingBPM;
