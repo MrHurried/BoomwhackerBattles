@@ -267,6 +267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isaNoteCarouselScript: {fileID: 732542726}
   currentNoteString: 
+  doCustomPiece: 1
+  customPieceString: []
 --- !u!114 &13443483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abed544b7109df742b8cdd24ae71a697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n2_C6: {fileID: 8300000, guid: 6635937646f0dbb4bb9595cb33ec7d50, type: 3}
+  n2_C6: {fileID: 8300000, guid: 1dce8019fa25f534990d7df3cfce53b1, type: 3}
   n4_C6: {fileID: 8300000, guid: 4af37512199c4994f8bba7c5f5a480d2, type: 3}
   n8_C6: {fileID: 8300000, guid: 35c0971eb117aa8479c35cc0072a3c11, type: 3}
   n16_C6: {fileID: 8300000, guid: d2e508c7bb148174682fefddf79924c5, type: 3}

@@ -12,16 +12,27 @@ public class NoteSoundScript : MonoBehaviour
 
     private AudioSource audioSource;
 
+    public bool doCustomPiece;
+    public List<string> customPieceString = new List<string>();
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         noteSounds = GetComponent<NoteSoundsStorer>();
+        if (doCustomPiece)
+        {
+            customPieceString = new List<string> { "2", "0", "0", "0", "0", "0", "0", "0 ", "2", "0", "0", "0", "0", "0", "0", "0 " };
+            RandomPieceGeneratorScript.generatedPiece = customPieceString;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         updateCurrentNotestring();
 
         if(currentNoteString == "2" && !audioSource.isPlaying)
