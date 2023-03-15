@@ -267,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isaNoteCarouselScript: {fileID: 732542726}
   currentNoteString: 
-  doCustomPiece: 1
+  doCustomPiece: 0
   customPieceString: []
 --- !u!114 &13443483
 MonoBehaviour:

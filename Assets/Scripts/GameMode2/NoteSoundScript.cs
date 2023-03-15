@@ -15,6 +15,8 @@ public class NoteSoundScript : MonoBehaviour
     public bool doCustomPiece;
     public List<string> customPieceString = new List<string>();
 
+    public int lastPlayedNoteIndex;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,34 +27,44 @@ public class NoteSoundScript : MonoBehaviour
             customPieceString = new List<string> { "2", "0", "0", "0", "0", "0", "0", "0 ", "2", "0", "0", "0", "0", "0", "0", "0 " };
             RandomPieceGeneratorScript.generatedPiece = customPieceString;
         }
-        
+
+        lastPlayedNoteIndex = isaNoteCarouselScript.currentNoteIndex;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isaNoteCarouselScript.currentNoteIndex < 0) return;
 
         updateCurrentNotestring();
 
-        if(currentNoteString == "2" && !audioSource.isPlaying)
+        if(currentNoteString == "2" && noteNeedsToPlay())
         {
             audioSource.PlayOneShot(noteSounds.n2_C6);
         }
-        if(currentNoteString == "4" && !audioSource.isPlaying)
+        if(currentNoteString == "4" && noteNeedsToPlay())
         {
             audioSource.PlayOneShot(noteSounds.n4_C6);
         }
-        if (currentNoteString == "8" && !audioSource.isPlaying)
+        if (currentNoteString == "8" && noteNeedsToPlay())
         {
             audioSource.PlayOneShot(noteSounds.n8_C6);
         }
-        if (currentNoteString == "16" && !audioSource.isPlaying)
+        if (currentNoteString == "16" && noteNeedsToPlay())
         {
             audioSource.PlayOneShot(noteSounds.n16_C6);
         }
     }
 
+    public bool noteNeedsToPlay()
+    {
+        if(isaNoteCarouselScript.currentNoteIndex != lastPlayedNoteIndex)
+        {
+            lastPlayedNoteIndex = isaNoteCarouselScript.currentNoteIndex;
+            return true;
+        }
+        else { return false; }
+    }
     public void updateCurrentNotestring()
     {
         if (isaNoteCarouselScript.currentNoteIndex < 0) return;
