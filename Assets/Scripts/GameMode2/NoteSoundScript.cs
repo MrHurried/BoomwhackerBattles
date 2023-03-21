@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,6 +18,11 @@ public class NoteSoundScript : MonoBehaviour
     public List<string> customPieceString = new List<string>();
 
     public int lastPlayedNoteIndex;
+
+    //these are sorted lowest to highest
+    string[] playableNotes = new string[8] { "C6", "D6", "E6", "F6", "G6", "A6", "B6", "C7" };
+
+    public string currentNoteName = "D6";
 
     // Start is called before the first frame update
     void Start()
@@ -72,4 +79,33 @@ public class NoteSoundScript : MonoBehaviour
         currentNoteString = RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex];
     }
 
+    private void playNextNote()
+    {
+        chooseNextNote();
+
+        // Get the type of the class containing the variable
+        Type type = typeof(NoteSoundsStorer);
+
+        // Get the field based on the input string
+        FieldInfo field = type.GetField("N2_" + currentNoteName);
+
+        // Get the value of the field
+        object fieldValue = field.GetValue(null);
+
+        Debug.Log(fieldValue);
+    }
+
+    private void chooseNextNote()
+    {
+        //get the index of the currently played note
+        int index = Array.IndexOf(playableNotes, currentNoteName);
+        int indexIncrement = UnityEngine.Random.Range(-2, 2);
+        int potentialIndex = index + indexIncrement;
+        if(potentialIndex >= 0 && potentialIndex < playableNotes.Length)
+        {
+            currentNoteName = playableNotes[potentialIndex];
+        }
+    }
+
 }
+

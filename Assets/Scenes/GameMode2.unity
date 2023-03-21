@@ -269,6 +269,8 @@ MonoBehaviour:
   currentNoteString: 
   doCustomPiece: 0
   customPieceString: []
+  lastPlayedNoteIndex: 0
+  currentNoteName: C6
 --- !u!114 &13443483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,10 +283,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abed544b7109df742b8cdd24ae71a697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  n2_C6: {fileID: 8300000, guid: 1dce8019fa25f534990d7df3cfce53b1, type: 3}
+  n2_C6: {fileID: 8300000, guid: 69d80a5a82278384b8c5a8e776d1d9b5, type: 3}
+  n2_D6: {fileID: 8300000, guid: f1ed180a4aa1d334e895be307aa06980, type: 3}
+  n2_E6: {fileID: 8300000, guid: b7136358b9ec9084891d520f939f4bd5, type: 3}
+  n2_F6: {fileID: 8300000, guid: b0a8a20075afe35418770d3bb0f4d06f, type: 3}
+  n2_G6: {fileID: 8300000, guid: e10671cda1eeed14b866c0c58e396706, type: 3}
+  n2_A6: {fileID: 8300000, guid: ec47e5309860f6449bbdbb57684273a1, type: 3}
+  n2_B6: {fileID: 8300000, guid: 2c813e4293bcbeb4285bcea2aba1b891, type: 3}
+  n2_C7: {fileID: 8300000, guid: 5a9db612bb3a2944eac0dcccdd3f2d79, type: 3}
   n4_C6: {fileID: 8300000, guid: 4af37512199c4994f8bba7c5f5a480d2, type: 3}
-  n8_C6: {fileID: 8300000, guid: 35c0971eb117aa8479c35cc0072a3c11, type: 3}
+  n4_D6: {fileID: 8300000, guid: edf915fdddecec743982c240e4b68386, type: 3}
+  n4_E6: {fileID: 8300000, guid: ad13fde970cd37646bd396250066ed87, type: 3}
+  n4_F6: {fileID: 8300000, guid: 2c2ff9fe797b62444bfe095c288d8c1f, type: 3}
+  n4_G6: {fileID: 8300000, guid: fdce54c064dae184db933b561afdcadf, type: 3}
+  n4_A6: {fileID: 8300000, guid: 5abdcf7e561cc5a42bcb90ea0ad24a79, type: 3}
+  n4_B6: {fileID: 8300000, guid: fcf8d9af99fd8304f970e54ac4530b18, type: 3}
+  n4_C7: {fileID: 8300000, guid: 6f06d01b0192f1849aa64d5aabc32810, type: 3}
+  n8_C6: {fileID: 8300000, guid: f0072854b35f52a4f8846bcd54b73a6a, type: 3}
+  n8_D6: {fileID: 8300000, guid: d8e676af1364ed340b369c27f2867387, type: 3}
+  n8_E6: {fileID: 8300000, guid: a29790aaa8a14a64c88c1ff12e75014e, type: 3}
+  n8_F6: {fileID: 8300000, guid: 1c3d083b8f8dfb644a4a7d84756cee3b, type: 3}
+  n8_G6: {fileID: 8300000, guid: 34e59b57ab804ee469fcaa28320009aa, type: 3}
+  n8_A6: {fileID: 8300000, guid: 419dba4f34cf5164b9ae19976f0cb9ee, type: 3}
+  n8_B6: {fileID: 8300000, guid: c259a84aea04f7447b2bf706ce5472ca, type: 3}
+  n8_C7: {fileID: 8300000, guid: 6a2f6a1a608d3aa4b846064946397c64, type: 3}
   n16_C6: {fileID: 8300000, guid: d2e508c7bb148174682fefddf79924c5, type: 3}
+  n16_D6: {fileID: 8300000, guid: 647979dfb734011438160cebe25c375c, type: 3}
+  n16_E6: {fileID: 8300000, guid: 6d00eaffbc0ec6b459eb8b56a5a6dc83, type: 3}
+  n16_F6: {fileID: 8300000, guid: 1a5dcb76b05eeb541a82c1bc58e60ad6, type: 3}
+  n16_G6: {fileID: 8300000, guid: eaf7f85d03ec08f4dbafd2eea91d1f53, type: 3}
+  n16_A6: {fileID: 8300000, guid: 34a5513911e82db489602d4e6ea378c2, type: 3}
+  n16_B6: {fileID: 8300000, guid: 2c86796db13285f418a4e5e9901625d1, type: 3}
+  n16_C7: {fileID: 8300000, guid: 383c5a5b52678e54eb73970602f21149, type: 3}
 --- !u!1 &64300973
 GameObject:
   m_ObjectHideFlags: 0
