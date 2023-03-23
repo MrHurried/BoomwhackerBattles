@@ -45,13 +45,21 @@ public class NoteSoundScript : MonoBehaviour
 
         updateCurrentNotestring();
 
-        if(currentNoteString == "2" && noteNeedsToPlay())
+
+        if(!currentNoteString.Contains("r") && noteNeedsToPlay() && currentNoteString != "0")
         {
-            audioSource.PlayOneShot(noteSounds.n2_C6);
+            playNextNote();
+            Debug.Log("just called playNextNote()");
+        }
+
+        /*if(currentNoteString == "2" && noteNeedsToPlay())
+        {
+            //audioSource.PlayOneShot(noteSounds.n2_C6);
+            playNextNote();
         }
         if(currentNoteString == "4" && noteNeedsToPlay())
         {
-            audioSource.PlayOneShot(noteSounds.n4_C6);
+            playNextNote();
         }
         if (currentNoteString == "8" && noteNeedsToPlay())
         {
@@ -60,7 +68,7 @@ public class NoteSoundScript : MonoBehaviour
         if (currentNoteString == "16" && noteNeedsToPlay())
         {
             audioSource.PlayOneShot(noteSounds.n16_C6);
-        }
+        }*/
     }
 
     public bool noteNeedsToPlay()
@@ -83,28 +91,38 @@ public class NoteSoundScript : MonoBehaviour
     {
         chooseNextNote();
 
-        // Get the type of the class containing the variable
-        Type type = typeof(NoteSoundsStorer);
+        string fullNoteName = "N" + currentNoteString.ToUpper() + "_" + currentNoteName;
 
-        // Get the field based on the input string
-        FieldInfo field = type.GetField("N2_" + currentNoteName);
+        Debug.Log(fullNoteName);
 
-        // Get the value of the field
-        object fieldValue = field.GetValue(null);
+        System.Reflection.FieldInfo field = noteSounds.GetType().GetField(fullNoteName);
 
-        Debug.Log(fieldValue);
+        if (field != null)
+        {
+            // Get the value of the variable
+            AudioClip noteClip = (AudioClip)field.GetValue(noteSounds);
+
+            audioSource.PlayOneShot(noteClip);
+        }
+        else
+        {
+            Debug.Log("this clip doesn't exist :(");
+        }
     }
 
     private void chooseNextNote()
     {
-        //get the index of the currently played note
-        int index = Array.IndexOf(playableNotes, currentNoteName);
-        int indexIncrement = UnityEngine.Random.Range(-2, 2);
-        int potentialIndex = index + indexIncrement;
-        if(potentialIndex >= 0 && potentialIndex < playableNotes.Length)
+        int potentialIndex = -1;
+        while (!(potentialIndex >= 0 && potentialIndex < playableNotes.Length))
         {
-            currentNoteName = playableNotes[potentialIndex];
+            //get the index of the currently played note
+            int index = Array.IndexOf(playableNotes, currentNoteName);
+            int indexIncrement = UnityEngine.Random.Range(-2, 2);
+            potentialIndex = index + indexIncrement;
         }
+        
+        currentNoteName = playableNotes[potentialIndex];
+
     }
 
 }
