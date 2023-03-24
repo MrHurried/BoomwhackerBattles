@@ -106,7 +106,7 @@ public class NoteCarouselScript : MonoBehaviour
         //advanceIndex();
 
         //testing
-        Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
+        //Debug.Log("piece length: " + RandomPieceGeneratorScript.generatedPiece.Count);
         //check if the full piece is played, then run the according procedure
         if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
         {

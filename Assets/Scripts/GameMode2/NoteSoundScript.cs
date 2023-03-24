@@ -27,6 +27,7 @@ public class NoteSoundScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         audioSource = GetComponent<AudioSource>();
         noteSounds = GetComponent<NoteSoundsStorer>();
         if (doCustomPiece)
@@ -46,7 +47,7 @@ public class NoteSoundScript : MonoBehaviour
         updateCurrentNotestring();
 
 
-        if(!currentNoteString.Contains("r") && noteNeedsToPlay() && currentNoteString != "0")
+        if (!currentNoteString.Contains("r") && noteNeedsToPlay() && currentNoteString != "0")
         {
             playNextNote();
             Debug.Log("just called playNextNote()");
@@ -73,7 +74,7 @@ public class NoteSoundScript : MonoBehaviour
 
     public bool noteNeedsToPlay()
     {
-        if(isaNoteCarouselScript.currentNoteIndex != lastPlayedNoteIndex)
+        if (isaNoteCarouselScript.currentNoteIndex != lastPlayedNoteIndex)
         {
             lastPlayedNoteIndex = isaNoteCarouselScript.currentNoteIndex;
             return true;
@@ -91,23 +92,25 @@ public class NoteSoundScript : MonoBehaviour
     {
         chooseNextNote();
 
-        string fullNoteName = "N" + currentNoteString.ToUpper() + "_" + currentNoteName;
+        string fullNoteName = "n" + currentNoteString + "_" + currentNoteName;
 
         Debug.Log(fullNoteName);
 
-        System.Reflection.FieldInfo field = noteSounds.GetType().GetField(fullNoteName);
+        System.Reflection.FieldInfo field = noteSounds.GetType().GetField(fullNoteName, /*System.Reflection.BindingFlags.NonPublic |*/ BindingFlags.Public | System.Reflection.BindingFlags.Instance);
 
         if (field != null)
         {
             // Get the value of the variable
-            AudioClip noteClip = (AudioClip)field.GetValue(noteSounds);
+            AudioClip noteClip = (AudioClip)(field.GetValue(noteSounds));
 
             audioSource.PlayOneShot(noteClip);
+
         }
         else
         {
             Debug.Log("this clip doesn't exist :(");
         }
+
     }
 
     private void chooseNextNote()
@@ -120,7 +123,7 @@ public class NoteSoundScript : MonoBehaviour
             int indexIncrement = UnityEngine.Random.Range(-2, 2);
             potentialIndex = index + indexIncrement;
         }
-        
+
         currentNoteName = playableNotes[potentialIndex];
 
     }

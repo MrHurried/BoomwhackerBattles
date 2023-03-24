@@ -25,7 +25,7 @@ public class NoteSoundsStorer : MonoBehaviour
      public AudioClip n4_B6;
      public AudioClip n4_C7;
 
-    [Header("EIGHTH NOTES:")]
+    [Header("EIGHTHT NOTES:")]
     public AudioClip n8_C6;
     public AudioClip n8_D6;
     public AudioClip n8_E6;
