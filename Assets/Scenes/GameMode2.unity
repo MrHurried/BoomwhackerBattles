@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 13443479}
   - component: {fileID: 13443481}
   - component: {fileID: 13443483}
+  - component: {fileID: 13443484}
   m_Layer: 0
   m_Name: NoteSoundPlayer
   m_TagString: Untagged
@@ -315,6 +316,33 @@ MonoBehaviour:
   n16_A6: {fileID: 8300000, guid: 34a5513911e82db489602d4e6ea378c2, type: 3}
   n16_B6: {fileID: 8300000, guid: 2c86796db13285f418a4e5e9901625d1, type: 3}
   n16_C7: {fileID: 8300000, guid: 383c5a5b52678e54eb73970602f21149, type: 3}
+--- !u!114 &13443484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13443478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc18d35c5b982c4ba72c2039292e24c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chord_C_1: {fileID: 8300000, guid: e0dc8c0c385733144b26b0d9c61a383e, type: 3}
+  chord_C_2: {fileID: 8300000, guid: 0427e1cdd6ea52e4a91ff5fbc4fd8804, type: 3}
+  chord_C_3: {fileID: 8300000, guid: 2014b84d314dd7a4a844a5db99a66a7f, type: 3}
+  chord_C_4: {fileID: 8300000, guid: 07b9d7c7ef2073b47bd713a96cd52270, type: 3}
+  chord_C_5: {fileID: 8300000, guid: e0030b498d0d85949bd84b0242207ca0, type: 3}
+  chord_C_6: {fileID: 8300000, guid: a385a595622acc04f844dea6a1d9c845, type: 3}
+  chord_C_7: {fileID: 8300000, guid: 8a47b932220a45b4abaa9d8bd7e30192, type: 3}
+  chord_C_8: {fileID: 8300000, guid: 52516cf2cae62c843bc6f0a3aafc3cab, type: 3}
+  chord_C_9: {fileID: 8300000, guid: e69aafc3016501c4783ac877d9d6223d, type: 3}
+  chord_C_10: {fileID: 8300000, guid: e7a07cd3dd866764dacd33d9310fe542, type: 3}
+  chord_C_11: {fileID: 8300000, guid: 79985a46ef45b6d409c684a772b8f533, type: 3}
+  chord_C_12: {fileID: 8300000, guid: 1e6111e20775d434f926488180b2040c, type: 3}
+  chord_C_13: {fileID: 8300000, guid: 352302b6b29311446807b831e0faa05f, type: 3}
+  chord_C_14: {fileID: 8300000, guid: 6ddd09aaf7e3edb4aa04e5897e7f5dc0, type: 3}
+  chord_C_15: {fileID: 8300000, guid: af9f3edd5060937489f3f046a12ba078, type: 3}
 --- !u!1 &64300973
 GameObject:
   m_ObjectHideFlags: 0
