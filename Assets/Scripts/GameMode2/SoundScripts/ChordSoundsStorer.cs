@@ -7,7 +7,7 @@ public class ChordSoundsStorer : MonoBehaviour
     [Header("C Major:")]
     public AudioClip chord_C_1;
     public AudioClip chord_C_2;
-    public AudioClip chord_C_3d;
+    public AudioClip chord_C_3;
     public AudioClip chord_C_4;
     public AudioClip chord_C_5;
     public AudioClip chord_C_6;
@@ -20,5 +20,11 @@ public class ChordSoundsStorer : MonoBehaviour
     public AudioClip chord_C_13;
     public AudioClip chord_C_14;
     public AudioClip chord_C_15;
-    public AudioClip[] c_chords = new AudioClip[15] { chord_C_1, chord_C_2, chord_C_3, chord_C_4 , chord_C_5, chord_C_6, chord_C_7 , chord_C_8 , chord_C_9 , chord_C_10, chord_C_11, chord_C_12, chord_C_13, chord_C_14, chord_C_15 };
+
+
+    public AudioClip[] c_chords;
+    private void Awake()
+    {
+       c_chords = new AudioClip[] { chord_C_1, chord_C_2, chord_C_3, chord_C_4, chord_C_5, chord_C_6, chord_C_7, chord_C_8, chord_C_9, chord_C_10, chord_C_11, chord_C_12, chord_C_13, chord_C_14, chord_C_15 };
+    }
 }
