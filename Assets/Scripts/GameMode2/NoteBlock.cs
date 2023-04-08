@@ -46,12 +46,12 @@ public class NoteBlock
         if (FromIsa)
         {
             GameObject nbholder = GameObject.Find("NotenBovenIsaHolder");
-            go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
+            go = nbholder.transform.GetChild(1).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
         else
         {
             GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
-            go = nbholder.transform.GetChild(0).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
+            go = nbholder.transform.GetChild(1).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
     }
 

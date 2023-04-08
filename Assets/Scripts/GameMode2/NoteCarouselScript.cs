@@ -3,12 +3,14 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using BoomWhackerBattles;
+using UnityEditor.ShaderGraph.Drawing;
 
 public class NoteCarouselScript : MonoBehaviour
 {
     [SerializeField] HealthScript isaHealthScript;
     [SerializeField] HealthScript matHealthScript;
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
+    public GM2FeedbackScript feedbackScript;
     private NoteBlockFunctions noteBlockFunctions;
     public int bpm = 60;
     public int currentNoteIndex; // might want to make this private if a bug concerning the noteindex persists
@@ -172,10 +174,18 @@ public class NoteCarouselScript : MonoBehaviour
         {
             doButtonPressProcedure(false, true);
         }
+        /*else
+        {
+            if(feedbackScript != null) { feedbackScript.doFeedbackProcedure(true, true); }
+        }*/
         if(matDidCorrectInputDuringNote == false && nbHolder.name.Contains("Mat"))
         {
             doButtonPressProcedure(false, false);
         }
+        /*else
+        {
+            if (feedbackScript != null) { feedbackScript.doFeedbackProcedure(false, true); }
+        }*/
     }
 
     void handleInputDuringNote()
@@ -255,9 +265,17 @@ public class NoteCarouselScript : MonoBehaviour
         //health should be decreased here
 
         Debug.Log("didCorrectInput == false && nbHolder.name.Contains(Isa) && fromIsa = " + (didCorrectInput == false && nbHolder.name.Contains("Isa") && fromIsa));
-        if (didCorrectInput == false && nbHolder.name.Contains("Isa") && fromIsa) isaHealthScript.removeHealth(1);
+        if (didCorrectInput == false && nbHolder.name.Contains("Isa") && fromIsa) { isaHealthScript.removeHealth(1); }
+        else
+        {
+            feedbackScript.doFeedbackProcedure(true, true);
+        }
         Debug.Log("didCorrectInput == false && nbHolder.name.Contains(Mat) && !fromIsa = " + (didCorrectInput == false && nbHolder.name.Contains("Mat") && !fromIsa));
         if (didCorrectInput == false && nbHolder.name.Contains("Mat") && !fromIsa) matHealthScript.removeHealth(1);
+        else
+        {
+            feedbackScript.doFeedbackProcedure(false, true);
+        }
     }
 
     void doNextRoundProcedure()

@@ -666,7 +666,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1515791458}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &141765342
 SpriteRenderer:
@@ -1917,7 +1917,7 @@ GameObject:
   - component: {fileID: 359278687}
   - component: {fileID: 359278686}
   m_Layer: 0
-  m_Name: isaCorrectInputAnim
+  m_Name: matCorrectInputAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1936,7 +1936,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1515791458}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &359278686
 SpriteRenderer:
@@ -2487,7 +2487,7 @@ Transform:
   - {fileID: 1359945905}
   - {fileID: 64300974}
   m_Father: {fileID: 1515791458}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527182332
 GameObject:
@@ -3451,6 +3451,7 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1277496334}
   - {fileID: 930924564}
   - {fileID: 1557276326}
   - {fileID: 1752958942}
@@ -3472,10 +3473,11 @@ MonoBehaviour:
   isaHealthScript: {fileID: 789250877}
   matHealthScript: {fileID: 651932300}
   randomPieceGeneratorScript: {fileID: 1427142615}
+  feedbackScript: {fileID: 1427142621}
   bpm: 60
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
-  invincibile: 1
+  invincibile: 0
   nbHolder: {fileID: 732542725}
   isaDidCorrectInputDuringNote: 0
   matDidCorrectInputDuringNote: 0
@@ -4196,7 +4198,7 @@ Transform:
   - {fileID: 916560227}
   - {fileID: 603426322}
   m_Father: {fileID: 732542725}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935725681
 GameObject:
@@ -5643,12 +5645,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277496333}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.009999514, y: 0.019999925, z: 0}
+  m_LocalPosition: {x: -1.5200006, y: 0.059999846, z: 0}
   m_LocalScale: {x: 0.45, y: 0.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2078816452}
-  m_RootOrder: 2
+  m_Father: {fileID: 732542725}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1277496335
 Animator:
@@ -5871,6 +5873,7 @@ GameObject:
   - component: {fileID: 1427142618}
   - component: {fileID: 1427142619}
   - component: {fileID: 1427142620}
+  - component: {fileID: 1427142621}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5976,6 +5979,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doCameraSway: 0
   startingBPM: 60
+--- !u!114 &1427142621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427142614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761efd59661665044b78312fd51be715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isaAnimator: {fileID: 1277496335}
+  matAnimator: {fileID: 359278687}
 --- !u!1 &1453287958
 GameObject:
   m_ObjectHideFlags: 0
@@ -6176,10 +6193,11 @@ MonoBehaviour:
   isaHealthScript: {fileID: 789250877}
   matHealthScript: {fileID: 651932300}
   randomPieceGeneratorScript: {fileID: 1427142615}
+  feedbackScript: {fileID: 1427142621}
   bpm: 60
   currentNoteIndex: 0
   bpmIncreaseAmount: 30
-  invincibile: 1
+  invincibile: 0
   nbHolder: {fileID: 1515791458}
   isaDidCorrectInputDuringNote: 0
   matDidCorrectInputDuringNote: 0
@@ -6195,9 +6213,9 @@ Transform:
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 359278685}
   - {fileID: 481144860}
   - {fileID: 141765341}
-  - {fileID: 359278685}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6547,7 +6565,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 732542725}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1557276327
 SpriteRenderer:
@@ -7357,7 +7375,7 @@ RectTransform:
   m_Children:
   - {fileID: 1574021784}
   m_Father: {fileID: 732542725}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7960,7 +7978,6 @@ Transform:
   m_Children:
   - {fileID: 1744502334}
   - {fileID: 1066321959}
-  - {fileID: 1277496334}
   m_Father: {fileID: 930924564}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
