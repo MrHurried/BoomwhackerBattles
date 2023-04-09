@@ -74,8 +74,8 @@ public class GM2WinnerScript : MonoBehaviour
         isaHeartHolder.SetActive(false);
         matNoteBlocks.SetActive(false);
         isaNoteBlocks.SetActive(false);
-        isaBW.SetActive(false);
-        matBW.SetActive(false);
+        //isaBW.SetActive(false);
+        //matBW.SetActive(false);
         //WinnerContinueHolder.SetActive(true);
         //isaWinText.SetActive(true);
     }

@@ -46,12 +46,12 @@ public class NoteBlock
         if (FromIsa)
         {
             GameObject nbholder = GameObject.Find("NotenBovenIsaHolder");
-            go = nbholder.transform.GetChild(1).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
+            go = nbholder.transform.GetChild(2).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
         else
         {
             GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
-            go = nbholder.transform.GetChild(1).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
+            go = nbholder.transform.GetChild(2).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
     }
 
@@ -129,7 +129,7 @@ public class NoteBlock
                     "\n parentIndex = " + parentIndex);*/
                 if(isaNoteCarouselScript.currentNoteIndex > -1) isaNoteCarouselScript.checkForWrongInputDuringNote();
                 isaNoteCarouselScript.currentNoteIndex++;
-                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") isaNoteCarouselScript.checkForWrongInputDuringNoteholder();
+                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") isaNoteCarouselScript.checkForWrongInputDuringNoteHolder();
                 this.setNextNote(false);
                 setSlider();
                 isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
@@ -151,7 +151,7 @@ public class NoteBlock
 
                 if (isaNoteCarouselScript.currentNoteIndex > -1) matNoteCarouselScript.checkForWrongInputDuringNote();
                 matNoteCarouselScript.currentNoteIndex++;
-                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") matNoteCarouselScript.checkForWrongInputDuringNoteholder();
+                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") matNoteCarouselScript.checkForWrongInputDuringNoteHolder();
                 this.setNextNote(false);
                 setSlider();
                 matNoteCarouselScript.matDidCorrectInputDuringNote = false;
