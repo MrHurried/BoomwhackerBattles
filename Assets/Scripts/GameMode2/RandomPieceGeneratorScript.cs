@@ -7,9 +7,10 @@ using UnityEngine;
 public class RandomPieceGeneratorScript : MonoBehaviour
 {
     // PIECE GENERATION RELATED
-    public static int noteAmount = 50;
+    public static int noteAmount = 20;
 
-    string[] availableNotes = { "2", "4", "8", "16", "r2", "r4", "r8", "r16" };
+    // WARNING: I REMOVED r2 AND r4 FROM THIS SELECTION
+    string[] availableNotes = { "2", "4", "8", "16", "r8", "r16" };
 
     public static List<string> generatedPiece = new List<string>();
 

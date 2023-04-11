@@ -11,6 +11,9 @@ public class NoteBlock
     public string note;
     public bool fromIsa;
 
+    public Color correctColor = new Color(0.6462264f, 1f, 0.6798744f);
+    public Color wrongColor = new Color(1f, 0.4198113f, 0.4306208f);
+
     NoteCarouselScript isaNoteCarouselScript;
     NoteCarouselScript matNoteCarouselScript;
     NoteBlockFunctions noteBlockFunctions;
@@ -134,6 +137,7 @@ public class NoteBlock
                 setSlider();
                 isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
                 isaNoteCarouselScript.matDidCorrectInputDuringNote = false;
+                revertColorToWhite();
             }
         }
         else
@@ -156,6 +160,7 @@ public class NoteBlock
                 setSlider();
                 matNoteCarouselScript.matDidCorrectInputDuringNote = false;
                 matNoteCarouselScript.isaDidCorrectInputDuringNote = false;
+                revertColorToWhite();
             }
         }
         float xCoord;
@@ -187,5 +192,24 @@ public class NoteBlock
         }
         return xCoord;
     }
+ 
+    public void adaptColorToFeedback(bool didCorrectInput)
+    {
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
 
+        if(didCorrectInput)
+        {
+            sr.color = correctColor;
+        }
+        else
+        {
+            sr.color = wrongColor;
+        }
+    }
+
+    private void revertColorToWhite()
+    {
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
+    }
 }

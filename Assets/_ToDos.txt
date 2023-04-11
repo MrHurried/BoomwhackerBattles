@@ -1,10 +1,6 @@
 MAKING THE HEALTH DROP AT THE CORRECT TIME
-It still doesn't work 100% correctly, Isabel has invincibility on the first note i believe
-
-ADDING JUICE
-- add an animated streak indicator
-1 fix de bug die zorgt dat de numbered text zwart is
-
-
-RETEXTURING
-- teken een sprite voor boven de notenbalk
+- the next round procedure has a few problems:
+1. the game only continues for Isabel, or so it seems
+2. the notes that come after the last of the current piece all keep their feedback colors
+3. there is no animation of the BPM Upping
+3.1 there is no indication what the current BPM is
