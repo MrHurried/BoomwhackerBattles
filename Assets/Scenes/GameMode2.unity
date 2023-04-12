@@ -3643,17 +3643,19 @@ MonoBehaviour:
   matHealthScript: {fileID: 651932300}
   randomPieceGeneratorScript: {fileID: 1427142615}
   feedbackScript: {fileID: 1427142621}
+  roundProcedureScript: {fileID: 1427142622}
   bpm: 150
   currentNoteIndex: 0
-  bpmIncreaseAmount: 30
   lastPlayedNoteIndex: 0
   firstNBParentIndex: 0
   secondNBParentIndex: 1
   nbHolder: {fileID: 732542725}
   isaDidCorrectInputDuringNote: 0
   matDidCorrectInputDuringNote: 0
-  invincibile: 0
+  invincibile: 1
   buttonPressProcedureWasCalled: 0
+  inIntermission: 0
+  secondsSinceLaunch: 0
 --- !u!1 &760100323
 GameObject:
   m_ObjectHideFlags: 0
@@ -6047,6 +6049,7 @@ GameObject:
   - component: {fileID: 1427142619}
   - component: {fileID: 1427142620}
   - component: {fileID: 1427142621}
+  - component: {fileID: 1427142622}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6151,7 +6154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doCameraSway: 0
-  startingBPM: 150
+  startingBPM: 90
 --- !u!114 &1427142621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6177,6 +6180,23 @@ MonoBehaviour:
   wrongSprite: {fileID: 21300000, guid: 4960dc55518deae4bb769eeca457c3e6, type: 3}
   neutralSprite: {fileID: 21300000, guid: ab3b66a6aa9ee564491cccd7e22de741, type: 3}
   correctSprite: {fileID: 21300000, guid: d7edc2c096642c4499461bf003bca4ba, type: 3}
+--- !u!114 &1427142622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427142614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310d531e06be993419cd30a4136a077a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isaNoteCarouselScript: {fileID: 732542726}
+  matNoteCarouselScript: {fileID: 1515791457}
+  randomPieceGeneratorScript: {fileID: 1427142615}
+  bpmIncreaseAmount: 0
+  bpm: 0
 --- !u!1 &1453287958
 GameObject:
   m_ObjectHideFlags: 0
@@ -6378,17 +6398,19 @@ MonoBehaviour:
   matHealthScript: {fileID: 651932300}
   randomPieceGeneratorScript: {fileID: 1427142615}
   feedbackScript: {fileID: 1427142621}
-  bpm: 150
+  roundProcedureScript: {fileID: 1427142622}
+  bpm: 400
   currentNoteIndex: 0
-  bpmIncreaseAmount: 30
   lastPlayedNoteIndex: 0
   firstNBParentIndex: 0
   secondNBParentIndex: 1
   nbHolder: {fileID: 1515791458}
   isaDidCorrectInputDuringNote: 0
   matDidCorrectInputDuringNote: 0
-  invincibile: 0
+  invincibile: 1
   buttonPressProcedureWasCalled: 0
+  inIntermission: 0
+  secondsSinceLaunch: 0
 --- !u!4 &1515791458
 Transform:
   m_ObjectHideFlags: 0

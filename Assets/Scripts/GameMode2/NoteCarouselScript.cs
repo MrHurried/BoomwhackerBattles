@@ -6,6 +6,8 @@ using BoomWhackerBattles;
 using UnityEditor.ShaderGraph.Drawing;
 using Unity.IO.LowLevel.Unsafe;
 
+//WARNING: I put a lot of if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
+//'s in this script without really thinking about it too much. Keep this in mind if you come across a bug
 public class NoteCarouselScript : MonoBehaviour
 {
     //SCRIPTS
@@ -14,11 +16,11 @@ public class NoteCarouselScript : MonoBehaviour
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
     public GM2FeedbackScript feedbackScript;
     private NoteBlockFunctions noteBlockFunctions;
+    public GM2RoundProcedureScript roundProcedureScript;
 
     //INTS
     public int bpm;
     public int currentNoteIndex; // might want to make this private if a bug concerning the noteindex persists
-    public int bpmIncreaseAmount = 30;
     public int lastPlayedNoteIndex = -1;
     public int firstNBParentIndex = 0;
     public int secondNBParentIndex = 1;
@@ -28,8 +30,8 @@ public class NoteCarouselScript : MonoBehaviour
 
     //NOTEBLOCK
     NoteBlock isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5;
-    NoteBlock[] noteblocksIsa;
-    NoteBlock[] noteblocksMat;
+    public NoteBlock[] noteblocksIsa;
+    public NoteBlock[] noteblocksMat;
     NoteBlock[] noteblocks;
     public NoteBlock firstNB;
     public NoteBlock secondNB;
@@ -39,14 +41,41 @@ public class NoteCarouselScript : MonoBehaviour
     public bool matDidCorrectInputDuringNote = false;
     public bool invincibile;
     public bool buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
+    public bool inIntermission = false;
 
     //DOUBLES
     const double nbDistance = 110.0d;
     double seconds = 0d;
 
     //FLOATS
-    float secondsSinceLaunch = 0f;
+    public float secondsSinceLaunch = 0f;
 
+    public void ResetScript()
+    {
+        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
+        currentNoteIndex = -4;
+        lastPlayedNoteIndex = currentNoteIndex;
+        createNoteBlocks();
+
+        //INTS
+        firstNBParentIndex = 0;
+        secondNBParentIndex = 1;
+
+        //BOOLS
+        isaDidCorrectInputDuringNote = false;
+        matDidCorrectInputDuringNote = false;
+
+        buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
+        inIntermission = false;
+
+        //DOUBLES
+        seconds = 0d;
+
+        //FLOATS
+        secondsSinceLaunch = 0f;
+
+        inIntermission = false;
+    }
 
     //set currentNoteIndex to -4
     //get gamemanger object
@@ -59,7 +88,7 @@ public class NoteCarouselScript : MonoBehaviour
         createNoteBlocks();
     }
 
-    private void createNoteBlocks()
+    public void createNoteBlocks()
     {
         //this is done to prevent bugs
         if (nbHolder.name.Contains("Isa"))
@@ -98,7 +127,7 @@ public class NoteCarouselScript : MonoBehaviour
         firstNBParentIndex += 1;
         secondNBParentIndex += 1;
 
-        if(firstNBParentIndex > noteblocks.Length-1) firstNBParentIndex = 0;
+        if (firstNBParentIndex > noteblocks.Length - 1) firstNBParentIndex = 0;
         firstNB = noteblocks[firstNBParentIndex];
 
         if (secondNBParentIndex > noteblocks.Length - 1) secondNBParentIndex = 0;
@@ -107,9 +136,29 @@ public class NoteCarouselScript : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("Max piece index = " + (RandomPieceGeneratorScript.generatedPiece.Count - 1));
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
         secondsSinceLaunch += 1f * Time.deltaTime;
         if (secondsSinceLaunch < 3) return;
+
+        //This code is a bit junk, I know. When everything works I can still rewrite it :)
+
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && !inIntermission && nbHolder.name.Contains("Isa"))
+        {
+            roundProcedureScript.doNextRoundProcedure();
+            inIntermission = true;
+            return;
+        }
+
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
+        {
+            inIntermission = true;
+        }
+
+        if (inIntermission)
+        {
+            return;
+        }
 
         callInputChecksEveryFrame();
 
@@ -124,14 +173,20 @@ public class NoteCarouselScript : MonoBehaviour
         //2 remove this if statement to see if the input detection still works as intended
         if (indexWasUpped())
         {
-            UpdateFirstAndSecondNB(); 
+            UpdateFirstAndSecondNB();
             checkForInputsEveryIndex();
         }
 
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
+        checkForLastNoteOfPiece();
+    }
+
+    public void checkForLastNoteOfPiece()
+    {
+        if (nbHolder.name.Contains("Isa") == false) return;
+
+        if (currentNoteIndex == RandomPieceGeneratorScript.generatedPiece.Count - 1)
         {
-            Debug.Log("should be doin the procedure now");
-            doNextRoundProcedure();
+            roundProcedureScript.doNextRoundProcedure();
         }
     }
 
@@ -140,6 +195,7 @@ public class NoteCarouselScript : MonoBehaviour
     public void checkForInputsEveryIndex()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
         //used to fix the bug where wasnoteBeforeHoldGets called when the current note isn't even a hold note
         string currentNoteString = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
 
@@ -154,11 +210,16 @@ public class NoteCarouselScript : MonoBehaviour
         bool currentNoteIsHold = currentNoteString == "0";
         bool previousNoteWasNote = previousNoteString.Contains("n"); //there are two hard things in coding, one of them being naming things
 
-        //CHECK FOR WRONG INPUTS
-        if (noteBlockFunctions.wasNoteBeforeHold(false) && currentNoteIsHold)
+        if (currentNoteIndex + 4 < RandomPieceGeneratorScript.generatedPiece.Count - 1 && currentNoteIndex > 0)
         {
-            checkForWrongInputDuringNoteHolder();
+            //CHECK FOR WRONG INPUTS
+            if (noteBlockFunctions.wasNoteBeforeHold(false) && currentNoteIsHold)
+            {
+                checkForWrongInputDuringNoteHolder();
+            }
         }
+
+        //CHECK FOR WRONG INPUTS
         if (previousNoteWasNote)
         {
             checkForWrongInputDuringNote();
@@ -171,6 +232,7 @@ public class NoteCarouselScript : MonoBehaviour
     public void callInputChecksEveryFrame()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 
         //these will be called every frame
         checkForWrongInputDuringRest();
@@ -210,6 +272,8 @@ public class NoteCarouselScript : MonoBehaviour
     // Declare a function that will be called periodically to check if the function was called
     private void checkForCorrectInputEveryIndex(bool changeFirstNB)
     {
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
+        if(currentNoteIndex < 0 ) return;
         if (buttonPressProcedureWasCalled)
         {
             buttonPressProcedureWasCalled = false;
@@ -217,7 +281,7 @@ public class NoteCarouselScript : MonoBehaviour
         }
         else
         {
-            doLocalCorrectInputAnim();
+            //doLocalCorrectInputAnim();
             if (gameObject.name.Contains("Isa")) feedbackScript.changeGradientFeedbackColor(1, true);
             else feedbackScript.changeGradientFeedbackColor(1, false);
 
@@ -247,6 +311,7 @@ public class NoteCarouselScript : MonoBehaviour
     //this will be called at the start of each hold note
     public void checkForWrongInputDuringNoteHolder()
     {
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
         // if the current piece hasn't started rolling OR if we're transitioning to another piece -> return
         if (currentNoteIndex > RandomPieceGeneratorScript.generatedPiece.Count || currentNoteIndex < 0) return;
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -274,6 +339,7 @@ public class NoteCarouselScript : MonoBehaviour
     public void checkForWrongInputDuringNote()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 
         //get the string value of the current note (aka the note under the arrow)
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -299,6 +365,7 @@ public class NoteCarouselScript : MonoBehaviour
     void handleInputDuringNote()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 
         //get the string value of the current note (aka the note under the arrow)
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -327,6 +394,7 @@ public class NoteCarouselScript : MonoBehaviour
     void checkForWrongInputDuringRest()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 
         //get the string value of the current note (aka the note under the arrow)
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -352,6 +420,7 @@ public class NoteCarouselScript : MonoBehaviour
     void checkForWrongInputDuringRestHolder()
     {
         if (currentNoteIndex < 0) return;
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 
         //get the string value of the current note (aka the note under the arrow)
         string strCurrentNote = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -384,7 +453,7 @@ public class NoteCarouselScript : MonoBehaviour
         {
             isaHealthScript.removeHealth(1);
             feedbackScript.changeGradientFeedbackColor(-1, true);
-            if(changeFirstNB) firstNB.adaptColorToFeedback(false);
+            if (changeFirstNB) firstNB.adaptColorToFeedback(false);
             else secondNB.adaptColorToFeedback(false);
         }
         //Debug.Log("didCorrectInput == false && nbHolder.name.Contains(Mat) && !fromIsa = " + (didCorrectInput == false && nbHolder.name.Contains("Mat") && !fromIsa));
@@ -397,16 +466,6 @@ public class NoteCarouselScript : MonoBehaviour
         }
     }
 
-    void doNextRoundProcedure()
-    {
-        Debug.Log("advancing to next round");
-
-        randomPieceGeneratorScript.generatePiece();
-        currentNoteIndex = -(noteblocksIsa.Length - 1);
-        secondsSinceLaunch = 0f;
-
-        bpm += bpmIncreaseAmount;
-    }
 
 
 

@@ -28,15 +28,19 @@ public class RandomPieceGeneratorScript : MonoBehaviour
     {
 
         generatePiece();
+        
+        printPiece();
+    }
+
+    public void printPiece()
+    {
         string testStr = "";
-        foreach( string str in generatedPiece)
+        foreach (string str in generatedPiece)
         {
             testStr += str + " - ";
         }
 
         Debug.Log(testStr);
-
-        
     }
 
     // Update is called once per frame
@@ -57,9 +61,13 @@ public class RandomPieceGeneratorScript : MonoBehaviour
 
             addZeroNotes(getNoteOrRestLength(generatedPiece[generatedPiece.Count-1]));
         }
-
+        //addEndMarker();
     }
 
+    /*private void addEndMarker()
+    {
+        generatedPiece.Add("e");
+    }*/
 
     //int iPiece represents the current index of the generatedPiece list initialization process
     private void addZeroNotes(int noteLength)

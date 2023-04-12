@@ -1,6 +1,43 @@
 MAKING THE HEALTH DROP AT THE CORRECT TIME
+-NOTE holds do double damage
+
+
 - the next round procedure has a few problems:
-1. the game only continues for Isabel, or so it seems
-2. the notes that come after the last of the current piece all keep their feedback colors
+FIXED:
+1. the game doesn't continue after the round is over
+2 the notes keep all their sliders
+2.1 the notes that come after the last of the current piece all keep their feedback colors
+
+YET TO FIX:
+HET STUK WORDT TE VROEG AFGESLOTEN
+bv (dit is echt gebeurd): laatste noot was een 8, niet de 0 die achter de acht kwam
+-Zorg dat het stuk pas wordt afgesloten na het werkelijke einde
+
+
+
+4 the notenboven???holders still show the last couple of notes of the previous piece AND some notes of the next piece
+- probeer ervoor te zorgen dat de new piece pas gegenerate wordt als de index geupt wordt
+5 ofwel bij Isa's nbholder, ofwel bij Mat's nbholder: de bijna alle nb's krijgen een feedback color
+v check of de parentindexes correct zijn. they are
+-check of het einde van het vorige stuk geen noten weghakt
+-check of de noten die je als eerste ziet na een nieuwe round werkelijk het begin zijn van het volgende stuk
+-observatie: welke noten je als eerste ziet is volgens mij afhankelijk van de laatste noot van het vorige stuk. Check of die random index if statements in notecarouselscript tegoei gedaan zijn
+
+
+EXTRAS
 3. there is no animation of the BPM Upping
 3.1 there is no indication what the current BPM is
+
+
+OBSERVATIONS: NEXT ROUND PROCEDURE
+run 1:
+laatste note: unsure
+matisse: alleen nb4 heeft een fout: groene feedback + groene slider
+isabel: juiste weergave
+run 2:
+matisse: 
+laatste note: 16th
+-nb4 heeft een groene 8th note (nb4 zou leeg moeten zijn, nb5 zou een 8th note zonder feedback moeten hebben)
+-nb5 heeft een groene marker
+isabel: 
+-juiste markering behalve dat de eerste noot (in dit geval staande op nb5) is een slider (dat is onmogelijk)

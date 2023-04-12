@@ -56,6 +56,7 @@ public class NoteBlock
             GameObject nbholder = GameObject.Find("NotenBovenMatHolder");
             go = nbholder.transform.GetChild(2).GetChild(parentIndex).gameObject; // first getChild is GO named "NoteBlocks", which holds nb0, nb1, etc.
         }
+        advancePosition();
     }
 
     public void setNextNote(bool doStarterNote)
@@ -70,7 +71,7 @@ public class NoteBlock
         {
             newestNoteIndex = 0;
             Sprite sprite = noteBlockFunctions.getNoteSprite(newestNoteIndex);
-            
+
             /*Debug.Log("Doing starternote sprite setting. fromIsa? " + this.fromIsa +
                 "\n parentindex? mine is: " + parentIndex +
                 "\n my GO's name? that's : " + go.name +
@@ -95,12 +96,18 @@ public class NoteBlock
     }
     public void setSlider()
     {
+
         Transform noteSliderHolder = go.transform.GetChild(1);
         SpriteRenderer sr = noteSliderHolder.GetComponent<SpriteRenderer>();
         Sprite slider;
 
         int newestNoteIndex = isaNoteCarouselScript.currentNoteIndex + 4; //i believe this doesn't have to have a "mat" equivalent
 
+        if (newestNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count - 1)
+        {
+            sr.sprite = noteBlockFunctions.emptySprite;
+            return;
+        }
         if (RandomPieceGeneratorScript.generatedPiece[newestNoteIndex] != "0")
         {
             sr.sprite = noteBlockFunctions.emptySprite;
@@ -130,9 +137,17 @@ public class NoteBlock
                     "\n spawnindex = " + spawnIndex +
                     "\n SavedPossibleSpawns.possibleSpawnsIsa.Length = " + SavedPossibleSpawns.possibleSpawnsIsa.Length +
                     "\n parentIndex = " + parentIndex);*/
-                if(isaNoteCarouselScript.currentNoteIndex > -1) isaNoteCarouselScript.checkForWrongInputDuringNote();
+                if (isaNoteCarouselScript.currentNoteIndex > -1) isaNoteCarouselScript.checkForWrongInputDuringNote();
                 isaNoteCarouselScript.currentNoteIndex++;
-                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") isaNoteCarouselScript.checkForWrongInputDuringNoteHolder();
+
+                bool indexIsInRange = isaNoteCarouselScript.currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count - 1;
+                if (indexIsInRange)
+                {
+                    if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0")
+                    {
+                        isaNoteCarouselScript.checkForWrongInputDuringNoteHolder();
+                    }
+                }
                 this.setNextNote(false);
                 setSlider();
                 isaNoteCarouselScript.isaDidCorrectInputDuringNote = false;
@@ -155,7 +170,14 @@ public class NoteBlock
 
                 if (isaNoteCarouselScript.currentNoteIndex > -1) matNoteCarouselScript.checkForWrongInputDuringNote();
                 matNoteCarouselScript.currentNoteIndex++;
-                if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0") matNoteCarouselScript.checkForWrongInputDuringNoteHolder();
+                bool indexIsInRange = isaNoteCarouselScript.currentNoteIndex <= RandomPieceGeneratorScript.generatedPiece.Count - 1;
+                if (indexIsInRange)
+                {
+                    if (isaNoteCarouselScript.currentNoteIndex > -1 && RandomPieceGeneratorScript.generatedPiece[isaNoteCarouselScript.currentNoteIndex] == "0")
+                    {
+                        matNoteCarouselScript.checkForWrongInputDuringNoteHolder();
+                    }
+                }
                 this.setNextNote(false);
                 setSlider();
                 matNoteCarouselScript.matDidCorrectInputDuringNote = false;
@@ -192,12 +214,12 @@ public class NoteBlock
         }
         return xCoord;
     }
- 
+
     public void adaptColorToFeedback(bool didCorrectInput)
     {
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
 
-        if(didCorrectInput)
+        if (didCorrectInput)
         {
             sr.color = correctColor;
         }
@@ -207,7 +229,7 @@ public class NoteBlock
         }
     }
 
-    private void revertColorToWhite()
+    public void revertColorToWhite()
     {
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
         sr.color = Color.white;

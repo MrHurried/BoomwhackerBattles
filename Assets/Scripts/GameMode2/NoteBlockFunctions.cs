@@ -77,6 +77,12 @@ public class NoteBlockFunctions : MonoBehaviour
         return sprite;
     }
 
+    public bool isThisIndexInsidePieceBounds(int index) 
+    {
+        bool answer = -1 < index && index < RandomPieceGeneratorScript.generatedPiece.Count-2;
+        return answer;
+    }
+
     public bool wasNoteBeforeHold(bool startFromNewestNote)
     {
         string strCurrentNote = "0";
@@ -84,6 +90,8 @@ public class NoteBlockFunctions : MonoBehaviour
         //if we need to start from the newest note, add 5
         int index = isaNoteCarouselScript.currentNoteIndex;
         if (startFromNewestNote) index = isaNoteCarouselScript.currentNoteIndex + 4;
+
+        Debug.Log("inside the wasNoteBeforeHold method. index = " + index);
 
         while (strCurrentNote == "0")
         {
