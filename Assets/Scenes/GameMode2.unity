@@ -6154,7 +6154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doCameraSway: 0
-  startingBPM: 90
+  startingBPM: 120
 --- !u!114 &1427142621
 MonoBehaviour:
   m_ObjectHideFlags: 0

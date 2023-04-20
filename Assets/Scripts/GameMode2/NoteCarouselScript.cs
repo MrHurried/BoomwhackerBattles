@@ -184,7 +184,7 @@ public class NoteCarouselScript : MonoBehaviour
     {
         if (nbHolder.name.Contains("Isa") == false) return;
 
-        if (currentNoteIndex == RandomPieceGeneratorScript.generatedPiece.Count - 1)
+        if (currentNoteIndex == RandomPieceGeneratorScript.generatedPiece.Count)
         {
             roundProcedureScript.doNextRoundProcedure();
         }
