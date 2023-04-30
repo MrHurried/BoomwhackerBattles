@@ -2,16 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionsApplierScriptGM2 : MonoBehaviour
+public class GM2OptionsScript : MonoBehaviour
 {
-    public static bool doCameraSway;
-    public static int startingBPM;
+    //set in the settings menu or, when starting the game in the GM2 scene, set to null
+    public static int? options_startingBPM = null;
+    public static int? options_BPMIncrease = null;
+    public static bool? options_doCameraSway = null;
+ 
+    public int startingBPM = 120;
+    public int BPMIncrease = 60;
+    public bool doCameraSway = false;
 
-    // Start is called before the first frame update
-    private void Awake()
+    void Awake()
     {
+        if(options_startingBPM != null) { startingBPM = (int)options_startingBPM; }
+        if(options_doCameraSway != null) { doCameraSway = (bool)options_doCameraSway; }
+
         changeStartingBPM();
     }
+
     void Start()
     {
         //disable or enable the cameraShake

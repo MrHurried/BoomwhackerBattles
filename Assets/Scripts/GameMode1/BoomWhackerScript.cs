@@ -67,8 +67,8 @@ namespace BoomWhackerBattles
 
             AudioSrc = GetComponent<AudioSource>();
 
-            doFlashAnimation = GameOptionsStorer.doFlashes;
-            MaxScore = GameOptionsStorer.pointsToWin;
+            doFlashAnimation = GM1GameOptionsStorer.doFlashes;
+            MaxScore = GM1GameOptionsStorer.pointsToWin;
         }
 
         void Update()

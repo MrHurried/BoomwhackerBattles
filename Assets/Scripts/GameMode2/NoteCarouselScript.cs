@@ -41,7 +41,6 @@ public class NoteCarouselScript : MonoBehaviour
     public bool matDidCorrectInputDuringNote = false;
     public bool invincibile;
     public bool buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
-    public bool inIntermission = false;
 
     //DOUBLES
     const double nbDistance = 110.0d;
@@ -50,31 +49,11 @@ public class NoteCarouselScript : MonoBehaviour
     //FLOATS
     public float secondsSinceLaunch = 0f;
 
-    public void ResetScript()
+    //This is done to prevent GameObject.Find() from failing
+    //info: every time a gameObject gets instantiated, "(clone)" gets appended to it's name, which messes it up
+    void Awake()
     {
-        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
-        currentNoteIndex = -4;
-        lastPlayedNoteIndex = currentNoteIndex;
-        createNoteBlocks();
-
-        //INTS
-        firstNBParentIndex = 0;
-        secondNBParentIndex = 1;
-
-        //BOOLS
-        isaDidCorrectInputDuringNote = false;
-        matDidCorrectInputDuringNote = false;
-
-        buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
-        inIntermission = false;
-
-        //DOUBLES
-        seconds = 0d;
-
-        //FLOATS
-        secondsSinceLaunch = 0f;
-
-        inIntermission = false;
+        
     }
 
     //set currentNoteIndex to -4
@@ -82,6 +61,9 @@ public class NoteCarouselScript : MonoBehaviour
     //set lastPlayedNoteIndex to currentNoteIndex
     void Start()
     {
+        if (gameObject.name.Contains("Isa")) gameObject.name = "NotenBovenIsaHolder";
+        if (gameObject.name.Contains("Mat")) gameObject.name = "NotenBovenMatHolder";
+
         noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
         currentNoteIndex = -4;
         lastPlayedNoteIndex = currentNoteIndex;
@@ -90,6 +72,7 @@ public class NoteCarouselScript : MonoBehaviour
 
     public void createNoteBlocks()
     {
+        Debug.Log("Creating NB's");
         //this is done to prevent bugs
         if (nbHolder.name.Contains("Isa"))
         {
@@ -136,6 +119,8 @@ public class NoteCarouselScript : MonoBehaviour
 
     void Update()
     {
+        if (gameObject == null) return;
+
         Debug.Log("Max piece index = " + (RandomPieceGeneratorScript.generatedPiece.Count - 1));
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
         secondsSinceLaunch += 1f * Time.deltaTime;
@@ -143,22 +128,12 @@ public class NoteCarouselScript : MonoBehaviour
 
         //This code is a bit junk, I know. When everything works I can still rewrite it :)
 
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && !inIntermission && nbHolder.name.Contains("Isa"))
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && nbHolder.name.Contains("Isa"))
         {
             roundProcedureScript.doNextRoundProcedure();
-            inIntermission = true;
             return;
         }
 
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count)
-        {
-            inIntermission = true;
-        }
-
-        if (inIntermission)
-        {
-            return;
-        }
 
         callInputChecksEveryFrame();
 
@@ -465,8 +440,5 @@ public class NoteCarouselScript : MonoBehaviour
             else secondNB.adaptColorToFeedback(false);
         }
     }
-
-
-
 
 }

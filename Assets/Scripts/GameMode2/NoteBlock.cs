@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BoomWhackerBattles;
-
+using System;
 public class NoteBlock
 {
     public GameObject go; // this will be the name of the game object
@@ -61,6 +61,7 @@ public class NoteBlock
 
     public void setNextNote(bool doStarterNote)
     {
+        if (isaNoteCarouselScript == null) return;
         Transform noteSpriteHolder = go.transform.GetChild(0);
         //Debug.Log("notespritehodler name = " + noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
@@ -124,6 +125,15 @@ public class NoteBlock
 
     public void advancePosition()
     {
+        if (isaNoteCarouselScript == null)
+        {
+            Debug.Log("Script is null");
+            return;
+        }
+        else
+        {
+            Debug.Log("Script is NOT null");
+        }
         if (fromIsa)
         {
             if (spawnIndex < SavedPossibleSpawns.possibleSpawnsIsa.Length - 1) // I believe this doesn't have to have a "possibleSpawnsMat" alternative
@@ -234,4 +244,5 @@ public class NoteBlock
         SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
         sr.color = Color.white;
     }
+
 }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class GameOptionsStorer : MonoBehaviour
+public class GM1GameOptionsStorer : MonoBehaviour
 {
     //game options
     public static bool doFlashes;
