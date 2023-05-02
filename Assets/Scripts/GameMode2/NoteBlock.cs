@@ -22,7 +22,7 @@ public class NoteBlock
     {
         isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
         matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
-        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
+        noteBlockFunctions = GameObject.Find("GM2GameManager").GetComponent<NoteBlockFunctions>();
 
         this.parentIndex = ParentIndex;
         this.fromIsa = FromIsa;

@@ -11,8 +11,8 @@ using Unity.IO.LowLevel.Unsafe;
 public class NoteCarouselScript : MonoBehaviour
 {
     //SCRIPTS
-    [SerializeField] HealthScript isaHealthScript;
-    [SerializeField] HealthScript matHealthScript;
+    HealthScript isaHealthScript;
+    HealthScript matHealthScript;
     [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
     public GM2FeedbackScript feedbackScript;
     private NoteBlockFunctions noteBlockFunctions;
@@ -41,6 +41,7 @@ public class NoteCarouselScript : MonoBehaviour
     public bool matDidCorrectInputDuringNote = false;
     public bool invincibile;
     public bool buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
+    private bool inIntermission = false;
 
     //DOUBLES
     const double nbDistance = 110.0d;
@@ -64,10 +65,19 @@ public class NoteCarouselScript : MonoBehaviour
         if (gameObject.name.Contains("Isa")) gameObject.name = "NotenBovenIsaHolder";
         if (gameObject.name.Contains("Mat")) gameObject.name = "NotenBovenMatHolder";
 
-        noteBlockFunctions = GameObject.Find("GameManager").GetComponent<NoteBlockFunctions>();
+        AssignComponentReferences();
+
         currentNoteIndex = -4;
         lastPlayedNoteIndex = currentNoteIndex;
         createNoteBlocks();
+    }
+
+    //There are better ways to make references, but I believe this will work well enough
+    private void AssignComponentReferences()
+    {
+        noteBlockFunctions = GameObject.Find("GM2GameManager").GetComponent<NoteBlockFunctions>();
+        isaHealthScript = GameObject.Find("IsaHeartHolder").GetComponent<HealthScript>();
+        matHealthScript = GameObject.Find("MatHeartHolder").GetComponent<HealthScript>();
     }
 
     public void createNoteBlocks()
@@ -128,9 +138,10 @@ public class NoteCarouselScript : MonoBehaviour
 
         //This code is a bit junk, I know. When everything works I can still rewrite it :)
 
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && nbHolder.name.Contains("Isa"))
+        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && nbHolder.name.Contains("Isa") && !inIntermission)
         {
             roundProcedureScript.doNextRoundProcedure();
+            inIntermission = true;
             return;
         }
 
