@@ -37,18 +37,41 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
     }
 
-    public void doNextRoundProcedure()
+    public IEnumerator doNextRoundProcedure()
     {
+
+        isaNoteCarouselScript.noteblocks = null;
+        matNoteCarouselScript.noteblocks = null;
+
         Destroy(isaNBHolder);
         Destroy(matNBHolder);
 
-        Instantiate(isaNBHolderPrefab);
-        Instantiate(matNBHolderPrefab);
+
+        isaNBHolder = GameObject.Find("NotenBovenIsaHolder");
+        while (isaNBHolder != null)
+        {
+            Debug.Log("Isa's holder still exists :'(");
+            isaNBHolder = GameObject.Find("NotenBovenIsaHolder");
+        }
+
+        matNBHolder = GameObject.Find("NotenBovenMatHolder");
+        while (isaNBHolder != null)
+        {
+            Debug.Log("Mat's holder still exists :'(");
+            matNBHolder = GameObject.Find("NotenBovenMatHolder");
+        }
+
+        Debug.Log("Ready to instantiate the NBHolder prefabs");
+
+        isaNBHolder = Instantiate(isaNBHolderPrefab);
+        matNBHolder = Instantiate(matNBHolderPrefab);
 
         assignNBHolders();
         assignNBScripts();
 
         IncreaseBPM();
+
+        yield return null;
     }
 
     private void IncreaseBPM()

@@ -10,13 +10,15 @@ using Unity.IO.LowLevel.Unsafe;
 //'s in this script without really thinking about it too much. Keep this in mind if you come across a bug
 public class NoteCarouselScript : MonoBehaviour
 {
+    //GAME OBJECTS
+    GameObject gameManager;
+
     //SCRIPTS
     HealthScript isaHealthScript;
     HealthScript matHealthScript;
-    [SerializeField] RandomPieceGeneratorScript randomPieceGeneratorScript;
-    public GM2FeedbackScript feedbackScript;
+    private GM2FeedbackScript feedbackScript;
     private NoteBlockFunctions noteBlockFunctions;
-    public GM2RoundProcedureScript roundProcedureScript;
+    private GM2RoundProcedureScript roundProcedureScript;
 
     //INTS
     public int bpm;
@@ -32,7 +34,7 @@ public class NoteCarouselScript : MonoBehaviour
     NoteBlock isanb0, isanb1, isanb2, isanb3, isanb4, isanb5, matnb0, matnb1, matnb2, matnb3, matnb4, matnb5;
     public NoteBlock[] noteblocksIsa;
     public NoteBlock[] noteblocksMat;
-    NoteBlock[] noteblocks;
+    public NoteBlock[] noteblocks;
     public NoteBlock firstNB;
     public NoteBlock secondNB;
 
@@ -65,17 +67,27 @@ public class NoteCarouselScript : MonoBehaviour
         if (gameObject.name.Contains("Isa")) gameObject.name = "NotenBovenIsaHolder";
         if (gameObject.name.Contains("Mat")) gameObject.name = "NotenBovenMatHolder";
 
+        AssignGameObjectReferences();
+
         AssignComponentReferences();
+        
 
         currentNoteIndex = -4;
         lastPlayedNoteIndex = currentNoteIndex;
         createNoteBlocks();
     }
 
+    private void AssignGameObjectReferences()
+    {
+        gameManager = GameObject.Find("GM2GameManager");
+    }
+
     //There are better ways to make references, but I believe this will work well enough
     private void AssignComponentReferences()
     {
-        noteBlockFunctions = GameObject.Find("GM2GameManager").GetComponent<NoteBlockFunctions>();
+        roundProcedureScript = gameManager.GetComponent<GM2RoundProcedureScript>();
+        feedbackScript = gameManager.GetComponent<GM2FeedbackScript>();
+        noteBlockFunctions = gameManager.GetComponent<NoteBlockFunctions>();
         isaHealthScript = GameObject.Find("IsaHeartHolder").GetComponent<HealthScript>();
         matHealthScript = GameObject.Find("MatHeartHolder").GetComponent<HealthScript>();
     }
@@ -129,7 +141,7 @@ public class NoteCarouselScript : MonoBehaviour
 
     void Update()
     {
-        if (gameObject == null) return;
+        if (this == null) return;
 
         Debug.Log("Max piece index = " + (RandomPieceGeneratorScript.generatedPiece.Count - 1));
         //used for waiting 3 secs, eliminates bugs and makes it easier to get ready
@@ -140,7 +152,7 @@ public class NoteCarouselScript : MonoBehaviour
 
         if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && nbHolder.name.Contains("Isa") && !inIntermission)
         {
-            roundProcedureScript.doNextRoundProcedure();
+            StartCoroutine(roundProcedureScript.doNextRoundProcedure());
             inIntermission = true;
             return;
         }

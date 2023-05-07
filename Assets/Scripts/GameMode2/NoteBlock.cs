@@ -127,7 +127,9 @@ public class NoteBlock
     {
         if (isaNoteCarouselScript == null)
         {
-            Debug.Log("Script is null");
+            Debug.Log("Script is null \n this NB belongs to Isa? => " + fromIsa);
+            isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
+            matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
             return;
         }
         else
