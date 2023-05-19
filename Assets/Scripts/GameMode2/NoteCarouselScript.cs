@@ -231,11 +231,14 @@ public class NoteCarouselScript : MonoBehaviour
         double secondsToWait = ((60.0d / bpm) / nbDistance);
         if (seconds >= secondsToWait)
         {
+            if (this == null) return;
             int amountOfMovements = (int)MathF.Floor((float)(seconds / secondsToWait));
             for (int i = 0; i < amountOfMovements; i++)
             {
+                if (this == null) break;
                 foreach (NoteBlock nb in noteblocks)
                 {
+                    if (this == null) break;
                     nb.advancePosition();
                 }
             }

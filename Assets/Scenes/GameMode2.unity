@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74340be87d04c8b49b78e0646a935b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingBPM: 600
+  startingBPM: 250
   BPMIncrease: 60
   doCameraSway: 0
 --- !u!114 &493185178
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   optionsScript: {fileID: 493185177}
   bpmIncreaseAmount: 0
   bpm: 0
+  inIntermission: 0
   isaNBHolderPrefab: {fileID: 496742520764400491, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
   matNBHolderPrefab: {fileID: 2215713494687158860, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
 --- !u!114 &493185179

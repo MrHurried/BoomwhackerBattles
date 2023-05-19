@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using BoomWhackerBattles;
 using System;
+using UnityEngine.Rendering.UI;
+
 public class NoteBlock
 {
     public GameObject go; // this will be the name of the game object
@@ -61,7 +63,7 @@ public class NoteBlock
 
     public void setNextNote(bool doStarterNote)
     {
-        if (go is null) return;
+        if (go == null) return;
         Transform noteSpriteHolder = go.transform.GetChild(0);
         //Debug.Log("notespritehodler name = " + noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
@@ -125,13 +127,7 @@ public class NoteBlock
 
     public void advancePosition()
     {
-        if (isaNoteCarouselScript == null)
-        {
-            Debug.Log("Script is null \n this NB belongs to Isa? => " + fromIsa);
-            isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
-            matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
-            return;
-        }
+        if (go == null || this == null) return;
         else
         {
             Debug.Log("Script is NOT null");
@@ -210,6 +206,7 @@ public class NoteBlock
         float yCoord = go.transform.position.y;
         float zCoord = go.transform.position.z;
 
+        
         go.transform.position = new Vector3(xCoord, yCoord, zCoord);
     }
 

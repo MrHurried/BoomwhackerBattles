@@ -78,6 +78,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
         Debug.Log("Ready to instantiate the NBHolder prefabs");
 
+        //yield return null;
+
         isaNBHolder = Instantiate(isaNBHolderPrefab);
         matNBHolder = Instantiate(matNBHolderPrefab);
 
@@ -87,7 +89,7 @@ public class GM2RoundProcedureScript : MonoBehaviour
         IncreaseBPM();
 
         inIntermission = false;
-        //yield return null;
+
     }
 
     private void IncreaseBPM()
