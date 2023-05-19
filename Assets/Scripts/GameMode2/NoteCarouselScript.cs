@@ -18,7 +18,6 @@ public class NoteCarouselScript : MonoBehaviour
     HealthScript matHealthScript;
     private GM2FeedbackScript feedbackScript;
     private NoteBlockFunctions noteBlockFunctions;
-    private GM2RoundProcedureScript roundProcedureScript;
 
     //INTS
     public int bpm;
@@ -43,7 +42,6 @@ public class NoteCarouselScript : MonoBehaviour
     public bool matDidCorrectInputDuringNote = false;
     public bool invincibile;
     public bool buttonPressProcedureWasCalled = true; //set to true so the first note doesn't automatically get green
-    private bool inIntermission = false;
 
     //DOUBLES
     const double nbDistance = 110.0d;
@@ -85,7 +83,6 @@ public class NoteCarouselScript : MonoBehaviour
     //There are better ways to make references, but I believe this will work well enough
     private void AssignComponentReferences()
     {
-        roundProcedureScript = gameManager.GetComponent<GM2RoundProcedureScript>();
         feedbackScript = gameManager.GetComponent<GM2FeedbackScript>();
         noteBlockFunctions = gameManager.GetComponent<NoteBlockFunctions>();
         isaHealthScript = GameObject.Find("IsaHeartHolder").GetComponent<HealthScript>();
@@ -150,14 +147,6 @@ public class NoteCarouselScript : MonoBehaviour
 
         //This code is a bit junk, I know. When everything works I can still rewrite it :)
 
-        if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && nbHolder.name.Contains("Isa") && !inIntermission)
-        {
-            StartCoroutine(roundProcedureScript.doNextRoundProcedure());
-            inIntermission = true;
-            return;
-        }
-
-
         callInputChecksEveryFrame();
 
         handleInputDuringNote();
@@ -173,18 +162,6 @@ public class NoteCarouselScript : MonoBehaviour
         {
             UpdateFirstAndSecondNB();
             checkForInputsEveryIndex();
-        }
-
-        checkForLastNoteOfPiece();
-    }
-
-    public void checkForLastNoteOfPiece()
-    {
-        if (nbHolder.name.Contains("Isa") == false) return;
-
-        if (currentNoteIndex == RandomPieceGeneratorScript.generatedPiece.Count)
-        {
-            roundProcedureScript.doNextRoundProcedure();
         }
     }
 

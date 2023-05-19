@@ -61,7 +61,7 @@ public class NoteBlock
 
     public void setNextNote(bool doStarterNote)
     {
-        if (isaNoteCarouselScript == null) return;
+        if (go is null) return;
         Transform noteSpriteHolder = go.transform.GetChild(0);
         //Debug.Log("notespritehodler name = " + noteSpriteHolder.name);
         SpriteRenderer sr = noteSpriteHolder.GetComponent<SpriteRenderer>();
