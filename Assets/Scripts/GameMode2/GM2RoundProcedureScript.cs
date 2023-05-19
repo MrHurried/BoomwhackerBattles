@@ -37,6 +37,11 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("Farewell. The gamemanger is goign to heaven");
+    }
+
     public IEnumerator doNextRoundProcedure()
     {
 
@@ -51,6 +56,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
         while (isaNBHolder != null)
         {
             Debug.Log("Isa's holder still exists :'(");
+            yield return null;
+            Debug.Log("Right back from the return null statement");
             isaNBHolder = GameObject.Find("NotenBovenIsaHolder");
         }
 
@@ -58,6 +65,7 @@ public class GM2RoundProcedureScript : MonoBehaviour
         while (isaNBHolder != null)
         {
             Debug.Log("Mat's holder still exists :'(");
+            yield return null;
             matNBHolder = GameObject.Find("NotenBovenMatHolder");
         }
 
