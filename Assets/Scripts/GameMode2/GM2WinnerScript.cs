@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GM2WinnerScript : MonoBehaviour
@@ -74,8 +75,8 @@ public class GM2WinnerScript : MonoBehaviour
         isaHeartHolder.SetActive(false);
         matNoteBlocks.SetActive(false);
         isaNoteBlocks.SetActive(false);
-        //isaBW.SetActive(false);
-        //matBW.SetActive(false);
+        isaBW.SetActive(false);
+        matBW.SetActive(false);
         //WinnerContinueHolder.SetActive(true);
         //isaWinText.SetActive(true);
     }
@@ -83,5 +84,15 @@ public class GM2WinnerScript : MonoBehaviour
     public void playVictorySound()
     {
         victoryAudioSrc.PlayOneShot(victoryAudioClip);
+    }
+
+    private IEnumerator fadeOutBGMusic()
+    {
+        while (bgMusicAudioSrc.volume > 0f)
+        {
+            bgMusicAudioSrc.volume -= fadeOutStrength;
+            yield return new WaitForSeconds(0.05f);
+        }
+        //yield return null;
     }
 }

@@ -46,8 +46,8 @@ namespace BoomWhackerBattles
         //PURELY FOR TESTING
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Space)) doMatWinSequence();
-            if (Input.GetKeyUp(KeyCode.N)) doIsaWinSequence();
+            //if (Input.GetKeyUp(KeyCode.Space)) doMatWinSequence();
+            //if (Input.GetKeyUp(KeyCode.N)) doIsaWinSequence();
         }
 
         public void doMatWinSequence()

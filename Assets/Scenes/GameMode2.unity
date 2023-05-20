@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingBPM: 250
-  BPMIncrease: 60
+  BPMIncrease: 30
   doCameraSway: 0
 --- !u!114 &493185178
 MonoBehaviour:
@@ -2857,6 +2857,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 496742520764400489, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
+      propertyPath: invincibile
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 496742520764400489, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
       propertyPath: feedbackScript
       value: 
       objectReference: {fileID: 0}
@@ -3015,6 +3019,10 @@ PrefabInstance:
       value: MatNBHolder
       objectReference: {fileID: 0}
     - target: {fileID: 2215713494687158861, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
+      propertyPath: invincibile
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215713494687158861, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
       propertyPath: feedbackScript
       value: 
       objectReference: {fileID: 0}
@@ -3142,7 +3150,7 @@ PrefabInstance:
     - target: {fileID: 3312453600756002751, guid: ad8ad8e5c4aac31449230ee03234bb0b, type: 3}
       propertyPath: winScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 493185180}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad8ad8e5c4aac31449230ee03234bb0b, type: 3}
 --- !u!1001 &3836035585300422880
@@ -3228,7 +3236,7 @@ PrefabInstance:
     - target: {fileID: 7246145084291447898, guid: 185b788c5ab082841b76869f8dfc2f18, type: 3}
       propertyPath: winScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 493185180}
     - target: {fileID: 7246145084291447900, guid: 185b788c5ab082841b76869f8dfc2f18, type: 3}
       propertyPath: m_Name
       value: MatHeartHolder
