@@ -63,18 +63,43 @@ public class NoteCarouselScript : MonoBehaviour
     //set lastPlayedNoteIndex to currentNoteIndex
     void Start()
     {
-        if (gameObject.name.Contains("Isa")) gameObject.name = "NotenBovenIsaHolder";
-        if (gameObject.name.Contains("Mat")) gameObject.name = "NotenBovenMatHolder";
+        changeCloneName(); // this should always be first in the start method
 
         AssignGameObjectReferences();
 
         AssignComponentReferences();
-        
+
+        editOldExternalReferences();
 
         currentNoteIndex = -4;
         Debug.Log("just ran start. the currentnoteindex is set to: " + currentNoteIndex);
         lastPlayedNoteIndex = currentNoteIndex;
         createNoteBlocks();
+    }
+
+    /// <summary>
+    /// this script is mainly used to fix issues when instantiating the NBHolder
+    /// references to the NBHolders and their components don't always update in other scripts
+    /// </summary>
+    private void editOldExternalReferences()
+    {
+        if (gameObject.name.Contains("Isa")) noteBlockFunctions.isaNoteCarouselScript = this; // used to fix outdated index when reinstatiating
+
+        if (gameObject.name.Contains("Isa"))
+        {
+            feedbackScript.isaBtnFeedback = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        }
+        if (gameObject.name.Contains("Mat")) 
+        {
+            feedbackScript.matBtnFeedback = gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        }
+
+    }
+
+    private void changeCloneName()
+    {
+        if (gameObject.name.Contains("Isa")) gameObject.name = "NotenBovenIsaHolder";
+        if (gameObject.name.Contains("Mat")) gameObject.name = "NotenBovenMatHolder";
     }
 
     private void AssignGameObjectReferences()

@@ -22,7 +22,7 @@ public class NoteBlockFunctions : MonoBehaviour
     [SerializeField] public Sprite noteSliderSprite;
     [SerializeField] public Sprite restSliderSprite;
 
-    [SerializeField] NoteCarouselScript isaNoteCarouselScript;
+    public NoteCarouselScript isaNoteCarouselScript;
 
     private bool skipReturn = false;
     private void Start()
