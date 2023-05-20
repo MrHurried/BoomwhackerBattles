@@ -2926,7 +2926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496742520764400491, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
       propertyPath: m_TagString
-      value: NBHolder
+      value: IsaNBHolder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
@@ -3012,7 +3012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2215713494687158860, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
       propertyPath: m_TagString
-      value: NBHolder
+      value: MatNBHolder
       objectReference: {fileID: 0}
     - target: {fileID: 2215713494687158861, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
       propertyPath: feedbackScript

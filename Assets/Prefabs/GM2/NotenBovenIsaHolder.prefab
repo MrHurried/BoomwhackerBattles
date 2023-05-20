@@ -1716,7 +1716,7 @@ GameObject:
   - component: {fileID: 496742520764400489}
   m_Layer: 0
   m_Name: NotenBovenIsaHolder
-  m_TagString: Untagged
+  m_TagString: IsaNBHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1753,11 +1753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56060719c071bb44689b46a3e252c4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isaHealthScript: {fileID: 0}
-  matHealthScript: {fileID: 0}
-  randomPieceGeneratorScript: {fileID: 4884302935176297819, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
-  feedbackScript: {fileID: 4884302935176297809, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
-  roundProcedureScript: {fileID: 4884302935176297810, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
   bpm: 150
   currentNoteIndex: 0
   lastPlayedNoteIndex: 0

@@ -22,8 +22,8 @@ public class NoteBlock
 
     public NoteBlock(int ParentIndex, bool FromIsa)
     {
-        isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
-        matNoteCarouselScript = GameObject.Find("NotenBovenMatHolder").GetComponent<NoteCarouselScript>();
+        isaNoteCarouselScript = GameObject.FindGameObjectWithTag("IsaNBHolder").GetComponent<NoteCarouselScript>();
+        matNoteCarouselScript = GameObject.FindGameObjectWithTag("MatNBHolder").GetComponent<NoteCarouselScript>();
         noteBlockFunctions = GameObject.Find("GM2GameManager").GetComponent<NoteBlockFunctions>();
 
         this.parentIndex = ParentIndex;
@@ -127,7 +127,11 @@ public class NoteBlock
 
     public void advancePosition()
     {
-        if (go == null || this == null) return;
+        if (go == null)
+        {
+            Debug.Log("Inside NB \ngo == null? " + (go == null).ToString());
+            return;
+        }
         else
         {
             Debug.Log("Script is NOT null");

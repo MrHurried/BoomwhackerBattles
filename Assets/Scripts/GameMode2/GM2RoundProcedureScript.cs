@@ -48,8 +48,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
     {
         if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count && !inIntermission)
         {
-            //StartCoroutine(doNextRoundProcedure());
-            doNextRoundProcedure();
+            StartCoroutine(doNextRoundProcedure());
+            //doNextRoundProcedure();
             inIntermission = true;
         }
     }
@@ -60,7 +60,7 @@ public class GM2RoundProcedureScript : MonoBehaviour
         Debug.Log("Farewell. The gamemanager is going to heaven");
     }
 
-    public void doNextRoundProcedure()
+    public IEnumerator doNextRoundProcedure()
     {
         Debug.Log("Starting the next round (hopefully) :ppppp");
 
@@ -78,12 +78,13 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
         Debug.Log("Ready to instantiate the NBHolder prefabs");
 
-        //yield return null;
+        yield return null;
 
         isaNBHolder = Instantiate(isaNBHolderPrefab);
         matNBHolder = Instantiate(matNBHolderPrefab);
 
-        assignNBHolders();
+        yield return null;
+
         assignNBScripts();
 
         IncreaseBPM();

@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 2215713494687158861}
   m_Layer: 0
   m_Name: NotenBovenMatHolder
-  m_TagString: Untagged
+  m_TagString: MatNBHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -524,9 +524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56060719c071bb44689b46a3e252c4ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomPieceGeneratorScript: {fileID: 4884302935176297819, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
-  feedbackScript: {fileID: 4884302935176297809, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
-  roundProcedureScript: {fileID: 4884302935176297810, guid: c710ed1a7c70a3d4783937bb0dac80cb, type: 3}
   bpm: 400
   currentNoteIndex: 0
   lastPlayedNoteIndex: 0

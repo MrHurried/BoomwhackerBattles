@@ -5,6 +5,7 @@ using UnityEngine;
 using BoomWhackerBattles;
 using UnityEditor.ShaderGraph.Drawing;
 using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 
 //WARNING: I put a lot of if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
 //'s in this script without really thinking about it too much. Keep this in mind if you come across a bug
@@ -231,14 +232,14 @@ public class NoteCarouselScript : MonoBehaviour
         double secondsToWait = ((60.0d / bpm) / nbDistance);
         if (seconds >= secondsToWait)
         {
-            if (this == null) return;
+            if (gameObject.IsDestroyed() || gameObject == null) return;
             int amountOfMovements = (int)MathF.Floor((float)(seconds / secondsToWait));
             for (int i = 0; i < amountOfMovements; i++)
             {
-                if (this == null) break;
+                if (gameObject.IsDestroyed() || gameObject == null) break;
                 foreach (NoteBlock nb in noteblocks)
                 {
-                    if (this == null) break;
+                    if (gameObject.IsDestroyed() || gameObject == null) break;
                     nb.advancePosition();
                 }
             }
