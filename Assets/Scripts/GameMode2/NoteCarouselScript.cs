@@ -72,6 +72,7 @@ public class NoteCarouselScript : MonoBehaviour
         
 
         currentNoteIndex = -4;
+        Debug.Log("just ran start. the currentnoteindex is set to: " + currentNoteIndex);
         lastPlayedNoteIndex = currentNoteIndex;
         createNoteBlocks();
     }

@@ -24,6 +24,7 @@ public class NoteBlockFunctions : MonoBehaviour
 
     [SerializeField] NoteCarouselScript isaNoteCarouselScript;
 
+    private bool skipReturn = false;
     private void Start()
     {
        isaNoteCarouselScript = GameObject.Find("NotenBovenIsaHolder").GetComponent<NoteCarouselScript>();
@@ -94,8 +95,20 @@ public class NoteBlockFunctions : MonoBehaviour
         Debug.Log("inside the wasNoteBeforeHold method. index = " + index);
 
         while (strCurrentNote == "0")
-        {
+        {           
             index--;
+            /*if (index < 0)
+            {
+                Debug.LogError("Custom error: wasNoteBeforeHold, index is less than 0. This shouldn't happen. breaking from the loop now");
+                skipReturn = true;
+                break;
+            }
+            if (index >= RandomPieceGeneratorScript.generatedPiece.Count)
+            {
+                Debug.LogError("Custom error: NoteblockFunctions: wasNoteBeforeHold: the index is greater than the piece length. This shouldn't happen. Breaking the loop now.");
+                skipReturn = true;
+                break;
+            }*/
             strCurrentNote = RandomPieceGeneratorScript.generatedPiece[index];
             //Debug.Log("inside the wasNoteBeforeHoldCheck: " + strCurrentNote);
         }
