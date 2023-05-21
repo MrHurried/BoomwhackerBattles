@@ -10,6 +10,7 @@ namespace BoomWhackerBattles
         [SerializeField] GameObject winnerHeader;
         [SerializeField] GameObject matWinText;
         [SerializeField] GameObject isaWinText;
+        [SerializeField] GameObject whackYourOpponentHintText;
 
         //OTHER UI
         [SerializeField] GameObject WinnerContinueHolder;
@@ -68,6 +69,7 @@ namespace BoomWhackerBattles
             winnerHeader.SetActive(true);
             WinnerContinueHolder.SetActive(true);
             matWinText.SetActive(true);
+            whackYourOpponentHintText.SetActive(false);
         }
 
         public void doIsaWinSequence()
@@ -86,6 +88,7 @@ namespace BoomWhackerBattles
             winnerHeader.SetActive(true);
             WinnerContinueHolder.SetActive(true);
             isaWinText.SetActive(true);
+            whackYourOpponentHintText.SetActive(false);
         }
 
         IEnumerator fadeOutBGMusic()

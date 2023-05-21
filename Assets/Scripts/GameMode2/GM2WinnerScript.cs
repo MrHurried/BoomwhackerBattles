@@ -1,16 +1,17 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GM2WinnerScript : MonoBehaviour
 {
 
     //TEXT
     [SerializeField] GameObject winnerHeader;
-    //[SerializeField] GameObject matWinText;
-    //[SerializeField] GameObject isaWinText;
+    [SerializeField] GameObject matWinText;
+    [SerializeField] GameObject isaWinText;
 
     //OTHER UI
-    [SerializeField] GameObject WinnerContinueHolder;
+    [SerializeField] GameObject continueHolder;
     [SerializeField] GameObject isaHeartHolder;
     [SerializeField] GameObject matHeartHolder;
     [SerializeField] GameObject matNBHolder;
@@ -43,6 +44,10 @@ public class GM2WinnerScript : MonoBehaviour
 
     public void doMatWinSequence()
     {
+        //enable or disable the [name] texts
+        isaWinText.SetActive(false);
+        matWinText.SetActive(true);
+
         //set matisse's sprite to one with a crown
         matSpriteRenderer.sprite = matisseWinSprite;
         //play the matisse win animation
@@ -54,6 +59,10 @@ public class GM2WinnerScript : MonoBehaviour
 
     public void doIsaWinSequence()
     {
+        //enable or disable the [name] texts
+        isaWinText.SetActive(true);
+        matWinText.SetActive(false);
+
         //set matisse's sprite to one with a crown
         isaSpriteRenderer.sprite = isabelWinSprite;
         //play the matisse win animation
@@ -79,8 +88,8 @@ public class GM2WinnerScript : MonoBehaviour
         isaNBHolder.SetActive(false);
         isaBW.SetActive(false);
         matBW.SetActive(false);
-        //WinnerContinueHolder.SetActive(true);
-        //isaWinText.SetActive(true);
+        continueHolder.SetActive(true);
+
     }
 
     public void playVictorySound()
@@ -97,5 +106,10 @@ public class GM2WinnerScript : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         //yield return null;
+    }
+
+    public void ContinueToMainMenu()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 }

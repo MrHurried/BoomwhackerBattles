@@ -9,7 +9,7 @@ public class GM1GameOptionsStorer : MonoBehaviour
 {
     //game options
     public static bool doFlashes;
-    public static int pointsToWin = 100;
+    public static int startingPointAmount = 100;
    
     [SerializeField] string sceneToLoad; // this might be a game option in the future, perhaphs a different game mode could be selected
 
@@ -27,7 +27,7 @@ public class GM1GameOptionsStorer : MonoBehaviour
         //check if pointsToWin Input field text element doesn't have an integer typed in
         // if it doesn't, an error shows
         //if it does, the if statement gets skipped and the decimal error text gets removed
-        if (!int.TryParse(ptwText, out pointsToWin))
+        if (!int.TryParse(ptwText, out startingPointAmount))
         {
             noDecimalsErrorGameObject.SetActive(true);
             return;
@@ -37,7 +37,7 @@ public class GM1GameOptionsStorer : MonoBehaviour
         //store all the game options
         doFlashes = doFlashingToggle.isOn;
         
-        pointsToWin = int.Parse(ptwText);
+        startingPointAmount = int.Parse(ptwText);
 
         //Load the last scene
         //SceneManager.LoadScene(sceneToLoad);

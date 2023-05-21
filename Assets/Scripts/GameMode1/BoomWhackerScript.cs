@@ -9,8 +9,8 @@ namespace BoomWhackerBattles
     public class BoomWhackerScript : MonoBehaviour
     {
         //TEXT OBJECTS
-        [SerializeField] TextMeshProUGUI IsaScoreText; //Defines the text GameObject that holds Isabel's score
-        [SerializeField] TextMeshProUGUI MatScoreText; //Defines the text GameObject that holds Matisse's score
+        [SerializeField] TextMeshProUGUI MatHealthText; //Defines the text GameObject that holds Isabel's score
+        [SerializeField] TextMeshProUGUI IsaHealthText; //Defines the text GameObject that holds Matisse's score
 
         //SPRITE RENDERERS
         [SerializeField] SpriteRenderer IsaSpriteRenderer; //Isabel's head sprite renderer
@@ -33,11 +33,11 @@ namespace BoomWhackerBattles
         //INTEGERS
         [SerializeField] int BloodBonusPoints; //defines how many extra points the blood effect should give
 
-        [SerializeField] int MaxScore; // score until win
+        [SerializeField] int startHealth; // score until win
         [SerializeField] int cheatMultiplier; //used for debugging, making score go up faster
 
-        public int IsaScore = 0; //tracks score for Isabel
-        public int MatScore = 0; //Tracks score for Matisse
+        public int matHealth = 0; //tracks score for Isabel
+        public int isaHealth = 0; //Tracks score for Matisse
 
         public int IsaScoreSinceLastBlood = 0; //Tracks the score of Isabel since matisse last bled
         public int MatScoreSinceLastBlood = 0; //Tracks the score of Matisse since Isabel last bled
@@ -68,7 +68,10 @@ namespace BoomWhackerBattles
             AudioSrc = GetComponent<AudioSource>();
 
             doFlashAnimation = GM1GameOptionsStorer.doFlashes;
-            MaxScore = GM1GameOptionsStorer.pointsToWin;
+            startHealth = GM1GameOptionsStorer.startingPointAmount;
+
+            matHealth = startHealth;
+            isaHealth = startHealth;
         }
 
         void Update()
@@ -120,7 +123,7 @@ namespace BoomWhackerBattles
                     HitsUntilBloodMat = Mathf.RoundToInt(Random.Range(1f, 20f));
 
                     //geef bonuspunten
-                    IsaScore += BloodBonusPoints;
+                    matHealth -= BloodBonusPoints;
 
                     //play the audio
                     AudioSrc.PlayOneShot(BloodClipV1);
@@ -134,8 +137,8 @@ namespace BoomWhackerBattles
 
             }
             //Add 1 to score and update text
-            IsaScore += 1 * cheatMultiplier;
-            IsaScoreText.text = IsaScore.ToString();
+            matHealth -= 1 * cheatMultiplier;
+            MatHealthText.text = matHealth.ToString();
 
 
             //If the animation isn't arlready playing, play it for matisse (isMatisse = true)
@@ -171,7 +174,7 @@ namespace BoomWhackerBattles
                     HitsUntilBloodIsa = Mathf.RoundToInt(Random.Range(1f, 20f));
 
                     //geef bonuspunten
-                    MatScore += BloodBonusPoints;
+                    isaHealth -= BloodBonusPoints;
 
                     //play the audio
                     AudioSrc.PlayOneShot(BloodClipV1);
@@ -185,8 +188,8 @@ namespace BoomWhackerBattles
 
             }
             //Add 1 to score and update text
-            MatScore += 1 * cheatMultiplier;
-            MatScoreText.text = MatScore.ToString();
+            isaHealth -= 1 * cheatMultiplier;
+            IsaHealthText.text = isaHealth.ToString();
 
 
             //If the animation isn't arlready playing, play it for matisse (isMatisse = true)
@@ -246,7 +249,7 @@ namespace BoomWhackerBattles
             if (hasWon) return;
             //ISABEL WINT
 
-            if (IsaScore >= MaxScore)
+            if (matHealth <= 0)
             {
                 Debug.Log("Isabel WINT!!!");
                 GetComponent<WinnerScript>().doIsaWinSequence();
@@ -254,7 +257,7 @@ namespace BoomWhackerBattles
             }
             //MATISSE WINT
 
-            if (MatScore >= MaxScore)
+            if (isaHealth <= 0)
             {
                 Debug.Log("Matisse WINT!!!");
                 GetComponent<WinnerScript>().doMatWinSequence();
