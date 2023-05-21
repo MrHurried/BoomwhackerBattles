@@ -9,6 +9,7 @@ public class ChordSoundScript : MonoBehaviour
 {
     private ChordSoundsStorer chordStorer;
     public NoteCarouselScript isaNoteCarouselScript;
+    public GM2WinnerScript winnerScript;
 
     public float twoBarDuration = 8f; // measured in seconds$
 
@@ -27,6 +28,11 @@ public class ChordSoundScript : MonoBehaviour
 
     void Start()
     {
+        if (this.enabled)
+        {
+            winnerScript.bgMusicAudioSrc = audioSource;
+        }
+
         chordStorer = GetComponent<ChordSoundsStorer>(); 
     }
 
@@ -50,66 +56,6 @@ public class ChordSoundScript : MonoBehaviour
         }
 
     }
-
-    /*
-    bool fadingOut = false;
-    bool fadingIn = false;
-    IEnumerator waitToFadeOutChord()
-    {
-        while (fadingIn)
-        {
-            yield return null;
-        }
-        //FADE BG MUSIC
-        float basevolume = audioSource.volume;
-
-        //Debug.Log(fadeoutMagnitude / transitionTime);
-        yield return new WaitForSeconds( twoBarDuration - transitionTime *2 ); // the 0.1F is just as a safe guard
-
-        fadingOut = true;
-        while (audioSource.volume > 0)
-        {
-            audioSource.volume -= fadeMagnitude;
-            yield return new WaitForSeconds(fadeMagnitude / transitionTime);
-        }
-        fadingOut = false;
-    }
-
-    IEnumerator fadeInChord()
-    {
-
-        while (!fadingOut)
-        {
-            yield return null;
-        }
-
-        //FADE BG MUSIC
-        float basevolume = audioSource.volume;
-
-        //Debug.Log(fadeoutMagnitude / transitionTime);
-
-        fadingIn = true;
-
-        while (audioSource.volume < 1)
-        {
-            audioSource.volume += fadeMagnitude;
-            yield return new WaitForSeconds(fadeMagnitude / transitionTime);
-        }
-
-        fadingIn = false;
-    }*/
-
-    /*ivate IEnumerator playChosenChord()
-    {
-        for(; ; )
-        {
-            setNewCurrentChordClip();
-            audioSource.clip = currentChordClip;
-            audioSource.Play();
-            yield return waitTwoBars;
-            StartCoroutine(playChosenChord());
-        }
-    }*/
 
     private void setNewCurrentChordClip()
     {

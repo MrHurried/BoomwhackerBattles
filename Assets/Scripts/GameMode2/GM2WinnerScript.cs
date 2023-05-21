@@ -13,8 +13,8 @@ public class GM2WinnerScript : MonoBehaviour
     [SerializeField] GameObject WinnerContinueHolder;
     [SerializeField] GameObject isaHeartHolder;
     [SerializeField] GameObject matHeartHolder;
-    [SerializeField] GameObject matNoteBlocks;
-    [SerializeField] GameObject isaNoteBlocks;
+    [SerializeField] GameObject matNBHolder;
+    [SerializeField] GameObject isaNBHolder;
 
     //SPRITES
     [SerializeField] Sprite matisseWinSprite;
@@ -34,7 +34,7 @@ public class GM2WinnerScript : MonoBehaviour
     [SerializeField] GameObject ScoreTextsHolder;
 
     //AUDIO RELATED
-    [SerializeField] AudioSource bgMusicAudioSrc;
+    public AudioSource bgMusicAudioSrc; // assigned in ChordSounScript
     [SerializeField] AudioSource victoryAudioSrc;
     [SerializeField] float victorySoundDelay;
     [SerializeField] float fadeOutStrength;
@@ -67,14 +67,16 @@ public class GM2WinnerScript : MonoBehaviour
     //A function to avoid boilerplate code
     public void doUniversalWinSequenceTasks()
     {
+        //start to fade out the BGMusic
+        StartCoroutine(fadeOutBGMusic());
         // invoke victory sound
         Invoke("playVictorySound", victorySoundDelay);
         //Enable texts
         winnerHeader.SetActive(true);
         matHeartHolder.SetActive(false);
         isaHeartHolder.SetActive(false);
-        matNoteBlocks.SetActive(false);
-        isaNoteBlocks.SetActive(false);
+        matNBHolder.SetActive(false);
+        isaNBHolder.SetActive(false);
         isaBW.SetActive(false);
         matBW.SetActive(false);
         //WinnerContinueHolder.SetActive(true);
@@ -87,7 +89,8 @@ public class GM2WinnerScript : MonoBehaviour
     }
 
     private IEnumerator fadeOutBGMusic()
-    {
+    { 
+        Debug.Log("Fading out the BG music (hopefully). audio src: " + bgMusicAudioSrc);
         while (bgMusicAudioSrc.volume > 0f)
         {
             bgMusicAudioSrc.volume -= fadeOutStrength;
