@@ -1127,7 +1127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74340be87d04c8b49b78e0646a935b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingBPM: 250
+  startingBPM: 60
   BPMIncrease: 30
   doCameraSway: 0
 --- !u!114 &493185178

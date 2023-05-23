@@ -726,7 +726,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Whack your opponent to score!
+  m_text: Whack your opponent to win!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 29ed1c09607322a46b5ae6e816195c91, type: 2}
   m_sharedMaterial: {fileID: -1295282698822182561, guid: 29ed1c09607322a46b5ae6e816195c91, type: 2}
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.2
+  m_fontSize: 36.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
