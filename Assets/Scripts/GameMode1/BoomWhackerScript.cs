@@ -56,7 +56,7 @@ namespace BoomWhackerBattles
         public bool CR_WhackMatisse_isPlaying = false; //Used to tell if the whack matisse animation is playing
         public bool CR_WhackIsabel_isPlaying = false; //Used to tell if the whack matisse animation is playing
 
-        public bool doFlashAnimation = false;
+        public bool doFlashAnimation = true;
         public bool doSquashAnimation = true;
 
         //this func ASSIGNS:
@@ -97,8 +97,6 @@ namespace BoomWhackerBattles
 
         private void WhackMatisse() // P key
         {
-            if (doFlashAnimation == true)
-                MatSpriteRenderer.gameObject.SendMessage("Flash");
 
             if (doSquashAnimation == true)
                 MatSpriteRenderer.gameObject.SendMessage("Squash");
@@ -119,6 +117,10 @@ namespace BoomWhackerBattles
             {
                 if (!MatBloodParticleSystem.isPlaying && IsaScoreSinceLastBlood % HitsUntilBloodMat == 0)
                 {
+                    //Flash
+                    if (doFlashAnimation == true)
+                        MatSpriteRenderer.gameObject.SendMessage("Flash");
+
                     //Maak de volgende HitsUntilBlood random
                     HitsUntilBloodMat = Mathf.RoundToInt(Random.Range(1f, 20f));
 
@@ -170,6 +172,10 @@ namespace BoomWhackerBattles
             {
                 if (!IsaBloodParticleSystem.isPlaying && MatScoreSinceLastBlood % HitsUntilBloodIsa == 0)
                 {
+                    //Flash
+                    if (doFlashAnimation == true)
+                        IsaSpriteRenderer.gameObject.SendMessage("Flash");
+
                     //Maak de volgende HitsUntilBlood random
                     HitsUntilBloodIsa = Mathf.RoundToInt(Random.Range(1f, 20f));
 
