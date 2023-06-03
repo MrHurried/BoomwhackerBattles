@@ -381,14 +381,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 128211170}
-  - component: {fileID: 128211171}
+  - component: {fileID: 128211172}
   m_Layer: 5
   m_Name: BPMandCo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &128211170
 RectTransform:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ RectTransform:
   m_GameObject: {fileID: 128211169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.58461, y: 0.58461, z: 0.58461}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 360357725}
@@ -409,24 +409,29 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -189}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &128211171
-MonoBehaviour:
+--- !u!95 &128211172
+Animator:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128211169}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc45551734e90b046accffcfad9a9a90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BPMText: {fileID: 360357726}
-  BPMEqualToSixteenthText: {fileID: 473495374}
-  isaNoteCarouselScript: {fileID: 732542726}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21baa3fa99d01d144a46799247a59d03, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &128599252
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 359.61}
+  m_AnchoredPosition: {x: 0, y: 7}
   m_SizeDelta: {x: 1443.0667, y: 360.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &360357726
@@ -910,7 +915,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 5
   m_fontSizeMax: 75
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -991,7 +996,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 284}
+  m_AnchoredPosition: {x: 0, y: -68.609985}
   m_SizeDelta: {x: 1443.0667, y: 360.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473495374
@@ -1047,7 +1052,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 5
   m_fontSizeMax: 50
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -1108,6 +1113,7 @@ GameObject:
   - component: {fileID: 493185179}
   - component: {fileID: 493185178}
   - component: {fileID: 493185177}
+  - component: {fileID: 493185184}
   m_Layer: 0
   m_Name: GM2GameManager
   m_TagString: Untagged
@@ -1262,6 +1268,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &493185184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493185176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc45551734e90b046accffcfad9a9a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BPMText: {fileID: 360357726}
+  BPMEqualToSixteenthText: {fileID: 473495374}
+  isaNoteCarouselScript: {fileID: 732542726}
+  animator: {fileID: 128211172}
 --- !u!1 &583151309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1319,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -61, y: 282.6}
+  m_AnchoredPosition: {x: -61, y: -70.00998}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &583151311
@@ -1814,6 +1836,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4422638527226289611, guid: f25095ed6d58c82499c51be062d50848, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 996023648}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f25095ed6d58c82499c51be062d50848, type: 3}
 --- !u!1 &874122846
@@ -2017,11 +2043,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 73c66c7408b053b4ba9913ac450cb5ae, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2797,7 +2823,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 496742520764400489, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
       propertyPath: invincibile
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 496742520764400489, guid: 2319c57681d3fac48898a06ba1298905, type: 3}
       propertyPath: feedbackScript
@@ -2959,7 +2985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2215713494687158861, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
       propertyPath: invincibile
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2215713494687158861, guid: 32d10cd0d9d8aef4593452934f1fd7a7, type: 3}
       propertyPath: feedbackScript

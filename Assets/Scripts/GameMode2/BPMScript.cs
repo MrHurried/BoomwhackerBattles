@@ -8,7 +8,9 @@ public class BPMScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI BPMText;
     [SerializeField] TextMeshProUGUI BPMEqualToSixteenthText;
 
-    [SerializeField] NoteCarouselScript isaNoteCarouselScript;
+    public NoteCarouselScript isaNoteCarouselScript;
+
+    [SerializeField] Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,5 +30,6 @@ public class BPMScript : MonoBehaviour
         BPMText.text = bpm.ToString() + " BPM"; 
         BPMEqualToSixteenthText.text = "(   = "+ bpm.ToString() + ")";
 
+        animator.Play("BPMGrowAnim");
     }
 }

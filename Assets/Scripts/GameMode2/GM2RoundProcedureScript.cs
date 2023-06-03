@@ -7,6 +7,8 @@ using UnityEngine;
 public class GM2RoundProcedureScript : MonoBehaviour
 {
     //SCRIPTS
+    private BPMScript bpmScript;
+
     public NoteCarouselScript isaNoteCarouselScript;
     public NoteCarouselScript matNoteCarouselScript;
 
@@ -34,6 +36,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
     {
         assignNBHolders();
         bpm = optionsScript.startingBPM;
+
+        bpmScript = GetComponent<BPMScript>();
     }
 
     // Update is called once per frame
@@ -88,6 +92,9 @@ public class GM2RoundProcedureScript : MonoBehaviour
         assignNBScripts();
 
         IncreaseBPM();
+
+        bpmScript.isaNoteCarouselScript = isaNoteCarouselScript;
+        bpmScript.changeBPMText();
 
         inIntermission = false;
 
