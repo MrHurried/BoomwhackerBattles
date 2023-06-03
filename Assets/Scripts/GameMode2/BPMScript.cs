@@ -30,6 +30,6 @@ public class BPMScript : MonoBehaviour
         BPMText.text = bpm.ToString() + " BPM"; 
         BPMEqualToSixteenthText.text = "(   = "+ bpm.ToString() + ")";
 
-        animator.Play("BPMGrowAnim");
+        animator.SetTrigger("DoGrowAnim");
     }
 }

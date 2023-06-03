@@ -16,6 +16,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
     public GM2OptionsScript optionsScript;
 
+    public GM2FeedbackScript feedbackScript;
+
     //INTS 
     public int bpmIncreaseAmount;
     public int bpm;
@@ -95,6 +97,11 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
         bpmScript.isaNoteCarouselScript = isaNoteCarouselScript;
         bpmScript.changeBPMText();
+
+        feedbackScript.isaNoteCarouselScript = isaNoteCarouselScript;
+        feedbackScript.matNoteCarouselScript = matNoteCarouselScript;
+        feedbackScript.isaArrow = isaNBHolder.transform.GetChild(3);
+        feedbackScript.matArrow = matNBHolder.transform.GetChild(3);
 
         inIntermission = false;
 

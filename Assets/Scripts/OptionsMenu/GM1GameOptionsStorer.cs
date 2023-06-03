@@ -16,11 +16,17 @@ public class GM1GameOptionsStorer : MonoBehaviour
    
     [SerializeField] string sceneToLoad; // this might be a game option in the future, perhaphs a different game mode could be selected
 
+    private OptionsMenuScript optionsMenuScript;
+
     //UI element references in OptionsMenu scene
     [SerializeField] TMP_InputField pointsToWinInputfield;
     [SerializeField] Toggle doFlashingToggle;
     [SerializeField] GameObject noDecimalsErrorGameObject;
 
+    private void Start()
+    {
+        optionsMenuScript = GetComponent<OptionsMenuScript>();
+    }
 
     //this function is called when the "continue" button in the OptionsMenu scene is pressed
     public void SaveGameOptionsGM1() 
@@ -37,7 +43,7 @@ public class GM1GameOptionsStorer : MonoBehaviour
         }
         else
         {
-            levelLoader.LoadLevel("GameMode1Scene");
+            optionsMenuScript.goToScreen2GM1();
         }
         noDecimalsErrorGameObject.SetActive(false);
 

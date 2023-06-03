@@ -1949,6 +1949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 1333427291}
   sceneToLoad: GameMode1Scene
+  optionsMenuScript: {fileID: 0}
   pointsToWinInputfield: {fileID: 1203820118}
   doFlashingToggle: {fileID: 264307002}
   noDecimalsErrorGameObject: {fileID: 1456894792}
@@ -4127,7 +4128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &836375345
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8044,7 +8045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1529206608
 RectTransform:
   m_ObjectHideFlags: 0
