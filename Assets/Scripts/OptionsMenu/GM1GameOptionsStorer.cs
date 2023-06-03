@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class GM1GameOptionsStorer : MonoBehaviour
 {
+    //Levelloader
+    [SerializeField] LevelLoaderScript levelLoader;
+
     //game options
     public static bool doFlashes = false;
     public static int startingPointAmount = 100;
@@ -31,6 +34,10 @@ public class GM1GameOptionsStorer : MonoBehaviour
         {
             noDecimalsErrorGameObject.SetActive(true);
             return;
+        }
+        else
+        {
+            levelLoader.LoadLevel("GameMode1Scene");
         }
         noDecimalsErrorGameObject.SetActive(false);
 
