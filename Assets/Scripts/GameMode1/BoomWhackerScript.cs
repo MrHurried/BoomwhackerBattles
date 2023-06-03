@@ -70,8 +70,13 @@ namespace BoomWhackerBattles
             doFlashAnimation = GM1GameOptionsStorer.doFlashes;
             startHealth = GM1GameOptionsStorer.startingPointAmount;
 
+            Debug.Log("DoFlash? " + doFlashAnimation);
+            
             matHealth = startHealth;
             isaHealth = startHealth;
+
+            MatHealthText.text = startHealth.ToString();
+            IsaHealthText.text = startHealth.ToString();
         }
 
         void Update()
@@ -149,10 +154,6 @@ namespace BoomWhackerBattles
 
         private void WhackIsabel() // Q key
         { 
-
-            if (doFlashAnimation == true)
-                IsaSpriteRenderer.gameObject.SendMessage("Flash");
-
             if (doSquashAnimation == true)
                 IsaSpriteRenderer.gameObject.SendMessage("Squash");
 

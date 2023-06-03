@@ -18,6 +18,8 @@ public class GM2OptionsScript : MonoBehaviour
         if(options_startingBPM != null) { startingBPM = (int)options_startingBPM; }
         if(options_doCameraSway != null) { doCameraSway = (bool)options_doCameraSway; }
 
+
+
         changeStartingBPM();
     }
 

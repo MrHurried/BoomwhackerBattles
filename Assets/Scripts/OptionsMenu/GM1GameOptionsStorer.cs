@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GM1GameOptionsStorer : MonoBehaviour
 {
     //game options
-    public static bool doFlashes;
+    public static bool doFlashes = false;
     public static int startingPointAmount = 100;
    
     [SerializeField] string sceneToLoad; // this might be a game option in the future, perhaphs a different game mode could be selected

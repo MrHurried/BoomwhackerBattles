@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: e5a9619535ffe2b4a84e61bddca57b41, type: 2}
-  duration: 0.125
+  duration: 0.25
 --- !u!114 &244568137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2abfc9bcae9c50e4398c4b2117d85fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squashMagnitude: 1.5
+  squashMagnitude: 2
   squashDuration: 0.2
 --- !u!1 &272406794
 GameObject:
@@ -22516,7 +22516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2abfc9bcae9c50e4398c4b2117d85fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squashMagnitude: 1.5
+  squashMagnitude: 2
   squashDuration: 0.2
 --- !u!114 &1755511698
 MonoBehaviour:
@@ -22531,7 +22531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: e5a9619535ffe2b4a84e61bddca57b41, type: 2}
-  duration: 0.125
+  duration: 0.25
 --- !u!1 &1849344379
 GameObject:
   m_ObjectHideFlags: 0
