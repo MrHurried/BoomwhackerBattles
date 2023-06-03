@@ -196,7 +196,7 @@ public class NoteCarouselScript : MonoBehaviour
     //does everything needed when a new index appears
     public void checkForInputsEveryIndex()
     {
-        if (currentNoteIndex < 0) return;
+        if (currentNoteIndex < 1) return;
         if (currentNoteIndex >= RandomPieceGeneratorScript.generatedPiece.Count) return;
         //used to fix the bug where wasnoteBeforeHoldGets called when the current note isn't even a hold note
         string currentNoteString = RandomPieceGeneratorScript.generatedPiece[currentNoteIndex];
@@ -325,12 +325,12 @@ public class NoteCarouselScript : MonoBehaviour
         if (strCurrentNote != "0" || !noteBlockFunctions.wasNoteBeforeHold(false)) return;
 
         //if the player didn't hold the right key AS SOON AS THE NEW NOTE APPEARED, they will lose health
-        if (!Input.GetKey(KeyCode.Q) && nbHolder.name.Contains("Isa"))
+        if (!Input.GetKey(KeyCode.Q) && nbHolder.name.Contains("Isa") && !buttonPressProcedureWasCalled)
         {
             doButtonPressProcedure(false, true, false);
             Debug.Log("Isabel did a wrong input during a note holder");
         }
-        if (!Input.GetKey(KeyCode.P) && nbHolder.name.Contains("Mat"))
+        if (!Input.GetKey(KeyCode.P) && nbHolder.name.Contains("Mat") && !buttonPressProcedureWasCalled)
         {
             doButtonPressProcedure(false, false, false);
             Debug.Log("Matisse did a wrong input during a note holder");

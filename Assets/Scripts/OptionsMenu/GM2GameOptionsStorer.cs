@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GM2GameOptionsStorer : MonoBehaviour
 {
+    //OptionsScript
+    private OptionsMenuScript optionsMenu;
+
     //Not a number error UI
     [SerializeField] GameObject NaN_BpmIncrease;
     [SerializeField] GameObject NaN_StartingBpm;
@@ -23,6 +26,12 @@ public class GM2GameOptionsStorer : MonoBehaviour
     //IPField text
     private string bpmIncreaseText;
     private string startingBpmText;
+
+    private void Start()
+    {
+        optionsMenu = GetComponent<OptionsMenuScript>();
+    }
+
     public void SaveGameOptionsGM2()
     {
         //get text from IPFields
@@ -33,6 +42,7 @@ public class GM2GameOptionsStorer : MonoBehaviour
         if(!int.TryParse(bpmIncreaseText, out bpmIncrease))
         {
             NaN_BpmIncrease.SetActive(true);
+            return;
         }
         else
         {
@@ -43,6 +53,7 @@ public class GM2GameOptionsStorer : MonoBehaviour
         if (!int.TryParse(startingBpmText, out startingBpm))
         {
             NaN_StartingBpm.SetActive(true);
+            return;
         }
         else
         {
@@ -50,5 +61,6 @@ public class GM2GameOptionsStorer : MonoBehaviour
         }
 
         doCameraSway = doScreenSwayToggle.isOn;
+        optionsMenu.goToScreen2GM2();
     }
 }

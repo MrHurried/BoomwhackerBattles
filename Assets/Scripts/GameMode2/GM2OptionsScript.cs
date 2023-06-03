@@ -15,9 +15,16 @@ public class GM2OptionsScript : MonoBehaviour
 
     void Awake()
     {
-        if(options_startingBPM != null) { startingBPM = (int)options_startingBPM; }
-        if(options_doCameraSway != null) { doCameraSway = (bool)options_doCameraSway; }
+        options_BPMIncrease = GM2GameOptionsStorer.bpmIncrease;
+        options_startingBPM = GM2GameOptionsStorer.startingBpm;
+        options_doCameraSway = GM2GameOptionsStorer.doCameraSway;
 
+        if(options_startingBPM == null) { startingBPM = (int)options_startingBPM; }
+        if (options_BPMIncrease != null) { BPMIncrease = (int)options_BPMIncrease; }
+        if (options_doCameraSway != null) { doCameraSway = (bool)options_doCameraSway; }
+
+        if(startingBPM == 0) startingBPM = 60;
+        if(BPMIncrease == 0) BPMIncrease = 60;
 
 
         changeStartingBPM();
