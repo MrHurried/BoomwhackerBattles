@@ -14,7 +14,7 @@ public class HealthScript : MonoBehaviour
 
     private int health = 6;
 
-    public static bool someoneWon = false;
+    public bool someoneWon = false;
 
     public SpriteRenderer heart0SpriteRenderer;
     public SpriteRenderer heart1SpriteRenderer;

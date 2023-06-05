@@ -14,9 +14,9 @@ public class GM2GameOptionsStorer : MonoBehaviour
     [SerializeField] GameObject NaN_StartingBpm;
 
     //settings
-    public static int bpmIncrease;
-    public static int startingBpm;
-    public static bool? doCameraSway;
+    public int bpmIncrease;
+    public int startingBpm;
+    public bool doCameraSway;
 
     //SETTINGS UI
     [SerializeField] TMP_InputField bpmIncreaseIPField;

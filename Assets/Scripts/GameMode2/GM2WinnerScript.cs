@@ -42,6 +42,13 @@ public class GM2WinnerScript : MonoBehaviour
     [SerializeField] float fadeOutStrength;
     [SerializeField] AudioClip victoryAudioClip;
 
+    //GameObjects
+    public GameObject optionsStorerObj;
+
+    private void Start()
+    {
+        optionsStorerObj = GameObject.Find("GameOptionsStorer");
+    }
 
     public void doMatWinSequence()
     {
@@ -93,7 +100,7 @@ public class GM2WinnerScript : MonoBehaviour
         isaBW.SetActive(false);
         matBW.SetActive(false);
         continueHolder.SetActive(true);
-
+        Destroy(optionsStorerObj);
     }
 
     public void playVictorySound()

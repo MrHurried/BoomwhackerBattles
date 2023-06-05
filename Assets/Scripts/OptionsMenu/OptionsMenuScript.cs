@@ -19,7 +19,9 @@ public class OptionsMenuScript : MonoBehaviour
 
     private void Start()
     {
-        goToScreen1GM2();
+        if(SceneManager.GetActiveScene().name == "OptionsMenu") goToScreen1GM2();
+
+        DontDestroyOnLoad(gameObject);
     }
         /*
      .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.   .----------------. 
