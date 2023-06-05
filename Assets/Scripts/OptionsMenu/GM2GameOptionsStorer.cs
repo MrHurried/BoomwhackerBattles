@@ -16,7 +16,7 @@ public class GM2GameOptionsStorer : MonoBehaviour
     //settings
     public static int bpmIncrease;
     public static int startingBpm;
-    public static bool doCameraSway;
+    public static bool? doCameraSway;
 
     //SETTINGS UI
     [SerializeField] TMP_InputField bpmIncreaseIPField;

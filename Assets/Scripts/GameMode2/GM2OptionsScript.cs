@@ -17,7 +17,7 @@ public class GM2OptionsScript : MonoBehaviour
     {
         options_BPMIncrease = GM2GameOptionsStorer.bpmIncrease;
         options_startingBPM = GM2GameOptionsStorer.startingBpm;
-        options_doCameraSway = GM2GameOptionsStorer.doCameraSway;
+        if(options_doCameraSway != null) options_doCameraSway = GM2GameOptionsStorer.doCameraSway;
 
         if(options_startingBPM != 0) { startingBPM = (int)options_startingBPM; }
         if (options_BPMIncrease != 0) { BPMIncrease = (int)options_BPMIncrease; }

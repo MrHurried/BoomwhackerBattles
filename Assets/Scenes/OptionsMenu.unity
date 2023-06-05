@@ -1949,7 +1949,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelLoader: {fileID: 1333427291}
   sceneToLoad: GameMode1Scene
-  optionsMenuScript: {fileID: 0}
   pointsToWinInputfield: {fileID: 1203820118}
   doFlashingToggle: {fileID: 264307002}
   noDecimalsErrorGameObject: {fileID: 1456894792}

@@ -9,13 +9,14 @@ public class GM2WinnerScript : MonoBehaviour
     [SerializeField] GameObject winnerHeader;
     [SerializeField] GameObject matWinText;
     [SerializeField] GameObject isaWinText;
+    [SerializeField] GameObject BPMText;
 
     //OTHER UI
     [SerializeField] GameObject continueHolder;
     [SerializeField] GameObject isaHeartHolder;
     [SerializeField] GameObject matHeartHolder;
-    [SerializeField] GameObject matNBHolder;
-    [SerializeField] GameObject isaNBHolder;
+    public GameObject matNBHolder;
+    public GameObject isaNBHolder;
 
     //SPRITES
     [SerializeField] Sprite matisseWinSprite;
@@ -76,6 +77,8 @@ public class GM2WinnerScript : MonoBehaviour
     //A function to avoid boilerplate code
     public void doUniversalWinSequenceTasks()
     {
+        //debug.logging for debugging purposes
+        Debug.Log("Doing the universal win sequence");
         //start to fade out the BGMusic
         StartCoroutine(fadeOutBGMusic());
         // invoke victory sound
@@ -84,6 +87,7 @@ public class GM2WinnerScript : MonoBehaviour
         winnerHeader.SetActive(true);
         matHeartHolder.SetActive(false);
         isaHeartHolder.SetActive(false);
+        BPMText.SetActive(false);
         matNBHolder.SetActive(false);
         isaNBHolder.SetActive(false);
         isaBW.SetActive(false);

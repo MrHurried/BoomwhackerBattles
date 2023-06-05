@@ -16,7 +16,9 @@ public class GM2RoundProcedureScript : MonoBehaviour
 
     public GM2OptionsScript optionsScript;
 
-    public GM2FeedbackScript feedbackScript;
+    private GM2FeedbackScript feedbackScript;
+
+    private GM2WinnerScript winnerScript;
 
     //INTS 
     public int bpmIncreaseAmount;
@@ -40,6 +42,8 @@ public class GM2RoundProcedureScript : MonoBehaviour
         bpm = optionsScript.startingBPM;
 
         bpmScript = GetComponent<BPMScript>();
+        feedbackScript = GetComponent<GM2FeedbackScript>();
+        winnerScript = GetComponent<GM2WinnerScript>();
     }
 
     // Update is called once per frame
@@ -102,6 +106,9 @@ public class GM2RoundProcedureScript : MonoBehaviour
         feedbackScript.matNoteCarouselScript = matNoteCarouselScript;
         feedbackScript.isaArrow = isaNBHolder.transform.GetChild(3);
         feedbackScript.matArrow = matNBHolder.transform.GetChild(3);
+
+        winnerScript.isaNBHolder = isaNBHolder;
+        winnerScript.matNBHolder = matNBHolder;
 
         inIntermission = false;
 

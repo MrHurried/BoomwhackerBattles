@@ -532,7 +532,7 @@ MonoBehaviour:
   nbHolder: {fileID: 2215713494687158862}
   isaDidCorrectInputDuringNote: 0
   matDidCorrectInputDuringNote: 0
-  invincibile: 1
+  invincibile: 0
   buttonPressProcedureWasCalled: 0
   secondsSinceLaunch: 0
 --- !u!1 &2215713494922112864
